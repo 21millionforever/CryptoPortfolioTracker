@@ -12,6 +12,7 @@ struct CryptoPortfolioTrackerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+//            TotalBalanceView()
         }
     }
 }

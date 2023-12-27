@@ -50,23 +50,7 @@ struct ContentView: View {
     var body: some View {
         ScrollView() {
             VStack(alignment: .leading) {
-                
-                HStack() {
-                    Text("Total Balance")
-                        .font(.largeTitle)
-                        .fontWeight(.semibold)
-                    Spacer()
-
-                }
-
-                HStack() {
-                    Text("$93,858.07")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                    Text(currentDate)
-         
-                }
+                TotalBalanceView()
                 
                 HStack(spacing: 3) {
                     Image(systemName: "arrowtriangle.up.fill")
@@ -90,6 +74,8 @@ struct ContentView: View {
                 }
                 
                 Spacer().frame(height: 300)
+                
+                Text(currentDate)
                 
                 HStack() {
                     Text("Accounts")
