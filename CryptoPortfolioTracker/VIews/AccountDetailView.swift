@@ -8,11 +8,55 @@
 import SwiftUI
 
 struct AccountDetailView: View {
+    var address: String
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            ScrollView {
+                VStack(alignment: .leading) {
+                    HStack() {
+                        Text("Account Balance")
+                            .font(.largeTitle)
+                            .fontWeight(.semibold)
+                        Spacer()
+
+                    }
+                    TotalBalanceView(addresses: [address])
+                    
+                    HStack(spacing: 3) {
+                        Image(systemName: "arrowtriangle.up.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(.green)
+                            
+                        Text("$645.55")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            
+                        Text("(0.69%)")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+
+                        Text("Today")
+                            .font(.subheadline)
+                            .fontWeight(.light)
+                
+                    }
+                    
+                    Spacer().frame(height: 300)
+  
+                }
+                .padding([.leading], 20)
+                
+                AssetActivityTabView()
+          
+            }
+                
+                
+                
+            
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(
@@ -22,16 +66,13 @@ struct AccountDetailView: View {
                         .foregroundColor(.green)
                 }
                )
-        
-        
-        
+    
     }
-        
     
 }
 
 struct AccountDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountDetailView()
+        AccountDetailView(address: Config.test_wallet)
     }
 }

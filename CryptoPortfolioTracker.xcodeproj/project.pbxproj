@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */; };
 		44D3CF5C2B3A275700DAE5C9 /* CryptoPortfolioTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D3CF5B2B3A275700DAE5C9 /* CryptoPortfolioTrackerApp.swift */; };
 		44D3CF5E2B3A275700DAE5C9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D3CF5D2B3A275700DAE5C9 /* ContentView.swift */; };
 		44D3CF602B3A275800DAE5C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44D3CF5F2B3A275800DAE5C9 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetActivityTabView.swift; sourceTree = "<group>"; };
 		44D3CF582B3A275700DAE5C9 /* CryptoPortfolioTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoPortfolioTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44D3CF5B2B3A275700DAE5C9 /* CryptoPortfolioTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoPortfolioTrackerApp.swift; sourceTree = "<group>"; };
 		44D3CF5D2B3A275700DAE5C9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				44D3CF692B3BCD2300DAE5C9 /* TotalBalanceView.swift */,
 				44F3D63B2B43444600801719 /* AccountCellView.swift */,
 				44F3D63F2B43ABAD00801719 /* AccountDetailView.swift */,
+				4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */,
 			);
 			path = VIews;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */,
 				44F3D63C2B43444600801719 /* AccountCellView.swift in Sources */,
 				44D3CF712B3BE48B00DAE5C9 /* confi.swift in Sources */,
 				44D3CF6A2B3BCD2300DAE5C9 /* TotalBalanceView.swift in Sources */,

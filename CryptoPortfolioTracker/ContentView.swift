@@ -46,87 +46,22 @@ struct ContentView: View {
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
             return formatter.string(from: now)
-        }
-    
-    var body: some View {
-        ScrollView() {
-            VStack(alignment: .leading) {
-                TotalBalanceView()
-                
-                HStack(spacing: 3) {
-                    Image(systemName: "arrowtriangle.up.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 15, height: 15)
-                        .foregroundColor(.green)
-                        
-                    Text("$645.55")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        
-                    Text("(0.69%)")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-
-                    Text("Today")
-                        .font(.subheadline)
-                        .fontWeight(.light)
-            
-                }
-                
-                Spacer().frame(height: 300)
-                
-                Text(currentDate)
-                
-                HStack() {
-                    Text("Accounts")
-                        .font(.largeTitle)
-                        .fontWeight(.semibold)
-                }
-                
-
-                
-                
-                VStack {
-                    ForEach(addresses, id: \.self) { address in
-                        AccountCellView(address: address)
-                    }
-                }
-
-                
-
-                
-                
-                
-            }
-            .padding([.leading], 20)
-            
-            
-
-            
-            
-        }
-     
-    }
-}
-
-
-
-struct Test: View {
-    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
-    
-    var currentDate: String {
-            let now = Date()
-            let formatter = DateFormatter()
-            formatter.dateStyle = .medium
-            return formatter.string(from: now)
     }
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading) {
-                    TotalBalanceView()
+                    HStack() {
+                        Text("Total Balance")
+                            .font(.largeTitle)
+                            .fontWeight(.semibold)
+                        Spacer()
+
+                    }
+                    
+                    // TODO
+                    TotalBalanceView(addresses: addresses)
                     
                     HStack(spacing: 3) {
                         Image(systemName: "arrowtriangle.up.fill")
@@ -164,7 +99,7 @@ struct Test: View {
                     
                     VStack {
                         ForEach(addresses, id: \.self) { address in
-                            NavigationLink(destination: AccountDetailView()) {
+                            NavigationLink(destination: AccountDetailView(address: address)) {
                                 AccountCellView(address: address)
                             }
                         }
@@ -182,10 +117,82 @@ struct Test: View {
     }
 }
 
+
+
+//struct Test: View {S
+//    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
+//
+//    var currentDate: String {
+//            let now = Date()
+//            let formatter = DateFormatter()
+//            formatter.dateStyle = .medium
+//            return formatter.string(from: now)
+//    }
+//
+//    var body: some View {
+//        NavigationView {
+//            ScrollView {
+//                VStack(alignment: .leading) {
+//                    TotalBalanceView()
+//
+//                    HStack(spacing: 3) {
+//                        Image(systemName: "arrowtriangle.up.fill")
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 15, height: 15)
+//                            .foregroundColor(.green)
+//
+//                        Text("$645.55")
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//
+//                        Text("(0.69%)")
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//
+//                        Text("Today")
+//                            .font(.subheadline)
+//                            .fontWeight(.light)
+//
+//                    }
+//
+//                    Spacer().frame(height: 300)
+//
+//                    Text(currentDate)
+//
+//                    HStack() {
+//                        Text("Accounts")
+//                            .font(.largeTitle)
+//                            .fontWeight(.semibold)
+//                    }
+//
+//
+//
+//
+//                    VStack {
+//                        ForEach(addresses, id: \.self) { address in
+//                            NavigationLink(destination: AccountDetailView(address: address)) {
+//                                AccountCellView(address: address)
+//                            }
+//                        }
+//                    }
+//
+//
+//
+//
+//
+//
+//                }
+//                .padding([.leading], 20)
+//            }
+//        }
+//    }
+//}
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-//        ContentView()
-        Test()
+        ContentView()
+//        Test()
     }
 }
 
