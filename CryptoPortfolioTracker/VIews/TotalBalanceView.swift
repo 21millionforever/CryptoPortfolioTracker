@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// TODO: Fix the issue of calling getbalance api too many times
 struct TotalBalanceView: View {
     var addresses: [String]
     @State private var totalBalance: Double = 0
@@ -28,7 +29,7 @@ struct TotalBalanceView: View {
                         do {
                             let response = try await fetchTotalBalance(walletAddress: address)
                             totalBalance += response.balance
-                            print(totalBalance)
+//                            print(address + totalBalance)
                         } catch APIError.invalidURL {
                             print("Invalid url")
                         } catch APIError.invalidResponse {

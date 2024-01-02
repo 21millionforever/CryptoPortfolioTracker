@@ -8,33 +8,26 @@
 import Foundation
 
 struct ActivitiesResponse: Codable {
-    let type: String
-    let chain: String
-    let timeStamp: String
-    let blockNumber: String
-    let hash: String
-    let status: String
+    let type, chian, timeStamp, blockNumber: String
+    let hash, status: String
     let extraInfo: ExtraInfo
     
 }
 
 struct ExtraInfo: Codable {
-    let sender: String?
-    let receiver: String?
+    let sender, receiver: String?
     let tokenPrice: Double?
     let tokenSymbol: String?
     let tokenAmount: Double?
     
     let GasUsedETH: Double?
     let GasUsedUSD: Double?
-    
+
     let sentTokenPrice: Double?
     let sentTokenSymbol: String?
     let sentTokenAmount: Double?
-    let receivedTokenPrice: Double?
     let receivedTokenSymbol: String?
     let receivedTokenAmount: Double?
-    
 }
 
 func fetchActivities(walletAddress: String) async throws -> [ActivitiesResponse] {

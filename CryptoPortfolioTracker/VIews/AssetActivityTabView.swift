@@ -50,7 +50,7 @@ struct AssetActivityTabView: View {
                 case "Assets":
                     Text(selectedTab)
                 case "Activity":
-                    Text(selectedTab)
+                    ActivityView()
                 default:
                     Text(selectedTab)
                 }
