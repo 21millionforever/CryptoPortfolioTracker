@@ -39,6 +39,7 @@ var data: [MonthlyHoursOfSunshine] = [
 
 
 struct ContentView: View {
+    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
     
     var currentDate: String {
             let now = Date()
@@ -83,163 +84,17 @@ struct ContentView: View {
                         .fontWeight(.semibold)
                 }
                 
-                VStack(alignment: .leading, spacing: 0) {
-                    HStack() {
-                        Image("SVG_MetaMask_Icon_Color")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
-                        
-                        Text("MetaMask")
-                            .font(.title2)
-                            .fontWeight(.medium)
-                        Text("0x868F2d27D9c5689181647a32c97578385CdDA4e6")
-                            .frame(width: 100, height: 40)
-                        
-                        Spacer()
-                        
+
+                
+                
+                VStack {
+                    ForEach(addresses, id: \.self) { address in
+                        AccountCellView(address: address)
                     }
-                    
-                    HStack(alignment: .top) {
-                        Chart(data) {
-                            LineMark(
-                                x: .value("Month", $0.date),
-                                y: .value("Hours of Sunshine", $0.hoursOfSunshine)
-                            )
-                        }
-                        .chartYAxis(.hidden)
-                        .chartXAxis(.hidden)
-                        .foregroundStyle(.red)
-                        .frame(width: 250, height: 70)
-                        .padding([.leading],20)
-                        
-                        Text("$42.65")
-                            .font(.title2)
-                            .fontWeight(.medium)
-                            .background(.green)
-                            .padding([.leading], 40)
-                        
-                    }
-                    
-                    
-                    HStack() {
-                        Image("SVG_MetaMask_Icon_Color")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
-                        
-                        Text("MetaMask")
-                            .font(.title2)
-                            .fontWeight(.medium)
-                        Text("0x868F2d27D9c5689181647a32c97578385CdDA4e6")
-                            .frame(width: 100, height: 40)
-                        
-                        Spacer()
-                        
-                    }
-                    
-                    HStack(alignment: .top) {
-                        Chart(data) {
-                            LineMark(
-                                x: .value("Month", $0.date),
-                                y: .value("Hours of Sunshine", $0.hoursOfSunshine)
-                            )
-                        }
-                        .chartYAxis(.hidden)
-                        .chartXAxis(.hidden)
-                        .foregroundStyle(.red)
-                        .frame(width: 250, height: 70)
-                        .padding([.leading],20)
-                        
-                        Text("$42.65")
-                            .font(.title2)
-                            .fontWeight(.medium)
-                            .background(.green)
-                            .padding([.leading], 40)
-                        
-                    }
-                    
-                    
-                    HStack() {
-                        Image("SVG_MetaMask_Icon_Color")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
-                        
-                        Text("MetaMask")
-                            .font(.title2)
-                            .fontWeight(.medium)
-                        Text("0x868F2d27D9c5689181647a32c97578385CdDA4e6")
-                            .frame(width: 100, height: 40)
-                        
-                        Spacer()
-                        
-                    }
-                    
-                    HStack(alignment: .top) {
-                        Chart(data) {
-                            LineMark(
-                                x: .value("Month", $0.date),
-                                y: .value("Hours of Sunshine", $0.hoursOfSunshine)
-                            )
-                        }
-                        .chartYAxis(.hidden)
-                        .chartXAxis(.hidden)
-                        .foregroundStyle(.red)
-                        .frame(width: 250, height: 70)
-                        .padding([.leading],20)
-                        
-                        Text("$42.65")
-                            .font(.title2)
-                            .fontWeight(.medium)
-                            .background(.green)
-                            .padding([.leading], 40)
-                        
-                    }
-                    
-                    
-                    HStack() {
-                        Image("SVG_MetaMask_Icon_Color")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
-                        
-                        Text("MetaMask")
-                            .font(.title2)
-                            .fontWeight(.medium)
-                        Text("0x868F2d27D9c5689181647a32c97578385CdDA4e6")
-                            .frame(width: 100, height: 40)
-                        
-                        Spacer()
-                        
-                    }
-                    
-                    HStack(alignment: .top) {
-                        Chart(data) {
-                            LineMark(
-                                x: .value("Month", $0.date),
-                                y: .value("Hours of Sunshine", $0.hoursOfSunshine)
-                            )
-                        }
-                        .chartYAxis(.hidden)
-                        .chartXAxis(.hidden)
-                        .foregroundStyle(.red)
-                        .frame(width: 250, height: 70)
-                        .padding([.leading],20)
-                        
-                        Text("$42.65")
-                            .font(.title2)
-                            .fontWeight(.medium)
-                            .background(.green)
-                            .padding([.leading], 40)
-                        
-                    }
-              
-                    
-              
-                    
                 }
-      
+
+                
+
                 
                 
                 
@@ -250,27 +105,87 @@ struct ContentView: View {
 
             
             
-
-//            VStack(spacing: 20) {
-//                ForEach(0..<10) {
-//                    Text("Item \($0)")
-//                        .foregroundStyle(.white)
-//                        .font(.largeTitle)
-//                        .frame(maxWidth: .infinity)
-//                        .frame(height: 200)
-//                        .background(.red)
-//                }
-//            }
-            
-            
         }
      
     }
 }
 
+
+
+struct Test: View {
+    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
+    
+    var currentDate: String {
+            let now = Date()
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            return formatter.string(from: now)
+    }
+    
+    var body: some View {
+        NavigationView {
+            ScrollView {
+                VStack(alignment: .leading) {
+                    TotalBalanceView()
+                    
+                    HStack(spacing: 3) {
+                        Image(systemName: "arrowtriangle.up.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(.green)
+                            
+                        Text("$645.55")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            
+                        Text("(0.69%)")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+
+                        Text("Today")
+                            .font(.subheadline)
+                            .fontWeight(.light)
+                
+                    }
+                    
+                    Spacer().frame(height: 300)
+                    
+                    Text(currentDate)
+                    
+                    HStack() {
+                        Text("Accounts")
+                            .font(.largeTitle)
+                            .fontWeight(.semibold)
+                    }
+                    
+
+                    
+                    
+                    VStack {
+                        ForEach(addresses, id: \.self) { address in
+                            NavigationLink(destination: AccountDetailView()) {
+                                AccountCellView(address: address)
+                            }
+                        }
+                    }
+
+                    
+
+                    
+                    
+                    
+                }
+                .padding([.leading], 20)
+            }
+        }
+    }
+}
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+//        ContentView()
+        Test()
     }
 }
 

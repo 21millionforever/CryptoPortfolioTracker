@@ -13,6 +13,7 @@ struct CryptoPortfolioTrackerApp: App {
         WindowGroup {
             ContentView()
 //            TotalBalanceView()
+//            AccountCellView(address: Config.test_wallet)
         }
     }
 }
