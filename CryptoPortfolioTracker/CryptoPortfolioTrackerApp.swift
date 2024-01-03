@@ -11,7 +11,7 @@ import SwiftUI
 struct CryptoPortfolioTrackerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(test: "Test")
 //            TotalBalanceView()
 //            AccountCellView(address: Config.test_wallet)
         }

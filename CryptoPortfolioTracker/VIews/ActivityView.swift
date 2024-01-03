@@ -12,12 +12,36 @@ struct ActivityView: View {
     
     var body: some View {
         VStack {
-            Text("Activity View")
+            ForEach(activities ?? [], id: \.self) { activity in
+                
+//                if let timeStamp = TimeInterval(activity.timeStamp) {
+//                    Text(timeStampToDate(from: timeStamp))
+//                } else {
+//                    Text("Failed to convert timeStamp")
+//                }
+                
+//                let timeStamp = TimeInterval(activity.timeStamp)
+                
+             
+                
+                if (activity.type == "Receive") {
+                    ActivityReceiveCell(activity: activity)
+                } else if (activity.type == "Send") {
+                    ActivitySendCell()
+                } else if (activity.type == "Swap") {
+                    ActivitySwapCell()
+                } else if (activity.type == "Approve") {
+                    ActivityApproveCell()
+                }
+                
+                
+            }
+            
         }
         .task {
             do {
                 activities = try await fetchActivities(walletAddress: Config.test_wallet)
-                print(activities)
+
             } catch APIError.invalidURL {
                 print("Invalid url")
             } catch APIError.invalidResponse {
@@ -31,6 +55,18 @@ struct ActivityView: View {
             
         }
         
+    }
+    
+    
+    func timeStampToDate(from timeStamp: TimeInterval) -> String {
+        let date = Date(timeIntervalSince1970: timeStamp)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        dateFormatter.locale = Locale(identifier: "en_US")
+        let formattedDate = dateFormatter.string(from: date)
+        print(formattedDate)
+        return formattedDate
     }
 }
 

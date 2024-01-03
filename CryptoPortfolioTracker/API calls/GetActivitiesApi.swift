@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct ActivitiesResponse: Codable {
+struct ActivitiesResponse: Codable, Hashable {
     let type, chian, timeStamp, blockNumber: String
     let hash, status: String
     let extraInfo: ExtraInfo
     
 }
 
-struct ExtraInfo: Codable {
+struct ExtraInfo: Codable, Hashable {
     let sender, receiver: String?
     let tokenPrice: Double?
     let tokenSymbol: String?

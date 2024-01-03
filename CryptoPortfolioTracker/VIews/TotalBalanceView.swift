@@ -29,7 +29,6 @@ struct TotalBalanceView: View {
                         do {
                             let response = try await fetchTotalBalance(walletAddress: address)
                             totalBalance += response.balance
-//                            print(address + totalBalance)
                         } catch APIError.invalidURL {
                             print("Invalid url")
                         } catch APIError.invalidResponse {

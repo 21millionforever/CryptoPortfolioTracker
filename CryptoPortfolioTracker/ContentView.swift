@@ -13,7 +13,6 @@ struct MonthlyHoursOfSunshine: Identifiable {
     var date: Date
     var hoursOfSunshine: Double
 
-
     init(month: Int, hoursOfSunshine: Double) {
         let calendar = Calendar.autoupdatingCurrent
         self.date = calendar.date(from: DateComponents(year: 2020, month: month))!
@@ -40,6 +39,7 @@ var data: [MonthlyHoursOfSunshine] = [
 
 struct ContentView: View {
     @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
+    var test: String
     
     var currentDate: String {
             let now = Date()
@@ -51,6 +51,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ScrollView {
+                Text(test)
                 VStack(alignment: .leading) {
                     HStack() {
                         Text("Total Balance")
@@ -118,6 +119,15 @@ struct ContentView: View {
 }
 
 
+
+
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView(test: "Test")
+//        Test()
+    }
+}
 
 //struct Test: View {S
 //    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
@@ -188,12 +198,4 @@ struct ContentView: View {
 //        }
 //    }
 //}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-//        Test()
-    }
-}
-
 
