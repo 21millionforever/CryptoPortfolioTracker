@@ -13,6 +13,9 @@
 		449C55CB2B44F8D9005E1593 /* ActivitySendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449C55CA2B44F8D9005E1593 /* ActivitySendCell.swift */; };
 		449C55CD2B44F939005E1593 /* ActivitySwapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449C55CC2B44F939005E1593 /* ActivitySwapCell.swift */; };
 		449C55CF2B44FA67005E1593 /* ActivityApproveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449C55CE2B44FA67005E1593 /* ActivityApproveCell.swift */; };
+		449C55D52B45FCFC005E1593 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449C55D42B45FCFC005E1593 /* TestView.swift */; };
+		449C55D72B463DEE005E1593 /* ImportWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449C55D62B463DEE005E1593 /* ImportWalletView.swift */; };
+		449C55D92B463E3B005E1593 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449C55D82B463E3B005E1593 /* BottomSheetView.swift */; };
 		44D3CF5C2B3A275700DAE5C9 /* CryptoPortfolioTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D3CF5B2B3A275700DAE5C9 /* CryptoPortfolioTrackerApp.swift */; };
 		44D3CF5E2B3A275700DAE5C9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D3CF5D2B3A275700DAE5C9 /* ContentView.swift */; };
 		44D3CF602B3A275800DAE5C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44D3CF5F2B3A275800DAE5C9 /* Assets.xcassets */; };
@@ -33,6 +36,9 @@
 		449C55CA2B44F8D9005E1593 /* ActivitySendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySendCell.swift; sourceTree = "<group>"; };
 		449C55CC2B44F939005E1593 /* ActivitySwapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySwapCell.swift; sourceTree = "<group>"; };
 		449C55CE2B44FA67005E1593 /* ActivityApproveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityApproveCell.swift; sourceTree = "<group>"; };
+		449C55D42B45FCFC005E1593 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		449C55D62B463DEE005E1593 /* ImportWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportWalletView.swift; sourceTree = "<group>"; };
+		449C55D82B463E3B005E1593 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		44D3CF582B3A275700DAE5C9 /* CryptoPortfolioTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoPortfolioTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44D3CF5B2B3A275700DAE5C9 /* CryptoPortfolioTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoPortfolioTrackerApp.swift; sourceTree = "<group>"; };
 		44D3CF5D2B3A275700DAE5C9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -90,6 +96,7 @@
 			children = (
 				44D3CF5B2B3A275700DAE5C9 /* CryptoPortfolioTrackerApp.swift */,
 				44D3CF5D2B3A275700DAE5C9 /* ContentView.swift */,
+				449C55D42B45FCFC005E1593 /* TestView.swift */,
 				44F3D63A2B43442400801719 /* VIews */,
 				44D3CF6D2B3BD02000DAE5C9 /* API calls */,
 				44D3CF722B3BE7DE00DAE5C9 /* Errors.swift */,
@@ -125,6 +132,8 @@
 				44F3D63F2B43ABAD00801719 /* AccountDetailView.swift */,
 				4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */,
 				4499E8A62B43E4EC0077CBEB /* ActivityView.swift */,
+				449C55D62B463DEE005E1593 /* ImportWalletView.swift */,
+				449C55D82B463E3B005E1593 /* BottomSheetView.swift */,
 				449C55C92B44E715005E1593 /* DifferentActivityCellViews */,
 			);
 			path = VIews;
@@ -207,11 +216,14 @@
 				44F3D63C2B43444600801719 /* AccountCellView.swift in Sources */,
 				44D3CF712B3BE48B00DAE5C9 /* confi.swift in Sources */,
 				449C55CF2B44FA67005E1593 /* ActivityApproveCell.swift in Sources */,
+				449C55D52B45FCFC005E1593 /* TestView.swift in Sources */,
 				44D3CF6A2B3BCD2300DAE5C9 /* TotalBalanceView.swift in Sources */,
 				44D3CF5E2B3A275700DAE5C9 /* ContentView.swift in Sources */,
 				44D3CF6F2B3BD06500DAE5C9 /* GetBalanceApi.swift in Sources */,
+				449C55D92B463E3B005E1593 /* BottomSheetView.swift in Sources */,
 				44D3CF732B3BE7DE00DAE5C9 /* Errors.swift in Sources */,
 				449C55CB2B44F8D9005E1593 /* ActivitySendCell.swift in Sources */,
+				449C55D72B463DEE005E1593 /* ImportWalletView.swift in Sources */,
 				44F3D6402B43ABAD00801719 /* AccountDetailView.swift in Sources */,
 				44F3D6392B428EF800801719 /* GetActivitiesApi.swift in Sources */,
 				44D3CF5C2B3A275700DAE5C9 /* CryptoPortfolioTrackerApp.swift in Sources */,

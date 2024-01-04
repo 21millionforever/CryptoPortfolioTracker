@@ -39,7 +39,10 @@ var data: [MonthlyHoursOfSunshine] = [
 
 struct ContentView: View {
     @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
-    var test: String
+    
+    @State private var showingBottomMenu = false
+
+    @State var navigateToImportWalletView = false
     
     var currentDate: String {
             let now = Date()
@@ -49,18 +52,10 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
-                Text(test)
                 VStack(alignment: .leading) {
-                    HStack() {
-                        Text("Total Balance")
-                            .font(.largeTitle)
-                            .fontWeight(.semibold)
-                        Spacer()
-
-                    }
-                    
+                
                     // TODO
                     TotalBalanceView(addresses: addresses)
                     
@@ -96,8 +91,6 @@ struct ContentView: View {
                     }
                     
 
-                    
-                    
                     VStack {
                         ForEach(addresses, id: \.self) { address in
                             NavigationLink(destination: AccountDetailView(address: address)) {
@@ -106,15 +99,32 @@ struct ContentView: View {
                         }
                     }
 
-                    
-
-                    
-                    
-                    
                 }
                 .padding([.leading], 20)
+                
+            }
+            .navigationDestination(isPresented: $navigateToImportWalletView, destination: {ImportWalletView()})
+            .navigationTitle("Total Balance")
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+           
+                    Button(action: {
+                        showingBottomMenu = true})
+                    {
+                        Image(systemName: "plus")
+                            .foregroundColor(.green)
+                            .font(.system(size: 20, weight: .bold))
+                    }
+                    .sheet(isPresented: $showingBottomMenu) {
+                        BottomSheetView(navigateToImportWalletView: $navigateToImportWalletView, showingBottomMenu: $showingBottomMenu)
+                            .padding()
+                            .presentationDetents([.fraction(0.2)])
+                            .presentationDragIndicator(.visible)
+                    }
+                }
             }
         }
+
     }
 }
 
@@ -124,13 +134,18 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(test: "Test")
-//        Test()
+        ContentView()
     }
 }
 
-//struct Test: View {S
+
+
+//struct PreviousVersion: View {
 //    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
+//
+//    @State private var showingBottomMenu = false
+//
+//    @State var navigateToImportWalletView = false
 //
 //    var currentDate: String {
 //            let now = Date()
@@ -140,10 +155,19 @@ struct ContentView_Previews: PreviewProvider {
 //    }
 //
 //    var body: some View {
-//        NavigationView {
+//        NavigationStack {
 //            ScrollView {
 //                VStack(alignment: .leading) {
-//                    TotalBalanceView()
+////                    HStack() {
+////                        Text("Total Balance")
+////                            .font(.largeTitle)
+////                            .fontWeight(.semibold)
+////                        Spacer()
+////
+////                    }
+//
+//                    // TODO
+//                    TotalBalanceView(addresses: addresses)
 //
 //                    HStack(spacing: 3) {
 //                        Image(systemName: "arrowtriangle.up.fill")
@@ -177,8 +201,6 @@ struct ContentView_Previews: PreviewProvider {
 //                    }
 //
 //
-//
-//
 //                    VStack {
 //                        ForEach(addresses, id: \.self) { address in
 //                            NavigationLink(destination: AccountDetailView(address: address)) {
@@ -187,15 +209,35 @@ struct ContentView_Previews: PreviewProvider {
 //                        }
 //                    }
 //
-//
-//
-//
-//
-//
 //                }
 //                .padding([.leading], 20)
 //            }
+//            .navigationTitle("Total Balance")
+//            .toolbar {
+//                ToolbarItemGroup(placement: .navigationBarTrailing) {
+//
+//                    Button(action: {
+//                        showingBottomMenu = true})
+//                    {
+//                        Image(systemName: "plus")
+//                            .foregroundColor(.green)
+//                            .font(.system(size: 20, weight: .bold))
+//                    }
+//                    .sheet(isPresented: $showingBottomMenu) {
+//                        BottomSheetView(navigateToImportWalletView: $navigateToImportWalletView, showingBottomMenu: $showingBottomMenu)
+//                            .padding()
+//                            .presentationDetents([.fraction(0.2)])
+//                            .presentationDragIndicator(.visible)
+//                    }
+//                    .background(
+//                         NavigationLink(destination: ImportWalletView(), isActive: $navigateToImportWalletView) {
+//                             EmptyView()
+//                         }
+//                     )
+//
+//                }
+//            }
 //        }
+//
 //    }
 //}
-

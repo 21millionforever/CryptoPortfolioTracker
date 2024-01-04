@@ -65,7 +65,7 @@ struct AccountDetailView: View {
                     Image(systemName: "arrow.backward")
                         .foregroundColor(.green)
                 }
-               )
+        )
     
     }
     

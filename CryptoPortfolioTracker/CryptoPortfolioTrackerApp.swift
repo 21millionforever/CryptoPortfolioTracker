@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct CryptoPortfolioTrackerApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            ContentView(test: "Test")
-//            TotalBalanceView()
-//            AccountCellView(address: Config.test_wallet)
+            ContentView()
+            
         }
     }
 }
