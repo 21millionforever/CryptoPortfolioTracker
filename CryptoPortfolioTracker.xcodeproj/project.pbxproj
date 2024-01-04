@@ -132,8 +132,8 @@
 				44F3D63F2B43ABAD00801719 /* AccountDetailView.swift */,
 				4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */,
 				4499E8A62B43E4EC0077CBEB /* ActivityView.swift */,
-				449C55D62B463DEE005E1593 /* ImportWalletView.swift */,
 				449C55D82B463E3B005E1593 /* BottomSheetView.swift */,
+				449C55D62B463DEE005E1593 /* ImportWalletView.swift */,
 				449C55C92B44E715005E1593 /* DifferentActivityCellViews */,
 			);
 			path = VIews;
