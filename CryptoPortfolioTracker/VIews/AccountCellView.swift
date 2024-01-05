@@ -17,7 +17,7 @@ struct AccountCellView: View {
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect() // 300 seconds = 5 minutes
     
     var body: some View {
-        VStack {
+        VStack(alignment: .trailing) {
             HStack(spacing:0) {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack() {
@@ -36,6 +36,7 @@ struct AccountCellView: View {
                     }
                     .frame(height:40)
 
+
                     HStack() {
                         Chart(data) {
                             LineMark(
@@ -46,10 +47,10 @@ struct AccountCellView: View {
                         .chartYAxis(.hidden)
                         .chartXAxis(.hidden)
                         .foregroundStyle(.red)
+                        
                         .padding([.top],30)
                     }
-                    .frame(width: 250, height: 70)
-
+                
                     .task {
                         do {
                             balance = try await fetchTotalBalance(walletAddress: address)
@@ -81,22 +82,20 @@ struct AccountCellView: View {
                         }
 
                     }
-
                 }
-                .frame(width: 300, height: 110)
+                .frame(height: 110)
 
                 VStack(spacing: 0) {
-
                     if let balanceValue = balance?.balance {
-
                         Text("$\(String(format: "%.2f", balanceValue))")
                             .font(.body)
                             .fontWeight(.regular)
-                            .background(.green)
+                            .foregroundColor(.black)
 
                     }
                 }
                 .frame(width: 100, height: 110)
+                Spacer()
 
             }
             Divider()
@@ -108,5 +107,6 @@ struct AccountCellView: View {
 struct AccountCellView_Previews: PreviewProvider {
     static var previews: some View {
         AccountCellView(address: Config.test_wallet)
+//        T(address: Config.test_wallet)
     }
 }

@@ -37,111 +37,10 @@ var data: [MonthlyHoursOfSunshine] = [
 
 
 
-struct ContentView: View {
-    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
-    
-    @State private var showingBottomMenu = false
-
-    @State var navigateToImportWalletView = false
-    
-    var currentDate: String {
-            let now = Date()
-            let formatter = DateFormatter()
-            formatter.dateStyle = .medium
-            return formatter.string(from: now)
-    }
-    
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading) {
-                
-                    // TODO
-                    TotalBalanceView(addresses: addresses)
-                    
-                    HStack(spacing: 3) {
-                        Image(systemName: "arrowtriangle.up.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(.green)
-                            
-                        Text("$645.55")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                            
-                        Text("(0.69%)")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-
-                        Text("Today")
-                            .font(.subheadline)
-                            .fontWeight(.light)
-                
-                    }
-                    
-                    Spacer().frame(height: 300)
-                    
-                    Text(currentDate)
-                    
-                    HStack() {
-                        Text("Accounts")
-                            .font(.largeTitle)
-                            .fontWeight(.semibold)
-                    }
-                    
-
-                    VStack {
-                        ForEach(addresses, id: \.self) { address in
-                            NavigationLink(destination: AccountDetailView(address: address)) {
-                                AccountCellView(address: address)
-                            }
-                        }
-                    }
-
-                }
-                .padding([.leading], 20)
-                
-            }
-            .navigationDestination(isPresented: $navigateToImportWalletView, destination: {ImportWalletView()})
-            .navigationTitle("Total Balance")
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-           
-                    Button(action: {
-                        showingBottomMenu = true})
-                    {
-                        Image(systemName: "plus")
-                            .foregroundColor(.green)
-                            .font(.system(size: 20, weight: .bold))
-                    }
-                    .sheet(isPresented: $showingBottomMenu) {
-                        BottomSheetView(navigateToImportWalletView: $navigateToImportWalletView, showingBottomMenu: $showingBottomMenu)
-                            .padding()
-                            .presentationDetents([.fraction(0.2)])
-                            .presentationDragIndicator(.visible)
-                    }
-                }
-            }
-        }
-
-    }
-}
-
-
-
-
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-
-
-
-//struct PreviousVersion: View {
-//    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
+//struct ContentView: View {
+//
+////    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
+//    @State var addresses: [String] = []
 //
 //    @State private var showingBottomMenu = false
 //
@@ -157,18 +56,15 @@ struct ContentView_Previews: PreviewProvider {
 //    var body: some View {
 //        NavigationStack {
 //            ScrollView {
+//
 //                VStack(alignment: .leading) {
-////                    HStack() {
-////                        Text("Total Balance")
-////                            .font(.largeTitle)
-////                            .fontWeight(.semibold)
-////                        Spacer()
-////
-////                    }
 //
-//                    // TODO
+//                    // TODO: problem: Calling balance api too many times and UI is not matching
 //                    TotalBalanceView(addresses: addresses)
+//                        .padding(.leading)
 //
+//
+//                    // Uncomment to code below
 //                    HStack(spacing: 3) {
 //                        Image(systemName: "arrowtriangle.up.fill")
 //                            .resizable()
@@ -188,31 +84,50 @@ struct ContentView_Previews: PreviewProvider {
 //                            .font(.subheadline)
 //                            .fontWeight(.light)
 //
+//                        Spacer()
+//
 //                    }
+//                    .padding(.leading)
+//
 //
 //                    Spacer().frame(height: 300)
+//                    HStack {
+//                        Text(currentDate)
+//                        Spacer()
+//                    }
+//                    .padding(.leading)
 //
-//                    Text(currentDate)
+//
 //
 //                    HStack() {
 //                        Text("Accounts")
 //                            .font(.largeTitle)
 //                            .fontWeight(.semibold)
+//                        Spacer()
 //                    }
+//                    .padding(.leading)
 //
 //
-//                    VStack {
-//                        ForEach(addresses, id: \.self) { address in
-//                            NavigationLink(destination: AccountDetailView(address: address)) {
-//                                AccountCellView(address: address)
-//                            }
+//
+//                    ForEach(addresses, id: \.self) { address in
+//                        NavigationLink(destination: AccountDetailView(address: address)) {
+//                            AccountCellView(address: address)
+//                                .padding(.leading)
 //                        }
 //                    }
 //
+//
+//
 //                }
-//                .padding([.leading], 20)
+//                .navigationTitle("Total Balance")
+//
+//
+//
+//
+//
+//
 //            }
-//            .navigationTitle("Total Balance")
+//            .navigationDestination(isPresented: $navigateToImportWalletView, destination: {ImportWalletView(addresses: $addresses, navigateToImportWalletView: $navigateToImportWalletView)})
 //            .toolbar {
 //                ToolbarItemGroup(placement: .navigationBarTrailing) {
 //
@@ -229,15 +144,127 @@ struct ContentView_Previews: PreviewProvider {
 //                            .presentationDetents([.fraction(0.2)])
 //                            .presentationDragIndicator(.visible)
 //                    }
-//                    .background(
-//                         NavigationLink(destination: ImportWalletView(), isActive: $navigateToImportWalletView) {
-//                             EmptyView()
-//                         }
-//                     )
-//
 //                }
 //            }
+//
 //        }
 //
 //    }
 //}
+
+
+struct ContentView: View {
+    
+//    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
+    @State var addresses: [String] = []
+    
+    @State private var showingBottomMenu = false
+
+    @State var showingImportWalletView = false
+    
+    var currentDate: String {
+            let now = Date()
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            return formatter.string(from: now)
+    }
+    
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading) {
+                    // TODO: problem: Calling balance api too many times and UI is not matching
+                    TotalBalanceView(addresses: addresses)
+                        .padding(.leading)
+               
+
+                    // Uncomment to code below
+                    HStack(spacing: 3) {
+                        Image(systemName: "arrowtriangle.up.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(.green)
+
+                        Text("$645.55")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+
+                        Text("(0.69%)")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+
+                        Text("Today")
+                            .font(.subheadline)
+                            .fontWeight(.light)
+
+                        Spacer()
+
+                    }
+                    .padding(.leading)
+               
+
+                    Spacer().frame(height: 300)
+                    HStack {
+                        Text(currentDate)
+                        Spacer()
+                    }
+                    .padding(.leading)
+                    
+                    
+
+                    HStack() {
+                        Text("Accounts")
+                            .font(.largeTitle)
+                            .fontWeight(.semibold)
+                        Spacer()
+                    }
+                    .padding(.leading)
+
+
+
+                    ForEach(addresses, id: \.self) { address in
+                        NavigationLink(destination: AccountDetailView(address: address)) {
+                            AccountCellView(address: address)
+                                .padding(.leading)
+                        }
+                    }
+                    
+
+
+                }
+                .navigationTitle("Total Balance")
+   
+            }
+            .navigationDestination(isPresented: $showingImportWalletView, destination: {ImportWalletView(addresses: $addresses, showingImportWalletView: $showingImportWalletView)})
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+           
+                    Button(action: {
+                        showingBottomMenu = true})
+                    {
+                        Image(systemName: "plus")
+                            .foregroundColor(.green)
+                            .font(.system(size: 20, weight: .bold))
+                    }
+                    .sheet(isPresented: $showingBottomMenu) {
+                        BottomSheetView(navigateToImportWalletView: $showingImportWalletView, showingBottomMenu: $showingBottomMenu)
+                            .padding()
+                            .presentationDetents([.fraction(0.2)])
+                            .presentationDragIndicator(.visible)
+                    }
+                }
+            }
+        
+        }
+
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
+
+

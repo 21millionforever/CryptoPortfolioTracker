@@ -7,14 +7,35 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct TestView: View {
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("fdasfsd")
+            .task {
+                do {
+                    print("Calling fetchWalletInfo")
+                    let response = try await fetchWalletInfo(walletAddresses: ["daads", "dads"])
+                    print(response)
+                } catch APIError.invalidURL {
+                    print("Invalid url")
+                } catch APIError.invalidResponse {
+                    print("Invalid response")
+                } catch APIError.invalidData {
+                    print("Invalid Data")
+                } catch {
+                    // Handle other errors
+                    print("An unexpected error")
+                }
+                
+            }
     }
 }
 
 struct TestView_Previews: PreviewProvider {
     static var previews: some View {
         TestView()
+
     }
 }

@@ -10,6 +10,8 @@ import SwiftUI
 struct ImportWalletView: View {
     
     @State private var walletAddress: String = ""
+    @Binding var addresses: [String]
+    @Binding var showingImportWalletView: Bool
     
     var body: some View {
         VStack(alignment: .center) {
@@ -31,7 +33,8 @@ struct ImportWalletView: View {
                     .cornerRadius(10)
 
                 Button(action: {
-
+                    saveAddress()
+                    RemoveView()
                 },
                        label: {
                     Text("Continue")
@@ -52,13 +55,17 @@ struct ImportWalletView: View {
         }
     }
     
-    func saceWallet() {
-        
+    func saveAddress() {
+        addresses.append(walletAddress)
+    }
+    
+    func RemoveView() {
+        showingImportWalletView = false
     }
 }
 
-struct ImportWalletView_Previews: PreviewProvider {
-    static var previews: some View {
-        ImportWalletView()
-    }
-}
+//struct ImportWalletView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ImportWalletView()
+//    }
+//}

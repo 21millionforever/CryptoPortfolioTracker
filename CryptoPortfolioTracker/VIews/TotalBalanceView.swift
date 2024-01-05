@@ -15,15 +15,17 @@ struct TotalBalanceView: View {
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect() // 300 seconds = 5 minutes
     
     var body: some View {
-        VStack(alignment: .leading) {
 
             HStack() {
                 Text(String(format: "%.2f", totalBalance))
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
+                
+                Spacer()
             }
             .task {
+                print("fetchTotalBalance is called")
                     totalBalance = 0
                     for address in addresses {
                         do {
@@ -66,7 +68,7 @@ struct TotalBalanceView: View {
             }
             
             
-        }
+
         
     }
     

@@ -13,7 +13,11 @@ struct CryptoPortfolioTrackerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+//            TestView()
             
         }
     }
 }
+
+// TODO
+// 1. Make API calls when the variables are empty, after the first call, then is 1 API call every 5 minutes
