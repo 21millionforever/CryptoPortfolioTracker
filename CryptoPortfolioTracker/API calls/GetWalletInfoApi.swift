@@ -8,7 +8,8 @@
 import Foundation
 
 // MARK: - Welcome
-struct WalletInfo: Codable {
+struct WalletInfo: Codable{
+    let id = UUID()
     let address: String
     let eth: Eth
     let tokens: [Token]
@@ -99,6 +100,7 @@ func fetchWalletInfo(walletAddresses: [String]) async throws -> [WalletInfo] {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let response = try decoder.decode([WalletInfo].self, from: data)
+        print(response)
         
         
         

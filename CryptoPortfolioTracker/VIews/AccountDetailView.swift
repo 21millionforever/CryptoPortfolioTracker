@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AccountDetailView: View {
-    var address: String
+    var walletInfo: WalletInfo
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
@@ -22,7 +22,7 @@ struct AccountDetailView: View {
                         Spacer()
 
                     }
-                    TotalBalanceView(addresses: [address])
+                    TotalBalanceView(balance: walletInfo.balanceInUSD)
                     
                     HStack(spacing: 3) {
                         Image(systemName: "arrowtriangle.up.fill")
@@ -71,8 +71,8 @@ struct AccountDetailView: View {
     
 }
 
-struct AccountDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        AccountDetailView(address: Config.test_wallet)
-    }
-}
+//struct AccountDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AccountDetailView(address: Config.test_wallet)
+//    }
+//}

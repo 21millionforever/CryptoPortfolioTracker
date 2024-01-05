@@ -155,12 +155,15 @@ var data: [MonthlyHoursOfSunshine] = [
 
 struct ContentView: View {
     
-//    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
-    @State var addresses: [String] = []
+    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
+    
+//    @State var addresses: [String] = []
+    @State var walletsInfo: [WalletInfo] = []
     
     @State private var showingBottomMenu = false
-
     @State var showingImportWalletView = false
+    
+    @State var totalBalance: Double = 0
     
     var currentDate: String {
             let now = Date()
@@ -174,7 +177,7 @@ struct ContentView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     // TODO: problem: Calling balance api too many times and UI is not matching
-                    TotalBalanceView(addresses: addresses)
+                    TotalBalanceView(balance: totalBalance)
                         .padding(.leading)
                
 
@@ -223,9 +226,11 @@ struct ContentView: View {
 
 
 
-                    ForEach(addresses, id: \.self) { address in
-                        NavigationLink(destination: AccountDetailView(address: address)) {
-                            AccountCellView(address: address)
+                    ForEach(walletsInfo, id: \.id) { walletInfo in
+            
+                        NavigationLink(destination: AccountDetailView(walletInfo: walletInfo)) {
+
+                            AccountCellView(walletInfo: walletInfo)
                                 .padding(.leading)
                         }
                     }
@@ -255,16 +260,34 @@ struct ContentView: View {
                     }
                 }
             }
+            .task {
+                totalBalance = 0
+                do {
+                    walletsInfo = try await fetchWalletInfo(walletAddresses: addresses)
+                    for walletInfo in walletsInfo {
+                        totalBalance += walletInfo.balanceInUSD
+                    }
+                } catch APIError.invalidURL {
+                    print("Invalid url")
+                } catch APIError.invalidResponse {
+                    print("Invalid response")
+                } catch APIError.invalidData {
+                    print("Invalid Data")
+                } catch {
+                    // Handle other errors
+                    print("An unexpected error")
+                }
+            }
         
         }
 
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}
 
 
