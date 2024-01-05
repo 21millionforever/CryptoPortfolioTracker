@@ -36,128 +36,12 @@ var data: [MonthlyHoursOfSunshine] = [
 
 
 
-
-//struct ContentView: View {
-//
-////    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
-//    @State var addresses: [String] = []
-//
-//    @State private var showingBottomMenu = false
-//
-//    @State var navigateToImportWalletView = false
-//
-//    var currentDate: String {
-//            let now = Date()
-//            let formatter = DateFormatter()
-//            formatter.dateStyle = .medium
-//            return formatter.string(from: now)
-//    }
-//
-//    var body: some View {
-//        NavigationStack {
-//            ScrollView {
-//
-//                VStack(alignment: .leading) {
-//
-//                    // TODO: problem: Calling balance api too many times and UI is not matching
-//                    TotalBalanceView(addresses: addresses)
-//                        .padding(.leading)
-//
-//
-//                    // Uncomment to code below
-//                    HStack(spacing: 3) {
-//                        Image(systemName: "arrowtriangle.up.fill")
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 15, height: 15)
-//                            .foregroundColor(.green)
-//
-//                        Text("$645.55")
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//
-//                        Text("(0.69%)")
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//
-//                        Text("Today")
-//                            .font(.subheadline)
-//                            .fontWeight(.light)
-//
-//                        Spacer()
-//
-//                    }
-//                    .padding(.leading)
-//
-//
-//                    Spacer().frame(height: 300)
-//                    HStack {
-//                        Text(currentDate)
-//                        Spacer()
-//                    }
-//                    .padding(.leading)
-//
-//
-//
-//                    HStack() {
-//                        Text("Accounts")
-//                            .font(.largeTitle)
-//                            .fontWeight(.semibold)
-//                        Spacer()
-//                    }
-//                    .padding(.leading)
-//
-//
-//
-//                    ForEach(addresses, id: \.self) { address in
-//                        NavigationLink(destination: AccountDetailView(address: address)) {
-//                            AccountCellView(address: address)
-//                                .padding(.leading)
-//                        }
-//                    }
-//
-//
-//
-//                }
-//                .navigationTitle("Total Balance")
-//
-//
-//
-//
-//
-//
-//            }
-//            .navigationDestination(isPresented: $navigateToImportWalletView, destination: {ImportWalletView(addresses: $addresses, navigateToImportWalletView: $navigateToImportWalletView)})
-//            .toolbar {
-//                ToolbarItemGroup(placement: .navigationBarTrailing) {
-//
-//                    Button(action: {
-//                        showingBottomMenu = true})
-//                    {
-//                        Image(systemName: "plus")
-//                            .foregroundColor(.green)
-//                            .font(.system(size: 20, weight: .bold))
-//                    }
-//                    .sheet(isPresented: $showingBottomMenu) {
-//                        BottomSheetView(navigateToImportWalletView: $navigateToImportWalletView, showingBottomMenu: $showingBottomMenu)
-//                            .padding()
-//                            .presentationDetents([.fraction(0.2)])
-//                            .presentationDragIndicator(.visible)
-//                    }
-//                }
-//            }
-//
-//        }
-//
-//    }
-//}
-
-
 struct ContentView: View {
+    let timer = Timer.publish(every: 120, on: .main, in: .common).autoconnect()
     
-    @State var addresses: [String] = [Config.test_wallet,"0x868F2d27D9c5689181647a32c97578385CdDA4e6"]
-    
+    @State var addresses: [String] = [Config.test_wallet]
 //    @State var addresses: [String] = []
+    
     @State var walletsInfo: [WalletInfo] = []
     
     @State private var showingBottomMenu = false
@@ -261,23 +145,50 @@ struct ContentView: View {
                 }
             }
             .task {
-                totalBalance = 0
-                do {
-                    walletsInfo = try await fetchWalletInfo(walletAddresses: addresses)
-                    for walletInfo in walletsInfo {
-                        totalBalance += walletInfo.balanceInUSD
+                if walletsInfo.isEmpty {
+                    totalBalance = 0
+                    do {
+                        walletsInfo = try await fetchWalletInfo(walletAddresses: addresses)
+                        for walletInfo in walletsInfo {
+                            totalBalance += walletInfo.balanceInUSD
+                        }
+                    } catch APIError.invalidURL {
+                        print("Invalid url")
+                    } catch APIError.invalidResponse {
+                        print("Invalid response")
+                    } catch APIError.invalidData {
+                        print("Invalid Data")
+                    } catch {
+                        // Handle other errors
+                        print("An unexpected error")
                     }
-                } catch APIError.invalidURL {
-                    print("Invalid url")
-                } catch APIError.invalidResponse {
-                    print("Invalid response")
-                } catch APIError.invalidData {
-                    print("Invalid Data")
-                } catch {
-                    // Handle other errors
-                    print("An unexpected error")
+                }
+
+            }
+            .onReceive(timer) { _ in
+                Task {
+                    totalBalance = 0
+                    do {
+                        walletsInfo = try await fetchWalletInfo(walletAddresses: addresses)
+                        for walletInfo in walletsInfo {
+                            totalBalance += walletInfo.balanceInUSD
+                        }
+                    } catch APIError.invalidURL {
+                        print("Invalid url")
+                    } catch APIError.invalidResponse {
+                        print("Invalid response")
+                    } catch APIError.invalidData {
+                        print("Invalid Data")
+                    } catch {
+                        // Handle other errors
+                        print("An unexpected error")
+                    }
                 }
             }
+            
+            
+            
+            
         
         }
 

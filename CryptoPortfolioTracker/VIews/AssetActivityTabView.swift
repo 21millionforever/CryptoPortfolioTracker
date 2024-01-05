@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct AssetActivityTabView: View {
+    let timer = Timer.publish(every: 120, on: .main, in: .common).autoconnect()
     let tabs = ["Assets", "Activity"]
     @State private var selectedTab = "Assets"
+    
+    @State private var activities: [ActivitiesResponse] = []
+    
     var body: some View {
         VStack() {
             VStack(alignment: .leading) {
@@ -47,17 +51,58 @@ struct AssetActivityTabView: View {
             VStack {
                 // Content based on the selected tab
                 switch selectedTab {
-                case "Assets":
-                    Text(selectedTab)
-                case "Activity":
-                    ActivityView()
-                default:
-                    Text(selectedTab)
+                    case "Assets":
+                        Text(selectedTab)
+                    case "Activity":
+                        ActivityView(activities: activities)
+                    default:
+                        Text(selectedTab)
                 }
                 
                 Spacer()
             }
         }
+        .task {
+            if activities.isEmpty {
+                do {
+                    activities = try await fetchActivities(walletAddress: Config.test_wallet)
+                } catch APIError.invalidURL {
+                    print("Invalid url")
+                } catch APIError.invalidResponse {
+                    print("Invalid response")
+                } catch APIError.invalidData {
+                    print("Invalid Data")
+                } catch {
+                    // Handle other errors
+                    print("An unexpected error")
+                }
+            }
+        }
+        .onReceive(timer) { _ in
+            Task {
+                do {
+                    activities = try await fetchActivities(walletAddress: Config.test_wallet)
+                } catch APIError.invalidURL {
+                    print("Invalid url")
+                } catch APIError.invalidResponse {
+                    print("Invalid response")
+                } catch APIError.invalidData {
+                    print("Invalid Data")
+                } catch {
+                    // Handle other errors
+                    print("An unexpected error")
+                }
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
 }
 
