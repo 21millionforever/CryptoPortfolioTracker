@@ -50,7 +50,7 @@ struct AccountDetailView: View {
                 }
                 .padding([.leading], 20)
                 
-                AssetActivityTabView()
+                AssetActivityTabView(walletInfo: walletInfo)
           
             }
                 

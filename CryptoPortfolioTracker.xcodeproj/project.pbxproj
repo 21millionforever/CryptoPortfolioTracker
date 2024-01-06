@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		441D140C2B48FAAF00A051B7 /* formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D140B2B48FAAF00A051B7 /* formatters.swift */; };
+		441D140E2B48FDDB00A051B7 /* AssetTokenCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D140D2B48FDDB00A051B7 /* AssetTokenCellView.swift */; };
+		441D14102B49000300A051B7 /* BottomNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */; };
+		441D14122B49040F00A051B7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D14112B49040F00A051B7 /* SettingsView.swift */; };
 		4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */; };
 		4499E8A72B43E4EC0077CBEB /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A62B43E4EC0077CBEB /* ActivityView.swift */; };
 		449C55C82B44776C005E1593 /* ActivityReceiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */; };
@@ -32,6 +36,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		441D140B2B48FAAF00A051B7 /* formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = formatters.swift; sourceTree = "<group>"; };
+		441D140D2B48FDDB00A051B7 /* AssetTokenCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetTokenCellView.swift; sourceTree = "<group>"; };
+		441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigationBarView.swift; sourceTree = "<group>"; };
+		441D14112B49040F00A051B7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetActivityTabView.swift; sourceTree = "<group>"; };
 		4499E8A62B43E4EC0077CBEB /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityReceiveCell.swift; sourceTree = "<group>"; };
@@ -82,6 +90,7 @@
 		44D3CF4F2B3A275700DAE5C9 = {
 			isa = PBXGroup;
 			children = (
+				441D140B2B48FAAF00A051B7 /* formatters.swift */,
 				44D3CF5A2B3A275700DAE5C9 /* CryptoPortfolioTracker */,
 				44D3CF592B3A275700DAE5C9 /* Products */,
 			);
@@ -99,6 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				44D3CF5B2B3A275700DAE5C9 /* CryptoPortfolioTrackerApp.swift */,
+				441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */,
+				441D14112B49040F00A051B7 /* SettingsView.swift */,
 				44D3CF5D2B3A275700DAE5C9 /* ContentView.swift */,
 				449C55D42B45FCFC005E1593 /* TestView.swift */,
 				44F3D63A2B43442400801719 /* VIews */,
@@ -140,6 +151,7 @@
 				4499E8A62B43E4EC0077CBEB /* ActivityView.swift */,
 				449C55D82B463E3B005E1593 /* BottomSheetView.swift */,
 				449C55D62B463DEE005E1593 /* ImportWalletView.swift */,
+				441D140D2B48FDDB00A051B7 /* AssetTokenCellView.swift */,
 				449C55C92B44E715005E1593 /* DifferentActivityCellViews */,
 			);
 			path = VIews;
@@ -220,7 +232,11 @@
 				449C55CD2B44F939005E1593 /* ActivitySwapCell.swift in Sources */,
 				4499E8A72B43E4EC0077CBEB /* ActivityView.swift in Sources */,
 				4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */,
+				441D140E2B48FDDB00A051B7 /* AssetTokenCellView.swift in Sources */,
+				441D140C2B48FAAF00A051B7 /* formatters.swift in Sources */,
 				44F3D63C2B43444600801719 /* AccountCellView.swift in Sources */,
+				441D14102B49000300A051B7 /* BottomNavigationBarView.swift in Sources */,
+				441D14122B49040F00A051B7 /* SettingsView.swift in Sources */,
 				44D3CF712B3BE48B00DAE5C9 /* confi.swift in Sources */,
 				449C55CF2B44FA67005E1593 /* ActivityApproveCell.swift in Sources */,
 				44EB87492B47CF2100EBF063 /* GetWalletInfoApi.swift in Sources */,

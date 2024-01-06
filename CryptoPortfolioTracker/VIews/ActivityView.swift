@@ -7,69 +7,6 @@
 
 import SwiftUI
 
-//struct ActivityView: View {
-//    @State private var activities: [ActivitiesResponse]?
-//
-//    var body: some View {
-//        VStack {
-//            ForEach(activities ?? [], id: \.self) { activity in
-//
-////                if let timeStamp = TimeInterval(activity.timeStamp) {
-////                    Text(timeStampToDate(from: timeStamp))
-////                } else {
-////                    Text("Failed to convert timeStamp")
-////                }
-//
-////                let timeStamp = TimeInterval(activity.timeStamp)
-//
-//
-//
-//                if (activity.type == "Receive") {
-//                    ActivityReceiveCell(activity: activity)
-//                } else if (activity.type == "Send") {
-//                    ActivitySendCell()
-//                } else if (activity.type == "Swap") {
-//                    ActivitySwapCell()
-//                } else if (activity.type == "Approve") {
-//                    ActivityApproveCell()
-//                }
-//
-//
-//            }
-//
-//        }
-//        .task {
-//            do {
-//                activities = try await fetchActivities(walletAddress: Config.test_wallet)
-//
-//            } catch APIError.invalidURL {
-//                print("Invalid url")
-//            } catch APIError.invalidResponse {
-//                print("Invalid response")
-//            } catch APIError.invalidData {
-//                print("Invalid Data")
-//            } catch {
-//                // Handle other errors
-//                print("An unexpected error")
-//            }
-//
-//        }
-//
-//    }
-//
-//
-//    func timeStampToDate(from timeStamp: TimeInterval) -> String {
-//        let date = Date(timeIntervalSince1970: timeStamp)
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateStyle = .medium
-//        dateFormatter.timeStyle = .none
-//        dateFormatter.locale = Locale(identifier: "en_US")
-//        let formattedDate = dateFormatter.string(from: date)
-//        print(formattedDate)
-//        return formattedDate
-//    }
-//}
-
 
 struct ActivityView: View {
     var activities: [ActivitiesResponse]

@@ -39,8 +39,8 @@ var data: [MonthlyHoursOfSunshine] = [
 struct ContentView: View {
     let timer = Timer.publish(every: 120, on: .main, in: .common).autoconnect()
     
-    @State var addresses: [String] = [Config.test_wallet]
-//    @State var addresses: [String] = []
+//    @State var addresses: [String] = [Config.test_wallet]
+    @State var addresses: [String] = []
     
     @State var walletsInfo: [WalletInfo] = []
     

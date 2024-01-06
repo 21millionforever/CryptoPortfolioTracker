@@ -11,8 +11,9 @@ struct AssetActivityTabView: View {
     let timer = Timer.publish(every: 120, on: .main, in: .common).autoconnect()
     let tabs = ["Assets", "Activity"]
     @State private var selectedTab = "Assets"
-    
     @State private var activities: [ActivitiesResponse] = []
+    
+    var walletInfo: WalletInfo
     
     var body: some View {
         VStack() {
@@ -52,7 +53,15 @@ struct AssetActivityTabView: View {
                 // Content based on the selected tab
                 switch selectedTab {
                     case "Assets":
-                        Text(selectedTab)
+                    NavigationStack {
+                        VStack {
+                            ForEach(walletInfo.tokens, id: \.id) { tokenInfo in
+                                AssetTokenCellView(tokenInfo: tokenInfo)
+                                Divider()
+                            }
+                        }
+                        .padding([.leading, .trailing])
+                    }
                     case "Activity":
                         ActivityView(activities: activities)
                     default:
@@ -104,10 +113,26 @@ struct AssetActivityTabView: View {
         
         
     }
+    
+    func formatTokenBalance(tokenInfo: Token) -> String {
+        let balance = Double(tokenInfo.balance)
+        let decimals = Double(tokenInfo.tokenInfo.decimals) ?? 18
+        let formattedBalance = balance / pow(10.0, decimals)
+        return String(format: "%.2f", formattedBalance)
+    }
+    
+    func calculateTokenValueInUSD(tokenInfo: Token) -> String {
+        let balance = Double(tokenInfo.balance)
+        let decimals = Double(tokenInfo.tokenInfo.decimals) ?? 18
+        let formattedBalance = balance / pow(10.0, decimals)
+        let tokenValueInUSD = formattedBalance * tokenInfo.tokenInfo.price.rate
+        return formatAsCurrency(number: tokenValueInUSD)
+    }
+    
 }
 
-struct AssetActivityTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        AssetActivityTabView()
-    }
-}
+//struct AssetActivityTabView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AssetActivityTabView()
+//    }
+//}

@@ -52,6 +52,7 @@ struct Price: Codable {
 
 // MARK: - Token
 struct Token: Codable {
+    let id = UUID()
     let tokenInfo: TokenInfo
     let balance: Double
     let rawBalance: String
