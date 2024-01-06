@@ -111,19 +111,24 @@ struct ContentView: View {
 
 
                     ForEach(walletsInfo, id: \.id) { walletInfo in
-            
-                        NavigationLink(destination: AccountDetailView(walletInfo: walletInfo)) {
+//                        NavigationLink(destination: AccountDetailView(walletInfo: walletInfo)) {
+//
+//                            AccountCellView(walletInfo: walletInfo)
+//                                .padding(.leading)
+//                        }
+                        
+                        NavigationLink(value: walletInfo) {
 
                             AccountCellView(walletInfo: walletInfo)
                                 .padding(.leading)
                         }
                     }
-                    
-
-
                 }
                 .navigationTitle("Total Balance")
    
+            }
+            .navigationDestination(for: WalletInfo.self) { walletInfo in
+                AccountDetailView(walletInfo: walletInfo)
             }
             .navigationDestination(isPresented: $showingImportWalletView, destination: {ImportWalletView(addresses: $addresses, showingImportWalletView: $showingImportWalletView)})
             .toolbar {
@@ -185,11 +190,6 @@ struct ContentView: View {
                     }
                 }
             }
-            
-            
-            
-            
-        
         }
 
     }

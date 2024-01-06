@@ -53,15 +53,19 @@ struct AssetActivityTabView: View {
                 // Content based on the selected tab
                 switch selectedTab {
                     case "Assets":
-                    NavigationStack {
+
                         VStack {
                             ForEach(walletInfo.tokens, id: \.id) { tokenInfo in
-                                AssetTokenCellView(tokenInfo: tokenInfo)
+                                NavigationLink(value: tokenInfo) {
+                                    AssetTokenCellView(tokenInfo: tokenInfo)
+                                }
                                 Divider()
                             }
                         }
                         .padding([.leading, .trailing])
-                    }
+                        .navigationDestination(for: Token.self) {tokenInfo in
+                            TestView()
+                        }
                     case "Activity":
                         ActivityView(activities: activities)
                     default:

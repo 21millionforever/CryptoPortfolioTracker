@@ -10,9 +10,13 @@ import SwiftUI
 struct AccountDetailView: View {
     var walletInfo: WalletInfo
     @Environment(\.presentationMode) var presentationMode
+    
+    init(walletInfo: WalletInfo) {
+        self.walletInfo = walletInfo
+        print("AccountDetailView is called")
+    }
 
     var body: some View {
-        NavigationView {
             ScrollView {
                 VStack(alignment: .leading) {
                     HStack() {
@@ -53,19 +57,14 @@ struct AccountDetailView: View {
                 AssetActivityTabView(walletInfo: walletInfo)
           
             }
-                
-                
-                
-            
-        }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(
-            leading:
-                Button(action: {presentationMode.wrappedValue.dismiss()}) {
-                    Image(systemName: "arrow.backward")
-                        .foregroundColor(.green)
-                }
-        )
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(
+                leading:
+                    Button(action: {presentationMode.wrappedValue.dismiss()}) {
+                        Image(systemName: "arrow.backward")
+                            .foregroundColor(.green)
+                    }
+            )
     
     }
     

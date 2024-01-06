@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Welcome
-struct WalletInfo: Codable{
+struct WalletInfo: Codable, Hashable{
     let id = UUID()
     let address: String
     let eth: Eth
@@ -23,7 +23,7 @@ struct WalletInfo: Codable{
 }
 
 // MARK: - Eth
-struct Eth: Codable {
+struct Eth: Codable, Hashable {
     let price: Price
     let balance: Double
     let rawBalance: String
@@ -31,7 +31,7 @@ struct Eth: Codable {
 }
 
 // MARK: - Price
-struct Price: Codable {
+struct Price: Codable, Hashable {
     let rate, diff, diff7D: Double
     let ts: Int
     let marketCapUsd, availableSupply, volume24H, volDiff1: Double
@@ -51,7 +51,7 @@ struct Price: Codable {
 }
 
 // MARK: - Token
-struct Token: Codable {
+struct Token: Codable, Hashable {
     let id = UUID()
     let tokenInfo: TokenInfo
     let balance: Double
@@ -59,7 +59,7 @@ struct Token: Codable {
 }
 
 // MARK: - TokenInfo
-struct TokenInfo: Codable {
+struct TokenInfo: Codable, Hashable {
     let address, decimals, name, owner: String
     let symbol, totalSupply: String
     let issuancesCount, lastUpdated: Int
