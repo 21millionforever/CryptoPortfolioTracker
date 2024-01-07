@@ -37,10 +37,10 @@ var data: [MonthlyHoursOfSunshine] = [
 
 
 struct ContentView: View {
-    let timer = Timer.publish(every: 120, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
     
-//    @State var addresses: [String] = [Config.test_wallet]
-    @State var addresses: [String] = []
+    @State var addresses: [String] = [Config.test_wallet]
+//    @State var addresses: [String] = []
     
     @State var walletsInfo: [WalletInfo] = []
     
@@ -143,10 +143,12 @@ struct ContentView: View {
             .task {
                 if walletsInfo.isEmpty {
                     totalBalance = 0
+                    walletsInfo = []
                     do {
-                        walletsInfo = try await fetchWalletInfo(walletAddresses: addresses)
-                        for walletInfo in walletsInfo {
+                        for address in addresses {
+                            let walletInfo = try await fetchWalletInfo(walletAddress: address)
                             totalBalance += walletInfo.balanceInUSD
+                            walletsInfo.append(walletInfo)
                         }
                     } catch APIError.invalidURL {
                         print("Invalid url")
@@ -164,11 +166,31 @@ struct ContentView: View {
             .onReceive(timer) { _ in
                 Task {
                     totalBalance = 0
+                    walletsInfo = []
                     do {
-                        walletsInfo = try await fetchWalletInfo(walletAddresses: addresses)
-                        for walletInfo in walletsInfo {
+                        for address in addresses {
+                            let walletInfo = try await fetchWalletInfo(walletAddress: address)
                             totalBalance += walletInfo.balanceInUSD
+                            walletsInfo.append(walletInfo)
                         }
+                    } catch APIError.invalidURL {
+                        print("Invalid url")
+                    } catch APIError.invalidResponse {
+                        print("Invalid response")
+                    } catch APIError.invalidData {
+                        print("Invalid Data")
+                    } catch {
+                        // Handle other errors
+                        print("An unexpected error")
+                    }
+                }
+            }
+            .onChange(of: addresses) { newValue in
+                Task {
+                    do {
+                        let walletInfo = try await fetchWalletInfo(walletAddress: addresses[addresses.count - 1])
+                        totalBalance += walletInfo.balanceInUSD
+                        walletsInfo.append(walletInfo)
                     } catch APIError.invalidURL {
                         print("Invalid url")
                     } catch APIError.invalidResponse {

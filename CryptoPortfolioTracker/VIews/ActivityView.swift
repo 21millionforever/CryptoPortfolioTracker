@@ -9,7 +9,10 @@ import SwiftUI
 
 
 struct ActivityView: View {
-    var activities: [ActivitiesResponse]
+    let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
+    
+    var address: String
+    @State private var activities: [ActivitiesResponse] = []
     
     var body: some View {
         VStack {
@@ -38,6 +41,38 @@ struct ActivityView: View {
                 
             }
             
+        }
+        .task {
+            if activities.isEmpty {
+                do {
+                    activities = try await fetchActivities(walletAddress: address)
+                } catch APIError.invalidURL {
+                    print("Invalid url")
+                } catch APIError.invalidResponse {
+                    print("Invalid response")
+                } catch APIError.invalidData {
+                    print("Invalid Data")
+                } catch {
+                    // Handle other errors
+                    print("An unexpected error")
+                }
+            }
+        }
+        .onReceive(timer) { _ in
+            Task {
+                do {
+                    activities = try await fetchActivities(walletAddress: address)
+                } catch APIError.invalidURL {
+                    print("Invalid url")
+                } catch APIError.invalidResponse {
+                    print("Invalid response")
+                } catch APIError.invalidData {
+                    print("Invalid Data")
+                } catch {
+                    // Handle other errors
+                    print("An unexpected error")
+                }
+            }
         }
         
     }

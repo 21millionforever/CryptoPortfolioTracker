@@ -71,27 +71,15 @@ struct TokenInfo: Codable, Hashable {
     let publicTags: [String]?
 }
 
-func fetchWalletInfo(walletAddresses: [String]) async throws -> [WalletInfo] {
+func fetchWalletInfo(walletAddress: String) async throws -> WalletInfo {
     
-    let endpoint = "\(Config.server_url)/getWalletInfo"
+    let endpoint = "\(Config.server_url)/getWalletInfo/\(walletAddress)"
     
     guard let url = URL(string: endpoint) else {
         throw APIError.invalidURL
     }
     
-    var request = URLRequest(url: url)
-    request.httpMethod = "POST"
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-    do {
-        let jsonData = try JSONEncoder().encode(walletAddresses)
-        request.httpBody = jsonData
-    } catch {
-        throw APIError.encodingError
-    }
-    
-    
-    let (data, response) = try await URLSession.shared.data(for: request)
+    let (data, response) = try await URLSession.shared.data(from: url)
     
     guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
         throw APIError.invalidResponse
@@ -100,7 +88,8 @@ func fetchWalletInfo(walletAddresses: [String]) async throws -> [WalletInfo] {
     do {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let response = try decoder.decode([WalletInfo].self, from: data)
+        let response = try decoder.decode(WalletInfo.self, from: data)
+        print("fetchWalletInfo is called")
   
         return response
     } catch {
