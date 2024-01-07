@@ -91,15 +91,13 @@ struct ContentView: View {
                     .padding(.leading)
                
 
-                    Spacer().frame(height: 300)
-                    HStack {
-                        Text(currentDate)
-                        Spacer()
-                    }
-                    .padding(.leading)
+                    Spacer().frame(height: 200)
+//                    HStack {
+//                        Text(currentDate)
+//                        Spacer()
+//                    }
+//                    .padding(.leading)
                     
-                    
-
                     HStack() {
                         Text("Accounts")
                             .font(.largeTitle)
@@ -111,14 +109,7 @@ struct ContentView: View {
 
 
                     ForEach(walletsInfo, id: \.id) { walletInfo in
-//                        NavigationLink(destination: AccountDetailView(walletInfo: walletInfo)) {
-//
-//                            AccountCellView(walletInfo: walletInfo)
-//                                .padding(.leading)
-//                        }
-                        
                         NavigationLink(value: walletInfo) {
-
                             AccountCellView(walletInfo: walletInfo)
                                 .padding(.leading)
                         }

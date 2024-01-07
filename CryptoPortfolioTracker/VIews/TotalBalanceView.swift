@@ -13,7 +13,11 @@ struct TotalBalanceView: View {
     
     var body: some View {
             HStack() {
-                Text(String(format: "%.2f", balance))
+//                Text(String(format: "%.2f", balance))
+//                    .font(.largeTitle)
+//                    .fontWeight(.bold)
+//                    .foregroundColor(.black)
+                Text(formatAsCurrency(number: balance))
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
