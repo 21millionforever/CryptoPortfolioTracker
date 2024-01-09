@@ -11,6 +11,8 @@
 		441D140E2B48FDDB00A051B7 /* AssetTokenCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D140D2B48FDDB00A051B7 /* AssetTokenCellView.swift */; };
 		441D14102B49000300A051B7 /* BottomNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */; };
 		441D14122B49040F00A051B7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D14112B49040F00A051B7 /* SettingsView.swift */; };
+		44570CC92B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44570CC82B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift */; };
+		44570CCD2B4C95D700ADA80B /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44570CCC2B4C95D700ADA80B /* UtilityFunctions.swift */; };
 		4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */; };
 		4499E8A72B43E4EC0077CBEB /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A62B43E4EC0077CBEB /* ActivityView.swift */; };
 		449C55C82B44776C005E1593 /* ActivityReceiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */; };
@@ -40,6 +42,8 @@
 		441D140D2B48FDDB00A051B7 /* AssetTokenCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetTokenCellView.swift; sourceTree = "<group>"; };
 		441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigationBarView.swift; sourceTree = "<group>"; };
 		441D14112B49040F00A051B7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		44570CC82B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetWalletHistoricalValueApi.swift; sourceTree = "<group>"; };
+		44570CCC2B4C95D700ADA80B /* UtilityFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctions.swift; sourceTree = "<group>"; };
 		4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetActivityTabView.swift; sourceTree = "<group>"; };
 		4499E8A62B43E4EC0077CBEB /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityReceiveCell.swift; sourceTree = "<group>"; };
@@ -90,7 +94,6 @@
 		44D3CF4F2B3A275700DAE5C9 = {
 			isa = PBXGroup;
 			children = (
-				441D140B2B48FAAF00A051B7 /* formatters.swift */,
 				44D3CF5A2B3A275700DAE5C9 /* CryptoPortfolioTracker */,
 				44D3CF592B3A275700DAE5C9 /* Products */,
 			);
@@ -107,10 +110,12 @@
 		44D3CF5A2B3A275700DAE5C9 /* CryptoPortfolioTracker */ = {
 			isa = PBXGroup;
 			children = (
+				441D140B2B48FAAF00A051B7 /* formatters.swift */,
 				44D3CF5B2B3A275700DAE5C9 /* CryptoPortfolioTrackerApp.swift */,
 				441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */,
 				441D14112B49040F00A051B7 /* SettingsView.swift */,
 				44D3CF5D2B3A275700DAE5C9 /* ContentView.swift */,
+				44570CCC2B4C95D700ADA80B /* UtilityFunctions.swift */,
 				449C55D42B45FCFC005E1593 /* TestView.swift */,
 				44F3D63A2B43442400801719 /* VIews */,
 				44D3CF6D2B3BD02000DAE5C9 /* API calls */,
@@ -136,6 +141,7 @@
 				44D3CF6E2B3BD06500DAE5C9 /* GetBalanceApi.swift */,
 				44F3D6382B428EF800801719 /* GetActivitiesApi.swift */,
 				44EB87482B47CF2100EBF063 /* GetWalletInfoApi.swift */,
+				44570CC82B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift */,
 			);
 			path = "API calls";
 			sourceTree = "<group>";
@@ -227,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44570CC92B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift in Sources */,
 				449C55C82B44776C005E1593 /* ActivityReceiveCell.swift in Sources */,
 				44EB87452B47219800EBF063 /* StartView.swift in Sources */,
 				449C55CD2B44F939005E1593 /* ActivitySwapCell.swift in Sources */,
@@ -236,6 +243,7 @@
 				441D140C2B48FAAF00A051B7 /* formatters.swift in Sources */,
 				44F3D63C2B43444600801719 /* AccountCellView.swift in Sources */,
 				441D14102B49000300A051B7 /* BottomNavigationBarView.swift in Sources */,
+				44570CCD2B4C95D700ADA80B /* UtilityFunctions.swift in Sources */,
 				441D14122B49040F00A051B7 /* SettingsView.swift in Sources */,
 				44D3CF712B3BE48B00DAE5C9 /* confi.swift in Sources */,
 				449C55CF2B44FA67005E1593 /* ActivityApproveCell.swift in Sources */,

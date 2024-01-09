@@ -31,9 +31,9 @@ struct ActivityView: View {
                 if (activity.type == "Receive") {
                     ActivityReceiveCell(activity: activity)
                 } else if (activity.type == "Send") {
-                    ActivitySendCell()
+                    ActivitySendCell(activity: activity)
                 } else if (activity.type == "Swap") {
-                    ActivitySwapCell()
+                    ActivitySwapCell(activity: activity)
                 } else if (activity.type == "Approve") {
                     ActivityApproveCell()
                 }
@@ -46,6 +46,7 @@ struct ActivityView: View {
             if activities.isEmpty {
                 do {
                     activities = try await fetchActivities(walletAddress: address)
+                    print(activities)
                 } catch APIError.invalidURL {
                     print("Invalid url")
                 } catch APIError.invalidResponse {

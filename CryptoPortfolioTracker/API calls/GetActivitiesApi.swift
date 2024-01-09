@@ -19,6 +19,7 @@ struct ExtraInfo: Codable {
     let sender, receiver: String?
     let tokenPrice: Double?
     let tokenSymbol: String?
+    let tokenName: String?
     let tokenAmount: Double?
     
     let GasUsedETH: Double?
@@ -26,8 +27,10 @@ struct ExtraInfo: Codable {
 
     let sentTokenPrice: Double?
     let sentTokenSymbol: String?
+    let sentTokenName: String?
     let sentTokenAmount: Double?
     let receivedTokenSymbol: String?
+    let receivedTokenName: String?
     let receivedTokenAmount: Double?
 }
 

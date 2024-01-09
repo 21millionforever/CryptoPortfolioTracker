@@ -20,8 +20,6 @@ struct AssetTokenCellView: View {
                     .frame(width: 40, height: 40)
                     .background(.red)
             }
-            .padding(5)
-            .background(.green)
             
             VStack(alignment: .leading, spacing: 3) {
                 Text(tokenInfo.tokenInfo.name)

@@ -19,3 +19,16 @@ func formatAsCurrency(number: Double) -> String {
     return formatter.string(from: NSNumber(value: number)) ?? "$0.00"
 }
 
+// 12345.6789 to 12,345.679
+func formatNumber(_ number: Double?) -> String {
+    guard let number = number else {
+        return "-1" // Default value if number is nil
+    }
+
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    formatter.maximumFractionDigits = 2
+    formatter.minimumFractionDigits = 2
+
+    return formatter.string(from: NSNumber(value: number)) ?? ""
+}

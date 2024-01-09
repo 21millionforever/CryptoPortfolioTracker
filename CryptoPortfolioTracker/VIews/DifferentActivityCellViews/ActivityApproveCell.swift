@@ -9,26 +9,22 @@ import SwiftUI
 
 struct ActivityApproveCell: View {
     var body: some View {
-        HStack(spacing: 0) {
-            Image(systemName: "arrowshape.turn.up.left.circle")
+        HStack {
+            Image(systemName: "rectangle.and.pencil.and.ellipsis")
                 .resizable()
-                .frame(width: 50, height:55)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 30, height: 30)
                 .foregroundColor(.black)
-//                .background(.green)
             VStack(alignment: .leading) {
                 Text("Approve")
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .leading)
-
-
             }
-            .frame(width: 150, height:55)
-//            .background(.red)
-            
             Spacer()
  
         }
-        .padding()
+        .frame(height:55)
+        .padding([.leading, .trailing])
         .background(Color.white)
         .cornerRadius(20)
         .shadow(radius: 2)
