@@ -12,6 +12,8 @@ import Foundation
 
 struct AccountCellView: View {
     var walletInfo: WalletInfo
+    var walletsBalanceChart: [String: [[Double]]]
+    var istotalBalanceChartDataLoaded: Bool
     
     var body: some View {
         VStack(alignment: .trailing) {
@@ -34,19 +36,31 @@ struct AccountCellView: View {
                     .frame(height:40)
 
 
-                    HStack() {
-                        Chart(data) {
-                            LineMark(
-                                x: .value("Month", $0.date),
-                                y: .value("Hours of Sunshine", $0.hoursOfSunshine)
-                            )
+//                    HStack() {
+//                        Chart(data) {
+//                            LineMark(
+//                                x: .value("Month", $0.date),
+//                                y: .value("Hours of Sunshine", $0.hoursOfSunshine)
+//                            )
+//                        }
+//                        .chartYAxis(.hidden)
+//                        .chartXAxis(.hidden)
+//                        .foregroundStyle(.red)
+//
+//                        .padding([.top],30)
+//                    }
+                    if (istotalBalanceChartDataLoaded) {
+                        if let totalBalanceChart = walletsBalanceChart[walletInfo.address] {
+                            AllTimeBalanceChartView(totalBalanceChart: totalBalanceChart)
+                                .frame(height:100)
+                        } else {
+                            // Handle the case where totalBalanceChart is nil
+                            Text(walletInfo.address)
                         }
-                        .chartYAxis(.hidden)
-                        .chartXAxis(.hidden)
-                        .foregroundStyle(.red)
-                        
-                        .padding([.top],30)
                     }
+
+                    
+                    
                 }
                 .frame(height: 110)
 

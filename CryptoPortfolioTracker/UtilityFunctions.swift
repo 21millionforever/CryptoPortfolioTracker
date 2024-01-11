@@ -32,3 +32,12 @@ func getHistoricalTotalValueChart(walletsBalanceChart : [String: [[Double]]]) ->
     print(sortedCombinedList)
     return sortedCombinedList
 }
+
+
+func createRange(from: Double, to: Double) -> ClosedRange<Int> {
+    let startValue = Int(from)
+    let endValue = Int(to)
+    let range = startValue...endValue
+    
+    return range
+}

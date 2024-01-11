@@ -2532,26 +2532,26 @@ struct TestView: View {
     }
 
     var body: some View {
-        Text("test")
-//        HStack {
-//            Chart {
-//                ForEach(0..<data.count, id: \.self) { index in
-//                    let entry = data[index]
-//
-//                    LineMark(
-//                        x: .value("Day", entry[0]),
-//                        y: .value("Value", entry[1])
-//                    )
-//                }
-//            }
-//            .chartXScale(domain: range)
-//            .aspectRatio(1, contentMode: .fit)
-//            .padding()
-//        }
-//        .chartYAxis(.hidden)
-//        .chartXAxis(.hidden)
-//        .foregroundStyle(.red)
-//        .frame(width: 1000, height: 400)
+ 
+        HStack {
+            Chart {
+                ForEach(0..<data.count, id: \.self) { index in
+                    let entry = data[index]
+
+                    LineMark(
+                        x: .value("Day", entry[0]),
+                        y: .value("Value", entry[1])
+                    )
+                }
+            }
+            .chartXScale(domain: range)
+            .frame(height: 200)
+            .aspectRatio(contentMode: .fit)
+            .padding()
+        }
+        .chartYAxis(.hidden)
+        .chartXAxis(.hidden)
+        .foregroundStyle(.green)
         
         
     }
