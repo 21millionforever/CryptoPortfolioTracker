@@ -25,6 +25,7 @@ import SwiftUI
 struct ContentView: View {
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
     
+    // An array of wallet addresses
     @State var addresses: [String] = [Config.test_wallet]
     
     @State var walletsInfo: [WalletInfo] = []
@@ -32,10 +33,13 @@ struct ContentView: View {
     @State private var showingBottomMenu = false
     @State var showingImportWalletView = false
     
+    // The sum of the balance of all the wallets
     @State var totalBalance: Double = 0
     
+    // wallet address maps to balance chart
     @State private var walletsBalanceChart: [String: [[Double]]] = [:]
     
+    // The balance chart of all the wallets combine
     @State private var totalBalanceChart = [[Double]]()
     
     @State private var istotalBalanceChartDataLoaded = false
@@ -56,7 +60,6 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading) {
-                    // TODO: problem: Calling balance api too many times and UI is not matching
                     TotalBalanceView(balance: totalBalance)
                         .padding(.leading)
                
