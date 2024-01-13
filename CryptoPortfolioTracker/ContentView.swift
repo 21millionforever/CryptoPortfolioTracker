@@ -216,7 +216,7 @@ struct ContentView: View {
                         var tempWalletsBalanceChart = [String: [[Double]]]()
 
                         for address in addresses {
-                            let balanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address)
+                            let balanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "max")
                             let lowerCaseAddress = address.lowercased()
                             tempWalletsBalanceChart[lowerCaseAddress] = balanceChart
                         }

@@ -7,8 +7,8 @@
 
 import Foundation
 
-func fetchWalletHistoricalValueChart(walletAddress: String) async throws -> [[Double]] {
-    let endpoint = "\(Config.server_url)/getWalletBalanceChart/\(walletAddress)"
+func fetchWalletHistoricalValueChart(walletAddress: String, days: String) async throws -> [[Double]] {
+    let endpoint = "\(Config.server_url)/getWalletBalanceChart/\(walletAddress)/\(days)"
 
     guard let url = URL(string: endpoint) else {
         throw APIError.invalidURL

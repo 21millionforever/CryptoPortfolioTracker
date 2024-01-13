@@ -19,12 +19,11 @@ struct TotalBalanceView: View {
     var body: some View {
             HStack() {
                 Text(formatAsCurrency(number: balance ?? 12))
+                    .contentTransition(.numericText())
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
                     .redacted(reason: isBalanceLoaded ? [] : .placeholder)
-                    
-                
                 Spacer()
             }
      
