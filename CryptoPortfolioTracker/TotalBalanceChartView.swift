@@ -15,7 +15,6 @@ struct TotalBalanceChartView: View {
     @State private var startIndex: Int = 0
     
     var body: some View {
-//        HStack {
             Chart {
                 ForEach(startIndex..<totalBalanceChart.count, id: \.self) { index in
                     let entry = totalBalanceChart[index]
@@ -29,7 +28,6 @@ struct TotalBalanceChartView: View {
             .frame(height: 200)
             .aspectRatio(contentMode: .fit)
             .padding()
-//        }
             .chartYAxis(.hidden)
             .chartXAxis(.hidden)
             .foregroundStyle(.green)

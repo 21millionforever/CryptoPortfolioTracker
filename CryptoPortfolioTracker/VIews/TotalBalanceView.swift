@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TotalBalanceView: View {
     var balance: Double?
-    @Binding var isBalanceLoaded: Bool
+    var isBalanceLoaded: Bool
     
 //    init(balance: Double?, isBalanceLoaded: Bool) {
 //        self.balance = balance
@@ -23,6 +23,7 @@ struct TotalBalanceView: View {
                     .fontWeight(.bold)
                     .foregroundColor(.black)
                     .redacted(reason: isBalanceLoaded ? [] : .placeholder)
+                    
                 
                 Spacer()
             }

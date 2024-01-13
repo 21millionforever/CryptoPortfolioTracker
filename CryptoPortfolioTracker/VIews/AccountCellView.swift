@@ -49,15 +49,18 @@ struct AccountCellView: View {
 //
 //                        .padding([.top],30)
 //                    }
-                    if (istotalBalanceChartDataLoaded) {
-                        if let totalBalanceChart = walletsBalanceChart[walletInfo.address] {
-                            AllTimeBalanceChartView(totalBalanceChart: totalBalanceChart)
-                                .frame(height:100)
-                        } else {
-                            // Handle the case where totalBalanceChart is nil
-                            Text(walletInfo.address)
-                        }
-                    }
+                    
+                    
+                    
+//                    if (istotalBalanceChartDataLoaded) {
+//                        if let totalBalanceChart = walletsBalanceChart[walletInfo.address] {
+//                            AllTimeBalanceChartView(totalBalanceChart: totalBalanceChart)
+//                                .frame(height:100)
+//                        } else {
+//                            // Handle the case where totalBalanceChart is nil
+//                            Text(walletInfo.address)
+//                        }
+//                    }
 
                     
                     

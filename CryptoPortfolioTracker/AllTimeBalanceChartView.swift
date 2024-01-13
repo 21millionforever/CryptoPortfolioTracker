@@ -9,27 +9,40 @@ import SwiftUI
 import Charts
 
 struct AllTimeBalanceChartView: View {
-    @State var totalBalanceChart : [[Double]]
+    var totalBalanceChart : [[Double]]?
+    var isTotalBalanceChartDataLoaded : Bool
     
     var body: some View {
-        HStack {
-            Chart {
-                ForEach(0..<totalBalanceChart.count, id: \.self) { index in
-                    let entry = totalBalanceChart[index]
-                    LineMark(
-                        x: .value("Day", entry[0]),
-                        y: .value("Value", entry[1])
-                    )
+        if (isTotalBalanceChartDataLoaded) {
+            HStack {
+                Chart {
+                    ForEach(0..<(totalBalanceChart?.count ?? 0), id: \.self) { index in
+                        if let entry = totalBalanceChart?[index], entry.count >= 2 {
+                            LineMark(
+                                x: .value("Day", entry[0]),
+                                y: .value("Value", entry[1])
+                            )
+                        }
+                    }
                 }
+                .chartXScale(domain: createRange(from: totalBalanceChart?.first?.first ?? 0, to: totalBalanceChart?.last?.first ?? 200))
+                .frame(height: 200)
+                .aspectRatio(contentMode: .fit)
+                .padding()
             }
-            .chartXScale(domain: createRange(from: totalBalanceChart[0][0], to: totalBalanceChart[totalBalanceChart.count - 1][0]))
-            .frame(height: 200)
-            .aspectRatio(contentMode: .fit)
-            .padding()
+            .chartYAxis(.hidden)
+            .chartXAxis(.hidden)
+            .foregroundStyle(.green)
         }
-        .chartYAxis(.hidden)
-        .chartXAxis(.hidden)
-        .foregroundStyle(.green)
+        else {
+            Rectangle()
+                .padding(20)
+                .frame(height: 250)
+                .foregroundColor(Color.gray.opacity(0.2))
+                .cornerRadius(10)
+        }
+        
+        
     }
 }
 

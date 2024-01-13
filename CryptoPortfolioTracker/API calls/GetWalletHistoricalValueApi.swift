@@ -23,9 +23,8 @@ func fetchWalletHistoricalValueChart(walletAddress: String) async throws -> [[Do
     do {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let output = try decoder.decode([[Double]].self, from: data)
-//        print(output)
-        return output
+//        let output = try decoder.decode([[Double]].self, from: data)
+        return try decoder.decode([[Double]].self, from: data)
     } catch {
         throw APIError.invalidData
     }
