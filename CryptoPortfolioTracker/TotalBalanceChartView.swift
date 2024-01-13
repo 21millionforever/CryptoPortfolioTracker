@@ -53,9 +53,7 @@ struct TotalBalanceChartView: View {
                     return index
                 }
             }
-
         }
-        print(0)
         
         return 0
     }

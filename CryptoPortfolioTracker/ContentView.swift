@@ -39,12 +39,12 @@ struct ContentView: View {
     // The balance chart of all the wallets combine
     @State var totalBalanceChart = [[Double]]()
 
-    @State var isBalanceLoaded = false
+    @State var isTotalBalanceLoaded = false
     @State var isTotalBalanceChartDataLoaded = false
     @State private var showingBottomMenu = false
     @State var showingImportWalletView = false
 
-    let tabs = ["LIVE", "1D", "1W", "3M", "All"]
+    let tabs = ["LIVE", "1D", "1W", "1M", "3M", "All"]
     @State private var selectedTab = "All"
 
 
@@ -60,7 +60,7 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading) {
-                    TotalBalanceView(balance: totalBalance, isBalanceLoaded: isBalanceLoaded)
+                    TotalBalanceView(balance: totalBalance, isBalanceLoaded: isTotalBalanceLoaded)
                         .padding(.leading)
 
 
@@ -90,54 +90,51 @@ struct ContentView: View {
                     .padding(.leading)
 
 
-                    switch selectedTab {
-                    case "LIVE":
-                        Text("LIVE")
-                    case "1D":
-                        Text("1D")
-                    case "1W":
-//                        let currentDate = Date()
-//                        TotalBalanceChartView(totalBalanceChart: totalBalanceChart, timeBefore: Calendar.current.date(byAdding: .day, value: -7, to: currentDate))
-                        Text("1D")
-                    case "3M":
-
-//                        if istotalBalanceChartDataLoaded {
+//                    switch selectedTab {
+//                        case "LIVE":
+//                            Text("LIVE")
+//                        case "1D":
+//                            Text("1D")
+//                        case "1W":
 //                            let currentDate = Date()
-//                            TotalBalanceChartView(totalBalanceChart: totalBalanceChart, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
-//                        }
-                        Text("1D")
-                    case "All":
-//                        if istotalBalanceChartDataLoaded {
-                        AllTimeBalanceChartView(totalBalanceChart: totalBalanceChart, isTotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
-//                        }
-                    default:
-                        Text("Defaualt")
-
-                    }
-
+//                            TotalBalanceChartView(totalBalanceChart: totalBalanceChart, timeBefore: Calendar.current.date(byAdding: .day, value: -7, to: currentDate))
+//                        case "1M":
+//                            let currentDate = Date()
+//                            TotalBalanceChartView(totalBalanceChart: totalBalanceChart, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
+//                        case "3M":
+//                                let currentDate = Date()
+//                                TotalBalanceChartView(totalBalanceChart: totalBalanceChart, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
+//                        case "All":
+//                            AllTimeBalanceChartView(totalBalanceChart: totalBalanceChart, isTotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
+//                        default:
+//                            Text("Defaualt")
+//
+//                    }
 
                     // Chart TabView
-                    VStack {
-                        HStack {
-                            ForEach(tabs, id: \.self) { tab in
-                                Button(action: {
-                                    self.selectedTab = tab
-                                }) {
-                                    Spacer()
-                                    VStack {
-                                        Text(tab)
-                                            .foregroundColor(self.selectedTab == tab ? .white : .green)
-                                            .frame(width: 50, height: 30)
-                                            .background(self.selectedTab == tab ? .green : .white)
-                                            .cornerRadius(10)
-
-                                    }
-                                    Spacer()
-                                }
-
-                            }
-                        }
-                    }
+//                    VStack {
+//                        HStack {
+//                            ForEach(tabs, id: \.self) { tab in
+//                                Button(action: {
+//                                    self.selectedTab = tab
+//                                }) {
+//                                    Spacer()
+//                                    VStack {
+//                                        Text(tab)
+//                                            .foregroundColor(self.selectedTab == tab ? .white : .green)
+//                                            .frame(width: 50, height: 30)
+//                                            .background(self.selectedTab == tab ? .green : .white)
+//                                            .cornerRadius(10)
+//
+//                                    }
+//                                    Spacer()
+//                                }
+//
+//                            }
+//                        }
+//                    }
+                    
+                    ChartTabView(selectedTab: $selectedTab, totalBalanceChart: totalBalanceChart, isTotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
 
                     HStack() {
                         Text("Accounts")
@@ -198,7 +195,7 @@ struct ContentView: View {
                         DispatchQueue.main.async {
                             self.walletsInfo = fetchedWalletsInfo
                             self.totalBalance = totalBalanceTmp
-                            self.isBalanceLoaded = true
+                            self.isTotalBalanceLoaded = true
                         }
 
                     } catch APIError.invalidURL {

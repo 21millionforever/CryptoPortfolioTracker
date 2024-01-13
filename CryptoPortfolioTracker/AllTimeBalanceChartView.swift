@@ -36,13 +36,11 @@ struct AllTimeBalanceChartView: View {
         }
         else {
             Rectangle()
-                .padding(20)
-                .frame(height: 250)
-                .foregroundColor(Color.gray.opacity(0.2))
-                .cornerRadius(10)
+                .foregroundColor(Color.gray.opacity(0.2)) // Set the color first
+                .frame(height: 250) // Then set the frame
+                .cornerRadius(20) // Apply corner radius after setting the frame
+                .padding(10) // Finally, apply padding
         }
-        
-        
     }
 }
 

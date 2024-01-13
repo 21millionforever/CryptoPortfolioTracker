@@ -15,7 +15,6 @@ struct CryptoPortfolioTrackerApp: App {
 //            ContentView()
             BottomNavigationBarView()
 //            TestViewTwo()
-//            ThreeMonthesTotalBalanceChartView()
             
         }
     }

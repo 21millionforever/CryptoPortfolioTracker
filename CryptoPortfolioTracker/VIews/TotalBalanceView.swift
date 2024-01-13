@@ -11,9 +11,9 @@ struct TotalBalanceView: View {
     var balance: Double?
     var isBalanceLoaded: Bool
     
-//    init(balance: Double?, isBalanceLoaded: Bool) {
+//    init(balance: Double?, isTotalBalanceLoaded: Bool) {
 //        self.balance = balance
-//        self.isBalanceLoaded = isBalanceLoaded
+//        self.isTotalBalanceLoaded = isTotalBalanceLoaded
 //    }
     
     var body: some View {
