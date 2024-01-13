@@ -26,7 +26,7 @@ struct AccountDetailView: View {
                         Spacer()
 
                     }
-                    TotalBalanceView(balance: walletInfo.balanceInUSD)
+//                    TotalBalanceView(balance: walletInfo.balanceInUSD)
                     
                     HStack(spacing: 3) {
                         Image(systemName: "arrowtriangle.up.fill")

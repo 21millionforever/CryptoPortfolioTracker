@@ -8,18 +8,21 @@
 import SwiftUI
 
 struct TotalBalanceView: View {
-    var balance: Double
+    var balance: Double?
+    @Binding var isBalanceLoaded: Bool
     
-    init(balance: Double) {
-        self.balance = balance
-    }
+//    init(balance: Double?, isBalanceLoaded: Bool) {
+//        self.balance = balance
+//        self.isBalanceLoaded = isBalanceLoaded
+//    }
     
     var body: some View {
             HStack() {
-                Text(formatAsCurrency(number: balance))
+                Text(formatAsCurrency(number: balance ?? 12))
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
+                    .redacted(reason: isBalanceLoaded ? [] : .placeholder)
                 
                 Spacer()
             }
@@ -28,8 +31,8 @@ struct TotalBalanceView: View {
     
 }
 
-struct BalanceView_Previews: PreviewProvider {
-    static var previews: some View {
-        TotalBalanceView(balance: 2000)
-    }
-}
+//struct BalanceView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TotalBalanceView(balance: 2000)
+//    }
+//}

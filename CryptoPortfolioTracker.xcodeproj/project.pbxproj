@@ -11,6 +11,7 @@
 		441D140E2B48FDDB00A051B7 /* AssetTokenCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D140D2B48FDDB00A051B7 /* AssetTokenCellView.swift */; };
 		441D14102B49000300A051B7 /* BottomNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */; };
 		441D14122B49040F00A051B7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D14112B49040F00A051B7 /* SettingsView.swift */; };
+		442F36DE2B5205CD0013DC96 /* TestViewTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36DD2B5205CD0013DC96 /* TestViewTwo.swift */; };
 		44570CC92B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44570CC82B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift */; };
 		44570CCD2B4C95D700ADA80B /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44570CCC2B4C95D700ADA80B /* UtilityFunctions.swift */; };
 		4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */; };
@@ -45,6 +46,7 @@
 		441D140D2B48FDDB00A051B7 /* AssetTokenCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetTokenCellView.swift; sourceTree = "<group>"; };
 		441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigationBarView.swift; sourceTree = "<group>"; };
 		441D14112B49040F00A051B7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		442F36DD2B5205CD0013DC96 /* TestViewTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewTwo.swift; sourceTree = "<group>"; };
 		44570CC82B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetWalletHistoricalValueApi.swift; sourceTree = "<group>"; };
 		44570CCC2B4C95D700ADA80B /* UtilityFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctions.swift; sourceTree = "<group>"; };
 		4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetActivityTabView.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				44A140F72B4DD8EA00B2F99D /* AllTimeBalanceChartView.swift */,
 				44570CCC2B4C95D700ADA80B /* UtilityFunctions.swift */,
 				449C55D42B45FCFC005E1593 /* TestView.swift */,
+				442F36DD2B5205CD0013DC96 /* TestViewTwo.swift */,
 				44F3D63A2B43442400801719 /* VIews */,
 				44D3CF6D2B3BD02000DAE5C9 /* API calls */,
 				44D3CF722B3BE7DE00DAE5C9 /* Errors.swift */,
@@ -271,6 +274,7 @@
 				44F3D6402B43ABAD00801719 /* AccountDetailView.swift in Sources */,
 				44F3D6392B428EF800801719 /* GetActivitiesApi.swift in Sources */,
 				44D3CF5C2B3A275700DAE5C9 /* CryptoPortfolioTrackerApp.swift in Sources */,
+				442F36DE2B5205CD0013DC96 /* TestViewTwo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

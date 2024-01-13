@@ -30,11 +30,8 @@ struct ContentView: View {
     
     @State var walletsInfo: [WalletInfo] = []
     
-    @State private var showingBottomMenu = false
-    @State var showingImportWalletView = false
-    
     // The sum of the balance of all the wallets
-    @State var totalBalance: Double = 0
+    @State var totalBalance: Double?
     
     // wallet address maps to balance chart
     @State private var walletsBalanceChart: [String: [[Double]]] = [:]
@@ -42,7 +39,10 @@ struct ContentView: View {
     // The balance chart of all the wallets combine
     @State private var totalBalanceChart = [[Double]]()
     
+    @State var isBalanceLoaded = false
     @State private var istotalBalanceChartDataLoaded = false
+    @State private var showingBottomMenu = false
+    @State var showingImportWalletView = false
     
     let tabs = ["LIVE", "1D", "1W", "3M", "All"]
     @State private var selectedTab = "All"
@@ -60,7 +60,7 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading) {
-                    TotalBalanceView(balance: totalBalance)
+                    TotalBalanceView(balance: totalBalance, isBalanceLoaded: $isBalanceLoaded)
                         .padding(.leading)
                
 
@@ -192,14 +192,17 @@ struct ContentView: View {
             }
             .task {
                 if walletsInfo.isEmpty {
-                    totalBalance = 0
+                    var tmp = 0.00
                     walletsInfo = []
                     do {
                         for address in addresses {
                             let walletInfo = try await fetchWalletInfo(walletAddress: address)
-                            totalBalance += walletInfo.balanceInUSD
+                            tmp += walletInfo.balanceInUSD
                             walletsInfo.append(walletInfo)
                         }
+                        totalBalance = tmp
+                        isBalanceLoaded = true
+                        
                     } catch APIError.invalidURL {
                         print("Invalid url")
                     } catch APIError.invalidResponse {
@@ -214,6 +217,7 @@ struct ContentView: View {
                 // Get historical balance for all the wallets
                 if walletsBalanceChart.isEmpty {
                     do {
+                        
                         for address in addresses {
                             let walletBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address)
                             let lowerCaseAddress = address.lowercased()
@@ -2752,14 +2756,15 @@ struct ContentView: View {
             }
             .onReceive(timer) { _ in
                 Task {
-                    totalBalance = 0
+                    var tmp = 0.00
                     walletsInfo = []
                     do {
                         for address in addresses {
                             let walletInfo = try await fetchWalletInfo(walletAddress: address)
-                            totalBalance += walletInfo.balanceInUSD
+                            tmp += walletInfo.balanceInUSD
                             walletsInfo.append(walletInfo)
                         }
+                        totalBalance = tmp
                     } catch APIError.invalidURL {
                         print("Invalid url")
                     } catch APIError.invalidResponse {
@@ -2776,7 +2781,7 @@ struct ContentView: View {
                 Task {
                     do {
                         let walletInfo = try await fetchWalletInfo(walletAddress: addresses[addresses.count - 1])
-                        totalBalance += walletInfo.balanceInUSD
+                        totalBalance = (totalBalance ?? 0) + walletInfo.balanceInUSD
                         walletsInfo.append(walletInfo)
                     } catch APIError.invalidURL {
                         print("Invalid url")
