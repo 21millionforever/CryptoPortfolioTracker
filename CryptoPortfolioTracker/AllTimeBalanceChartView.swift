@@ -9,30 +9,66 @@ import SwiftUI
 import Charts
 
 struct AllTimeBalanceChartView: View {
-    var totalBalanceChart : [[Double]]?
+    var totalBalanceChart : BalanceChartData?
     var isTotalBalanceChartDataLoaded : Bool
+    var timeInterval: String
     
     var body: some View {
         if (isTotalBalanceChartDataLoaded) {
-            HStack {
-                Chart {
-                    ForEach(0..<(totalBalanceChart?.count ?? 0), id: \.self) { index in
-                        if let entry = totalBalanceChart?[index], entry.count >= 2 {
-                            LineMark(
-                                x: .value("Day", entry[0]),
-                                y: .value("Value", entry[1])
-                            )
-                        }
+            if (timeInterval == "All") {
+                HStack {
+                    Chart {
+                            if let dataPoints = totalBalanceChart?.all {
+                                ForEach(0..<(dataPoints.count), id: \.self) { index in
+                                    let entry = dataPoints[index]
+                                    if entry.count >= 2 {
+                                        LineMark(
+                                            x: .value("Day", entry[0]),
+                                            y: .value("Value", entry[1])
+                                        )
+                                    }
+                                    
+                                }
+                            }
                     }
+                    .chartXScale(domain: createRange(from: totalBalanceChart?.all?.first?.first ?? 0, to: totalBalanceChart?.all?.last?.first ?? 200))
+                    .frame(height: 200)
+                    .aspectRatio(contentMode: .fit)
+                    .padding()
+                    
+                    
                 }
-                .chartXScale(domain: createRange(from: totalBalanceChart?.first?.first ?? 0, to: totalBalanceChart?.last?.first ?? 200))
-                .frame(height: 200)
-                .aspectRatio(contentMode: .fit)
-                .padding()
+                .chartYAxis(.hidden)
+                .chartXAxis(.hidden)
+                .foregroundStyle(.green)
             }
-            .chartYAxis(.hidden)
-            .chartXAxis(.hidden)
-            .foregroundStyle(.green)
+            else if (timeInterval == "7") {
+                HStack {
+                    Chart {
+                            if let dataPoints = totalBalanceChart?.oneWeek {
+                                ForEach(0..<(dataPoints.count), id: \.self) { index in
+                                    let entry = dataPoints[index]
+                                    if entry.count >= 2 {
+                                        LineMark(
+                                            x: .value("Day", entry[0]),
+                                            y: .value("Value", entry[1])
+                                        )
+                                    }
+                                    
+                                }
+                            }
+                    }
+                    .chartXScale(domain: createRange(from: totalBalanceChart?.oneWeek?.first?.first ?? 0, to: totalBalanceChart?.oneWeek?.last?.first ?? 200))
+                    .frame(height: 200)
+                    .aspectRatio(contentMode: .fit)
+                    .padding()
+                    
+                    
+                }
+                .chartYAxis(.hidden)
+                .chartXAxis(.hidden)
+                .foregroundStyle(.green)
+            }
         }
         else {
             Rectangle()

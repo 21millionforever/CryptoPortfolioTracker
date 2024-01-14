@@ -8,23 +8,30 @@
 import SwiftUI
 import Charts
 
-struct TotalBalanceChartView: View {
+struct BalanceChartView: View {
     
-    var totalBalanceChart : [[Double]]
+    var balanceChart : [[Double]]
     var timeBefore : Date?
     @State private var startIndex: Int = 0
     
     var body: some View {
+        if (balanceChart.isEmpty) {
+            Rectangle()
+                .foregroundColor(Color.gray.opacity(0.2)) // Set the color first
+                .frame(height: 250) // Then set the frame
+                .cornerRadius(20) // Apply corner radius after setting the frame
+                .padding(10) // Finally, apply padding
+        } else {
             Chart {
-                ForEach(startIndex..<totalBalanceChart.count, id: \.self) { index in
-                    let entry = totalBalanceChart[index]
+                ForEach(startIndex..<balanceChart.count, id: \.self) { index in
+                    let entry = balanceChart[index]
                     LineMark(
                         x: .value("Day", entry[0]),
                         y: .value("Value", entry[1])
                     )
                 }
             }
-            .chartXScale(domain: createRange(from: totalBalanceChart[startIndex][0], to: totalBalanceChart[totalBalanceChart.count - 1][0]))
+            .chartXScale(domain: createRange(from: balanceChart[startIndex][0], to: balanceChart[balanceChart.count - 1][0]))
             .frame(height: 200)
             .aspectRatio(contentMode: .fit)
             .padding()
@@ -32,9 +39,12 @@ struct TotalBalanceChartView: View {
             .chartXAxis(.hidden)
             .foregroundStyle(.green)
             .onAppear {
-                startIndex = getStartIndex(totalBalanceChart: totalBalanceChart)
+                startIndex = getStartIndex(totalBalanceChart: balanceChart)
             }
+        }
+
     }
+    
     
     func getStartIndex(totalBalanceChart: [[Double]]) -> Int {
 

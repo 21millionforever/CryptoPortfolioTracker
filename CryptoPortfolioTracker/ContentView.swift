@@ -8,22 +8,17 @@ import Charts
 
 import SwiftUI
 
-//struct MonthlyHoursOfSunshine: Identifiable {
-//    var id = UUID()
-//    var date: Date
-//    var hoursOfSunshine: Double
-//
-//    init(month: Int, hoursOfSunshine: Double) {
-//        let calendar = Calendar.autoupdatingCurrent
-//        self.date = calendar.date(from: DateComponents(year: 2020, month: month))!
-//        self.hoursOfSunshine = hoursOfSunshine
-//    }
-//}
+struct BalanceChartData {
+    var all: [[Double]]?
+    var oneWeek: [[Double]]?
+    var oneDay: [[Double]]?
+    var live: [[Double]]?
+}
 
 
 
 struct ContentView: View {
-    let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
     // An array of wallet addresses
     @State var addresses: [String] = [Config.test_wallet]
@@ -34,11 +29,11 @@ struct ContentView: View {
     @State var totalBalance: Double?
 
     // wallet address maps to balance chart
-    @State private var walletsBalanceChart: [String: [[Double]]] = [:]
+    @State private var walletToBalanceChart: [String: BalanceChartData] = [:]
 
     // The balance chart of all the wallets combine
-    @State var totalBalanceChart = [[Double]]()
-
+    @State var totalBalanceChart = BalanceChartData()
+    
     @State var isTotalBalanceLoaded = false
     @State var isTotalBalanceChartDataLoaded = false
     @State private var showingBottomMenu = false
@@ -88,53 +83,8 @@ struct ContentView: View {
 
                     }
                     .padding(.leading)
-
-
-//                    switch selectedTab {
-//                        case "LIVE":
-//                            Text("LIVE")
-//                        case "1D":
-//                            Text("1D")
-//                        case "1W":
-//                            let currentDate = Date()
-//                            TotalBalanceChartView(totalBalanceChart: totalBalanceChart, timeBefore: Calendar.current.date(byAdding: .day, value: -7, to: currentDate))
-//                        case "1M":
-//                            let currentDate = Date()
-//                            TotalBalanceChartView(totalBalanceChart: totalBalanceChart, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
-//                        case "3M":
-//                                let currentDate = Date()
-//                                TotalBalanceChartView(totalBalanceChart: totalBalanceChart, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
-//                        case "All":
-//                            AllTimeBalanceChartView(totalBalanceChart: totalBalanceChart, isTotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
-//                        default:
-//                            Text("Defaualt")
-//
-//                    }
-
-                    // Chart TabView
-//                    VStack {
-//                        HStack {
-//                            ForEach(tabs, id: \.self) { tab in
-//                                Button(action: {
-//                                    self.selectedTab = tab
-//                                }) {
-//                                    Spacer()
-//                                    VStack {
-//                                        Text(tab)
-//                                            .foregroundColor(self.selectedTab == tab ? .white : .green)
-//                                            .frame(width: 50, height: 30)
-//                                            .background(self.selectedTab == tab ? .green : .white)
-//                                            .cornerRadius(10)
-//
-//                                    }
-//                                    Spacer()
-//                                }
-//
-//                            }
-//                        }
-//                    }
                     
-                    ChartTabView(selectedTab: $selectedTab, totalBalanceChart: totalBalanceChart, isTotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
+                    ChartTabView(selectedTab: $selectedTab, balanceChart: totalBalanceChart, isDataLoaded: isTotalBalanceChartDataLoaded)
 
                     HStack() {
                         Text("Accounts")
@@ -145,14 +95,15 @@ struct ContentView: View {
                     .padding(.leading)
 
 
-                    if (isTotalBalanceChartDataLoaded) {
-                        ForEach(walletsInfo, id: \.id) { walletInfo in
-                            NavigationLink(value: walletInfo) {
-                                AccountCellView(walletInfo: walletInfo, walletsBalanceChart: walletsBalanceChart, istotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
-                                    .padding(.leading)
-                            }
-                        }
-                    }
+//                    if (isTotalBalanceChartDataLoaded) {
+//                        ForEach(walletsInfo, id: \.id) { walletInfo in
+//                            NavigationLink(value: walletInfo) {
+//                                AccountCellView(walletInfo: walletInfo, walletsBalanceChart: walletsBalanceChart, istotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
+//
+//                                    .padding(.leading)
+//                            }
+//                        }
+//                    }
 
                 }
                 .navigationTitle("Total Balance")
@@ -211,19 +162,29 @@ struct ContentView: View {
                 }
 
                 // Get historical balance for all the wallets
-                if walletsBalanceChart.isEmpty {
+                if walletToBalanceChart.isEmpty {
                     do {
-                        var tempWalletsBalanceChart = [String: [[Double]]]()
+                        var tempWalletToBalanceChart = [String: BalanceChartData]()
 
                         for address in addresses {
-                            let balanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "max")
+                            let tempAllBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "max")
                             let lowerCaseAddress = address.lowercased()
-                            tempWalletsBalanceChart[lowerCaseAddress] = balanceChart
+                            var existingChartData = tempWalletToBalanceChart[lowerCaseAddress] ?? BalanceChartData()
+                            existingChartData.all = tempAllBalanceChart
+                            
+                            let tempOneWeekBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "7")
+                            existingChartData.oneWeek = tempOneWeekBalanceChart
+                            
+                            tempWalletToBalanceChart[lowerCaseAddress] = existingChartData
                         }
+                        let allchartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "All")
+                        let oneWeekChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "7")
+                        
 
                         DispatchQueue.main.async {
-                            self.walletsBalanceChart = tempWalletsBalanceChart
-                            self.totalBalanceChart = getHistoricalTotalValueChart(walletsBalanceChart: self.walletsBalanceChart)
+                            self.walletToBalanceChart = tempWalletToBalanceChart
+                            self.totalBalanceChart.all = allchartData
+                            self.totalBalanceChart.oneWeek = oneWeekChartData
                             self.isTotalBalanceChartDataLoaded = true
                         }
 
@@ -243,10 +204,11 @@ struct ContentView: View {
             }
             .onReceive(timer) { _ in
                 Task {
-                    var totalBalanceTmp = 0.00
-                    var fetchedWalletsInfo = [WalletInfo]() // Replace WalletInfoType with your actual type
 
                     do {
+                        var totalBalanceTmp = 0.00
+                        var fetchedWalletsInfo = [WalletInfo]() // Replace WalletInfoType with your actual type
+                        
                         for address in addresses {
                             let walletInfo = try await fetchWalletInfo(walletAddress: address)
                             totalBalanceTmp += walletInfo.balanceInUSD
@@ -256,6 +218,7 @@ struct ContentView: View {
                         DispatchQueue.main.async {
                             self.walletsInfo = fetchedWalletsInfo
                             self.totalBalance = totalBalanceTmp
+                            self.isTotalBalanceLoaded = true
                         }
 
                     } catch APIError.invalidURL {
@@ -267,6 +230,44 @@ struct ContentView: View {
                     } catch {
                         // Handle other errors
                         print("An unexpected error: \(error.localizedDescription)")
+                    }
+                    
+                    
+                    
+                    do {
+                        var tempWalletToBalanceChart = [String: BalanceChartData]()
+
+                        for address in addresses {
+                            let tempAllBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "max")
+                            let lowerCaseAddress = address.lowercased()
+                            var existingChartData = tempWalletToBalanceChart[lowerCaseAddress] ?? BalanceChartData()
+                            existingChartData.all = tempAllBalanceChart
+                            
+                            let tempOneWeekBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "7")
+                            existingChartData.oneWeek = tempOneWeekBalanceChart
+                            
+                            tempWalletToBalanceChart[lowerCaseAddress] = existingChartData
+                        }
+                        let allchartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "All")
+                        let oneWeekChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "7")
+                        
+
+                        DispatchQueue.main.async {
+                            self.walletToBalanceChart = tempWalletToBalanceChart
+                            self.totalBalanceChart.all = allchartData
+                            self.totalBalanceChart.oneWeek = oneWeekChartData
+                            self.isTotalBalanceChartDataLoaded = true
+                        }
+
+                    } catch APIError.invalidURL {
+                        print("Invalid url")
+                    } catch APIError.invalidResponse {
+                        print("Invalid response")
+                    } catch APIError.invalidData {
+                        print("Invalid Data")
+                    } catch {
+                        // Handle other errors
+                        print("An unexpected error")
                     }
                 }
             }

@@ -11,9 +11,16 @@ struct ChartTabView: View {
     
     let tabs = ["LIVE", "1D", "1W", "1M", "3M", "All"]
     @Binding var selectedTab: String
-    var totalBalanceChart:  [[Double]]
-    var isTotalBalanceChartDataLoaded: Bool
+    var balanceChart:  BalanceChartData
+    var isDataLoaded: Bool
     
+//    var currentDate: String {
+//            let now = Date()
+//            let formatter = DateFormatter()
+//            formatter.dateStyle = .medium
+//            return formatter.string(from: now)
+//    }
+//
     var body: some View {
         switch selectedTab {
             case "LIVE":
@@ -21,16 +28,15 @@ struct ChartTabView: View {
             case "1D":
                 Text("1D")
             case "1W":
-                let currentDate = Date()
-                TotalBalanceChartView(totalBalanceChart: totalBalanceChart, timeBefore: Calendar.current.date(byAdding: .day, value: -7, to: currentDate))
+            AllTimeBalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "7")
             case "1M":
                 let currentDate = Date()
-                TotalBalanceChartView(totalBalanceChart: totalBalanceChart, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
+            BalanceChartView(balanceChart: balanceChart.all ?? [], timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
             case "3M":
-                    let currentDate = Date()
-                    TotalBalanceChartView(totalBalanceChart: totalBalanceChart, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
+                let currentDate = Date()
+                BalanceChartView(balanceChart: balanceChart.all ?? [], timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
             case "All":
-                AllTimeBalanceChartView(totalBalanceChart: totalBalanceChart, isTotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
+                AllTimeBalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "All")
             default:
                 Text("Defaualt")
 

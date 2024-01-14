@@ -7,11 +7,23 @@
 
 import Foundation
 
-func getHistoricalTotalValueChart(walletsBalanceChart : [String: [[Double]]]) -> [[Double]]{
+func CalculateTotalBalanceChart(walletToBalanceChart : [String: BalanceChartData], timeInteval: String) -> [[Double]]{
     // Step 1: Merge lists
     var mergedList = [[Double]]()
-    for (address, chart) in walletsBalanceChart {
-        mergedList += chart
+    for (address, balanceChartData) in walletToBalanceChart {
+        if (timeInteval == "All") {
+            mergedList += balanceChartData.all ?? []
+        }
+        else if (timeInteval == "7") {
+            mergedList += balanceChartData.oneWeek ?? []
+        }
+        
+        
+//        if (timeInteval == "All") {
+//            if let data = balanceChartData.all{
+//                mergedList += data
+//            }
+//        }
     }
     
     // Step 2: Sum values using a dictionary
@@ -29,7 +41,6 @@ func getHistoricalTotalValueChart(walletsBalanceChart : [String: [[Double]]]) ->
     
     // Sort by the first element if needed
     let sortedCombinedList = combinedList.sorted { $0[0] < $1[0] }
-    print(sortedCombinedList)
     return sortedCombinedList
 }
 
