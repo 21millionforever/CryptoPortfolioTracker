@@ -12,6 +12,8 @@ struct AllTimeBalanceChartView: View {
     var totalBalanceChart : BalanceChartData?
     var isTotalBalanceChartDataLoaded : Bool
     var timeInterval: String
+    var width: CGFloat?
+    var height: CGFloat
     
     var body: some View {
         if (isTotalBalanceChartDataLoaded) {
@@ -32,7 +34,7 @@ struct AllTimeBalanceChartView: View {
                             }
                     }
                     .chartXScale(domain: createRange(from: totalBalanceChart?.all?.first?.first ?? 0, to: totalBalanceChart?.all?.last?.first ?? 200))
-                    .frame(height: 200)
+                    .frame(width: width ?? nil, height: height)
                     .aspectRatio(contentMode: .fit)
                     .padding()
                     
@@ -59,7 +61,7 @@ struct AllTimeBalanceChartView: View {
                             }
                     }
                     .chartXScale(domain: createRange(from: totalBalanceChart?.oneWeek?.first?.first ?? 0, to: totalBalanceChart?.oneWeek?.last?.first ?? 200))
-                    .frame(height: 200)
+                    .frame(height: height)
                     .aspectRatio(contentMode: .fit)
                     .padding()
                     
@@ -69,6 +71,34 @@ struct AllTimeBalanceChartView: View {
                 .chartXAxis(.hidden)
                 .foregroundStyle(.green)
             }
+            else if (timeInterval == "1") {
+                HStack {
+                    Chart {
+                            if let dataPoints = totalBalanceChart?.oneDay {
+                                ForEach(0..<(dataPoints.count), id: \.self) { index in
+                                    let entry = dataPoints[index]
+                                    if entry.count >= 2 {
+                                        LineMark(
+                                            x: .value("Day", entry[0]),
+                                            y: .value("Value", entry[1])
+                                        )
+                                    }
+                                    
+                                }
+                            }
+                    }
+                    .chartXScale(domain: createRange(from: totalBalanceChart?.oneDay?.first?.first ?? 0, to: totalBalanceChart?.oneDay?.last?.first ?? 200))
+                    .frame(height: height)
+                    .aspectRatio(contentMode: .fit)
+                    .padding()
+                    
+                    
+                }
+                .chartYAxis(.hidden)
+                .chartXAxis(.hidden)
+                .foregroundStyle(.green)
+            }
+            
         }
         else {
             Rectangle()

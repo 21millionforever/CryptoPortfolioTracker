@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChartTabView: View {
     
-    let tabs = ["LIVE", "1D", "1W", "1M", "3M", "All"]
+    let tabs = ["1D", "1W", "1M", "3M", "All"]
     @Binding var selectedTab: String
     var balanceChart:  BalanceChartData
     var isDataLoaded: Bool
@@ -23,12 +23,13 @@ struct ChartTabView: View {
 //
     var body: some View {
         switch selectedTab {
-            case "LIVE":
-                Text("LIVE")
+//            case "LIVE":
+//                Text("LIVE")
             case "1D":
-                Text("1D")
+            AllTimeBalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "1", height: 200)
+                
             case "1W":
-            AllTimeBalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "7")
+            AllTimeBalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "7", height: 200)
             case "1M":
                 let currentDate = Date()
             BalanceChartView(balanceChart: balanceChart.all ?? [], timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
@@ -36,7 +37,7 @@ struct ChartTabView: View {
                 let currentDate = Date()
                 BalanceChartView(balanceChart: balanceChart.all ?? [], timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
             case "All":
-                AllTimeBalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "All")
+            AllTimeBalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "All", height: 200)
             default:
                 Text("Defaualt")
 

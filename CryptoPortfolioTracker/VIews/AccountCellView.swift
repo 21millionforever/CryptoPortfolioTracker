@@ -12,7 +12,7 @@ import Foundation
 
 struct AccountCellView: View {
     var walletInfo: WalletInfo
-    var walletsBalanceChart: [String: [[Double]]]
+    var walletToBalanceChart: [String: BalanceChartData]
     var istotalBalanceChartDataLoaded: Bool
     
     var body: some View {
@@ -23,7 +23,7 @@ struct AccountCellView: View {
                         Image("SVG_MetaMask_Icon_Color")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
+                            .frame(width: 40)
 
                         Text("MetaMask")
                             .font(.title2)
@@ -34,38 +34,24 @@ struct AccountCellView: View {
                             .foregroundColor(.black)
                     }
                     .frame(height:40)
+                    Spacer()
+                    
+                    
+                    
+                    if (istotalBalanceChartDataLoaded) {
+                        if let balanceChart = walletToBalanceChart[walletInfo.address] {
+                            AllTimeBalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: istotalBalanceChartDataLoaded, timeInterval: "All", width: 200, height: 30)
 
-
-//                    HStack() {
-//                        Chart(data) {
-//                            LineMark(
-//                                x: .value("Month", $0.date),
-//                                y: .value("Hours of Sunshine", $0.hoursOfSunshine)
-//                            )
-//                        }
-//                        .chartYAxis(.hidden)
-//                        .chartXAxis(.hidden)
-//                        .foregroundStyle(.red)
-//
-//                        .padding([.top],30)
-//                    }
-                    
-                    
-                    
-//                    if (istotalBalanceChartDataLoaded) {
-//                        if let totalBalanceChart = walletsBalanceChart[walletInfo.address] {
-//                            AllTimeBalanceChartView(totalBalanceChart: totalBalanceChart)
-//                                .frame(height:100)
-//                        } else {
-//                            // Handle the case where totalBalanceChart is nil
-//                            Text(walletInfo.address)
-//                        }
-//                    }
+                        } else {
+                            // Handle the case where totalBalanceChart is nil
+                            Text(walletInfo.address)
+                        }
+                    }
 
                     
                     
                 }
-                .frame(height: 110)
+//                .frame(height: 110)
 
                 VStack(spacing: 0) {
 //                    balanceValue = walletInfo.balanceInUSD {

@@ -17,6 +17,9 @@ func CalculateTotalBalanceChart(walletToBalanceChart : [String: BalanceChartData
         else if (timeInteval == "7") {
             mergedList += balanceChartData.oneWeek ?? []
         }
+        else if (timeInteval == "1") {
+            mergedList += balanceChartData.oneDay ?? []
+        }
         
         
 //        if (timeInteval == "All") {

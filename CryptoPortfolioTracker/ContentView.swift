@@ -18,7 +18,7 @@ struct BalanceChartData {
 
 
 struct ContentView: View {
-    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 20, on: .main, in: .common).autoconnect()
 
     // An array of wallet addresses
     @State var addresses: [String] = [Config.test_wallet]
@@ -95,15 +95,16 @@ struct ContentView: View {
                     .padding(.leading)
 
 
-//                    if (isTotalBalanceChartDataLoaded) {
-//                        ForEach(walletsInfo, id: \.id) { walletInfo in
-//                            NavigationLink(value: walletInfo) {
-//                                AccountCellView(walletInfo: walletInfo, walletsBalanceChart: walletsBalanceChart, istotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
-//
-//                                    .padding(.leading)
-//                            }
-//                        }
-//                    }
+                    if (isTotalBalanceChartDataLoaded) {
+                        ForEach(walletsInfo, id: \.id) { walletInfo in
+                            NavigationLink(value: walletInfo) {
+                                AccountCellView(walletInfo: walletInfo, walletToBalanceChart: walletToBalanceChart, istotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
+
+                                    .padding(.leading)
+                            }
+                        }
+                    }
+                    
 
                 }
                 .navigationTitle("Total Balance")
@@ -175,16 +176,21 @@ struct ContentView: View {
                             let tempOneWeekBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "7")
                             existingChartData.oneWeek = tempOneWeekBalanceChart
                             
+                            let tempOneDayBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "1")
+                            existingChartData.oneDay = tempOneDayBalanceChart
+                            
                             tempWalletToBalanceChart[lowerCaseAddress] = existingChartData
                         }
                         let allchartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "All")
                         let oneWeekChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "7")
+                        let oneDayChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "1")
                         
 
                         DispatchQueue.main.async {
                             self.walletToBalanceChart = tempWalletToBalanceChart
                             self.totalBalanceChart.all = allchartData
                             self.totalBalanceChart.oneWeek = oneWeekChartData
+                            self.totalBalanceChart.oneDay = oneDayChartData
                             self.isTotalBalanceChartDataLoaded = true
                         }
 
@@ -246,19 +252,24 @@ struct ContentView: View {
                             let tempOneWeekBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "7")
                             existingChartData.oneWeek = tempOneWeekBalanceChart
                             
+                            let tempOneDayBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "1")
+                            existingChartData.oneDay = tempOneDayBalanceChart
+                            
                             tempWalletToBalanceChart[lowerCaseAddress] = existingChartData
                         }
                         let allchartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "All")
                         let oneWeekChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "7")
+                        let oneDayChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "1")
+                        
                         
 
                         DispatchQueue.main.async {
                             self.walletToBalanceChart = tempWalletToBalanceChart
                             self.totalBalanceChart.all = allchartData
                             self.totalBalanceChart.oneWeek = oneWeekChartData
+                            self.totalBalanceChart.oneDay = oneDayChartData
                             self.isTotalBalanceChartDataLoaded = true
                         }
-
                     } catch APIError.invalidURL {
                         print("Invalid url")
                     } catch APIError.invalidResponse {
@@ -273,7 +284,7 @@ struct ContentView: View {
             }
             .onChange(of: addresses) { newValue in
                 guard let lastAddress = addresses.last else { return }
-
+                
                 Task {
                     do {
                         let walletInfo = try await fetchWalletInfo(walletAddress: lastAddress)
