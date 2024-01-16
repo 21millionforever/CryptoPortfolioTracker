@@ -10,23 +10,19 @@ import SwiftUI
 struct AccountDetailView: View {
     var walletInfo: WalletInfo
     @Environment(\.presentationMode) var presentationMode
+    var balanceChart: BalanceChartData
+    var isTotalBalanceChartDataLoaded: Bool
     
-    init(walletInfo: WalletInfo) {
-        self.walletInfo = walletInfo
-        print("AccountDetailView is called")
-    }
+    let tabs = ["LIVE", "1D", "1W", "1M", "3M", "All"]
+    @State private var selectedTab = "All"
+    
+  
 
     var body: some View {
             ScrollView {
                 VStack(alignment: .leading) {
-                    HStack() {
-                        Text("Account Balance")
-                            .font(.largeTitle)
-                            .fontWeight(.semibold)
-                        Spacer()
-
-                    }
-//                    TotalBalanceView(balance: walletInfo.balanceInUSD)
+                    TotalBalanceView(balance: walletInfo.balanceInUSD, isBalanceLoaded: isTotalBalanceChartDataLoaded)
+                        
                     
                     HStack(spacing: 3) {
                         Image(systemName: "arrowtriangle.up.fill")
@@ -49,14 +45,14 @@ struct AccountDetailView: View {
                 
                     }
                     
-                    Spacer().frame(height: 300)
-  
+                    ChartTabView(selectedTab: $selectedTab, balanceChart: balanceChart, isDataLoaded: isTotalBalanceChartDataLoaded)
                 }
                 .padding([.leading], 20)
                 
                 AssetActivityTabView(walletInfo: walletInfo)
           
             }
+            .navigationTitle("Total Balance")
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(
                 leading:

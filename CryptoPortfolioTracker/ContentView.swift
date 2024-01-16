@@ -104,6 +104,9 @@ struct ContentView: View {
                             }
                         }
                     }
+                    else {
+                        AccountCellSectionPlaceHolderView()
+                    }
                     
 
                 }
@@ -111,7 +114,7 @@ struct ContentView: View {
 
             }
             .navigationDestination(for: WalletInfo.self) { walletInfo in
-                AccountDetailView(walletInfo: walletInfo)
+                AccountDetailView(walletInfo: walletInfo, balanceChart: walletToBalanceChart[walletInfo.address] ?? BalanceChartData() , isTotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
             }
             .navigationDestination(isPresented: $showingImportWalletView, destination: {ImportWalletView(addresses: $addresses, showingImportWalletView: $showingImportWalletView)})
             .toolbar {

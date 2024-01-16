@@ -10,16 +10,27 @@ import SwiftUI
 struct AssetTokenCellView: View {
     
     var tokenInfo: Token
+    init(tokenInfo: Token) {
+        self.tokenInfo = tokenInfo
+        print(tokenInfo)
+    }
     
     var body: some View {
         HStack {
-            VStack {
-                Image(systemName: "pencil.circle.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 40, height: 40)
-                    .background(.red)
+            
+            AsyncImage(url: URL(string: tokenInfo.tokenInfo.image)) { image in
+                image.resizable()
+            } placeholder: {
+                ProgressView()
             }
+            .frame(width: 40, height: 40)
+            
+
+            Image(systemName: "pencil.circle.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 40, height: 40)
+                .background(.red)
             
             VStack(alignment: .leading, spacing: 3) {
                 Text(tokenInfo.tokenInfo.name)

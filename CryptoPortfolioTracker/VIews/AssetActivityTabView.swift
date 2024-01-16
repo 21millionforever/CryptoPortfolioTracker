@@ -51,19 +51,7 @@ struct AssetActivityTabView: View {
                 // Content based on the selected tab
                 switch selectedTab {
                     case "Assets":
-
-                        VStack {
-                            ForEach(walletInfo.tokens, id: \.id) { tokenInfo in
-                                NavigationLink(value: tokenInfo) {
-                                    AssetTokenCellView(tokenInfo: tokenInfo)
-                                }
-                                Divider()
-                            }
-                        }
-                        .padding([.leading, .trailing])
-                        .navigationDestination(for: Token.self) {tokenInfo in
-                            TestView()
-                        }
+                        AssetsView(walletInfo: walletInfo)
                     case "Activity":
                         ActivityView(address: walletInfo.address)
                     default:

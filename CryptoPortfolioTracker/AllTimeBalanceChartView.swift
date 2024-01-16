@@ -14,7 +14,7 @@ struct AllTimeBalanceChartView: View {
     var timeInterval: String
     var width: CGFloat?
     var height: CGFloat
-    
+
     var body: some View {
         if (isTotalBalanceChartDataLoaded) {
             if (timeInterval == "All") {
@@ -29,7 +29,7 @@ struct AllTimeBalanceChartView: View {
                                             y: .value("Value", entry[1])
                                         )
                                     }
-                                    
+
                                 }
                             }
                     }
@@ -37,8 +37,8 @@ struct AllTimeBalanceChartView: View {
                     .frame(width: width ?? nil, height: height)
                     .aspectRatio(contentMode: .fit)
                     .padding()
-                    
-                    
+
+
                 }
                 .chartYAxis(.hidden)
                 .chartXAxis(.hidden)
@@ -56,7 +56,7 @@ struct AllTimeBalanceChartView: View {
                                             y: .value("Value", entry[1])
                                         )
                                     }
-                                    
+
                                 }
                             }
                     }
@@ -64,8 +64,8 @@ struct AllTimeBalanceChartView: View {
                     .frame(height: height)
                     .aspectRatio(contentMode: .fit)
                     .padding()
-                    
-                    
+
+
                 }
                 .chartYAxis(.hidden)
                 .chartXAxis(.hidden)
@@ -83,7 +83,7 @@ struct AllTimeBalanceChartView: View {
                                             y: .value("Value", entry[1])
                                         )
                                     }
-                                    
+
                                 }
                             }
                     }
@@ -91,14 +91,14 @@ struct AllTimeBalanceChartView: View {
                     .frame(height: height)
                     .aspectRatio(contentMode: .fit)
                     .padding()
-                    
-                    
+
+
                 }
                 .chartYAxis(.hidden)
                 .chartXAxis(.hidden)
                 .foregroundStyle(.green)
             }
-            
+
         }
         else {
             Rectangle()
@@ -109,6 +109,7 @@ struct AllTimeBalanceChartView: View {
         }
     }
 }
+
 
 //struct AllTimeBalanceChartView_Previews: PreviewProvider {
 //    static var previews: some View {
