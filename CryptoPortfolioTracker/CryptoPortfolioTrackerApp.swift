@@ -13,6 +13,7 @@ struct CryptoPortfolioTrackerApp: App {
     var body: some Scene {
         WindowGroup {
 //            ContentView()
+//            TestViewTwo()
             BottomNavigationBarView()
 //            TestViewTwo()
             

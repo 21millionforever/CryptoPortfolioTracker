@@ -89,8 +89,6 @@ func fetchWalletInfo(walletAddress: String) async throws -> WalletInfo {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let response = try decoder.decode(WalletInfo.self, from: data)
-        print("fetchWalletInfo is called")
-  
         return response
     } catch {
         throw APIError.invalidData

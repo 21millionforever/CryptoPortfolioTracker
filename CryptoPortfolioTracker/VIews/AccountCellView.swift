@@ -66,7 +66,11 @@ struct AccountCellView: View {
                 Spacer()
 
             }
-            Divider()
+            GrayDivider()
+                .padding()
+//            Divider()
+//                .frame(height: 1)
+//                .overlay(Color.gray.opacity(0.3))
         }
         
     }
@@ -76,3 +80,4 @@ struct AccountCellView: View {
 //        AccountCellView(address: Config.test_wallet)
 //    }
 //}
+

@@ -10,15 +10,12 @@ import SwiftUI
 struct AssetTokenCellView: View {
     
     var tokenInfo: Token
-    init(tokenInfo: Token) {
-        self.tokenInfo = tokenInfo
-        print(tokenInfo)
-    }
+    @State var imageUrl: String?
     
     var body: some View {
         HStack {
             
-            AsyncImage(url: URL(string: tokenInfo.tokenInfo.image)) { image in
+            AsyncImage(url: URL(string: imageUrl ?? "")) { image in
                 image.resizable()
             } placeholder: {
                 ProgressView()
@@ -26,11 +23,6 @@ struct AssetTokenCellView: View {
             .frame(width: 40, height: 40)
             
 
-            Image(systemName: "pencil.circle.fill")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 40, height: 40)
-                .background(.red)
             
             VStack(alignment: .leading, spacing: 3) {
                 Text(tokenInfo.tokenInfo.name)
@@ -53,17 +45,52 @@ struct AssetTokenCellView: View {
                     .font(.body)
                     .fontWeight(.bold)
                 HStack {
-                    Image(systemName: "arrowtriangle.up.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 10, height: 10)
-                        .foregroundColor(.green)
+                    if(tokenInfo.tokenInfo.price.diff >= 0) {
+                        Image(systemName: "arrowtriangle.up.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 10, height: 10)
+                            .foregroundColor(.green)
+                        
+                        Text("\(String(format: "%.2f", tokenInfo.tokenInfo.price.diff))%")
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color.gray.opacity(0.8))
+                        
+                    } else {
+                        Image(systemName: "arrowtriangle.down.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 10, height: 10)
+                            .foregroundColor(.red)
+                        Text("\(String(format: "%.2f", tokenInfo.tokenInfo.price.diff * -1))%")
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color.gray.opacity(0.8))
+                    }
                     
-                    Text("0.69%")
-                        .font(.caption)
-                        .fontWeight(.bold)
-                        .foregroundColor(Color.gray.opacity(0.8))
+                    
+                   
                 }
+            }
+            
+        }
+        .task {
+            do {
+                let data = try await fetchTokenImage(tokenSymbol: tokenInfo.tokenInfo.symbol)
+                DispatchQueue.main.async
+                {
+                    imageUrl = data.url
+                }
+            } catch APIError.invalidURL {
+                print("Invalid url")
+            } catch APIError.invalidResponse {
+                print("Invalid response")
+            } catch APIError.invalidData {
+                print("Invalid Data")
+            } catch {
+                // Handle other errors
+                print("An unexpected error")
             }
             
         }

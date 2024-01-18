@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct ActivityApproveCell: View {
+    var imageUrl: String?
+    
     var body: some View {
         HStack {
-            Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 30, height: 30)
-                .foregroundColor(.black)
+            AsyncImage(url: URL(string: imageUrl ?? "")) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 30, height:30)
+                    .foregroundColor(.green)
+            } placeholder: {
+                ProgressView()
+            }
             VStack(alignment: .leading) {
                 Text("Approve")
                     .fontWeight(.bold)
@@ -26,8 +32,8 @@ struct ActivityApproveCell: View {
         .frame(height:55)
         .padding([.leading, .trailing])
         .background(Color.white)
-        .cornerRadius(20)
-        .shadow(radius: 2)
+//        .cornerRadius(20)
+//        .shadow(radius: 2)
     }
 }
 

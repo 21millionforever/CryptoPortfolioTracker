@@ -18,7 +18,7 @@ struct BalanceChartData {
 
 
 struct ContentView: View {
-    let timer = Timer.publish(every: 20, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
 
     // An array of wallet addresses
     @State var addresses: [String] = [Config.test_wallet]

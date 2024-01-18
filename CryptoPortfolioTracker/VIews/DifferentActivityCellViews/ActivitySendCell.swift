@@ -9,19 +9,30 @@ import SwiftUI
 
 struct ActivitySendCell: View {
     var activity: ActivitiesResponse
+    var imageUrl: String?
     
     var body: some View {
         HStack {
-            Image(systemName: "arrowtriangle.down.fill")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 30, height:30)
-                .foregroundColor(.red)
+            AsyncImage(url: URL(string: imageUrl ?? "")) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 30, height:30)
+                    .foregroundColor(.green)
+            } placeholder: {
+                ProgressView()
+            }
+            
+//            Image(systemName: "arrowtriangle.down.fill")
+//                .resizable()
+//                .aspectRatio(contentMode: .fit)
+//                .frame(width: 30, height:30)
+//                .foregroundColor(.red)
             VStack(alignment: .leading, spacing: 0) {
                 Text("Sent")
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                HStack {
+                HStack(spacing: 2) {
                     Text("to")
                         .font(.subheadline)
                         .foregroundColor(.gray)
@@ -30,6 +41,7 @@ struct ActivitySendCell: View {
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .frame(width: 100, height: 30)
+                   
                 }
             }
             Spacer()
@@ -41,11 +53,6 @@ struct ActivitySendCell: View {
                     .fontWeight(.bold)
                     .foregroundColor(.red)
                     .frame(maxWidth: .infinity, alignment: .trailing)
-                Text("\(activity.extraInfo.tokenPrice ?? -1)")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                
                 
             }
  
@@ -53,8 +60,6 @@ struct ActivitySendCell: View {
         .frame(height:55)
         .padding([.leading, .trailing])
         .background(Color.white)
-        .cornerRadius(20)
-        .shadow(radius: 2)
     }
 }
 
