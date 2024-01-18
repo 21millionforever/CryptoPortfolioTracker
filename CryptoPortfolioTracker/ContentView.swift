@@ -60,31 +60,31 @@ struct ContentView: View {
 
 
                     // Uncomment to code below
-                    HStack(spacing: 3) {
-                        Image(systemName: "arrowtriangle.up.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(.green)
-
-                        Text("$645.55")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-
-                        Text("(0.69%)")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-
-                        Text("Today")
-                            .font(.subheadline)
-                            .fontWeight(.light)
-
-                        Spacer()
-
-                    }
-                    .padding(.leading)
+//                    HStack(spacing: 3) {
+//                        Image(systemName: "arrowtriangle.up.fill")
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 15, height: 15)
+//                            .foregroundColor(.green)
+//
+//                        Text("$645.55")
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//
+//                        Text("(0.69%)")
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//
+//                        Text("Today")
+//                            .font(.subheadline)
+//                            .fontWeight(.light)
+//
+//                        Spacer()
+//
+//                    }
+//                    .padding(.leading)
                     
-                    ChartTabView(selectedTab: $selectedTab, balanceChart: totalBalanceChart, isDataLoaded: isTotalBalanceChartDataLoaded)
+                    ChartTabView(selectedTab: $selectedTab, balanceChart: totalBalanceChart, isDataLoaded: isTotalBalanceChartDataLoaded, totalBalance: totalBalance)
 
                     HStack() {
                         Text("Accounts")

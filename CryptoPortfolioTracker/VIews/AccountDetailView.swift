@@ -24,26 +24,26 @@ struct AccountDetailView: View {
                     TotalBalanceView(balance: walletInfo.balanceInUSD, isBalanceLoaded: isTotalBalanceChartDataLoaded)
                         
                     
-                    HStack(spacing: 3) {
-                        Image(systemName: "arrowtriangle.up.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(.green)
-                            
-                        Text("$645.55")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                            
-                        Text("(0.69%)")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-
-                        Text("Today")
-                            .font(.subheadline)
-                            .fontWeight(.light)
-                
-                    }
+//                    HStack(spacing: 3) {
+//                        Image(systemName: "arrowtriangle.up.fill")
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 15, height: 15)
+//                            .foregroundColor(.green)
+//
+//                        Text("$645.55")
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//
+//                        Text("(0.69%)")
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//
+//                        Text("Today")
+//                            .font(.subheadline)
+//                            .fontWeight(.light)
+//
+//                    }
                     
                     ChartTabView(selectedTab: $selectedTab, balanceChart: balanceChart, isDataLoaded: isTotalBalanceChartDataLoaded)
                 }

@@ -10,6 +10,7 @@ import Charts
 
 struct AllTimeBalanceChartView: View {
     var totalBalanceChart : BalanceChartData?
+   
     var isTotalBalanceChartDataLoaded : Bool
     var timeInterval: String
     var width: CGFloat?
@@ -18,31 +19,33 @@ struct AllTimeBalanceChartView: View {
     var body: some View {
         if (isTotalBalanceChartDataLoaded) {
             if (timeInterval == "All") {
-                HStack {
-                    Chart {
-                            if let dataPoints = totalBalanceChart?.all {
-                                ForEach(0..<(dataPoints.count), id: \.self) { index in
-                                    let entry = dataPoints[index]
-                                    if entry.count >= 2 {
-                                        LineMark(
-                                            x: .value("Day", entry[0]),
-                                            y: .value("Value", entry[1])
-                                        )
+                VStack {
+                    HStack {
+                        Chart {
+                                if let dataPoints = totalBalanceChart?.all {
+                                    ForEach(0..<(dataPoints.count), id: \.self) { index in
+                                        let entry = dataPoints[index]
+                                        if entry.count >= 2 {
+                                            LineMark(
+                                                x: .value("Day", entry[0]),
+                                                y: .value("Value", entry[1])
+                                            )
+                                        }
+
                                     }
-
                                 }
-                            }
+                        }
+                        .chartXScale(domain: createRange(from: totalBalanceChart?.all?.first?.first ?? 0, to: totalBalanceChart?.all?.last?.first ?? 200))
+                        .frame(width: width ?? nil, height: height)
+                        .aspectRatio(contentMode: .fit)
+                        .padding()
+
+
                     }
-                    .chartXScale(domain: createRange(from: totalBalanceChart?.all?.first?.first ?? 0, to: totalBalanceChart?.all?.last?.first ?? 200))
-                    .frame(width: width ?? nil, height: height)
-                    .aspectRatio(contentMode: .fit)
-                    .padding()
-
-
+                    .chartYAxis(.hidden)
+                    .chartXAxis(.hidden)
+                    .foregroundStyle(.green)
                 }
-                .chartYAxis(.hidden)
-                .chartXAxis(.hidden)
-                .foregroundStyle(.green)
             }
             else if (timeInterval == "7") {
                 HStack {
@@ -107,6 +110,15 @@ struct AllTimeBalanceChartView: View {
                 .cornerRadius(20) // Apply corner radius after setting the frame
                 .padding(10) // Finally, apply padding
         }
+    }
+    
+    func getTheLastElementInTheArray(totalBalanceChart : BalanceChartData?) -> String {
+        if let totalBalanceChart = totalBalanceChart {
+            if let lastElement = totalBalanceChart.all?.last {
+                return formatAsCurrency(number: lastElement[1])
+            }
+        }
+        return "Unknown"
     }
 }
 

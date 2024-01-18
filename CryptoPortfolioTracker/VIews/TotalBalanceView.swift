@@ -10,13 +10,10 @@ import SwiftUI
 struct TotalBalanceView: View {
     var balance: Double?
     var isBalanceLoaded: Bool
-    
-//    init(balance: Double?, isTotalBalanceLoaded: Bool) {
-//        self.balance = balance
-//        self.isTotalBalanceLoaded = isTotalBalanceLoaded
-//    }
+
     
     var body: some View {
+        VStack(spacing: 10) {
             HStack() {
                 Text(formatAsCurrency(number: balance ?? 12))
                     .contentTransition(.numericText())
@@ -26,8 +23,38 @@ struct TotalBalanceView: View {
                     .redacted(reason: isBalanceLoaded ? [] : .placeholder)
                 Spacer()
             }
-     
+            
+//            HStack(spacing: 3) {
+//                Image(systemName: "arrowtriangle.up.fill")
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fit)
+//                    .frame(width: 15, height: 15)
+//                    .foregroundColor(.green)
+//                
+//                Spacer()
+//                    .frame(width: 5)
+//
+//                Text(formatAsCurrency(number: balance ?? 12))
+//                    .font(.subheadline)
+//                    .fontWeight(.semibold)
+//
+//                Text("(100.0%)")
+//                    .font(.subheadline)
+//                    .fontWeight(.semibold)
+//
+//                Text("All Time")
+//                    .font(.subheadline)
+//                    .fontWeight(.light)
+//                
+//                Spacer()
+//
+//            }
+            
+            
+        }
+
     }
+        
     
 }
 
