@@ -39,6 +39,7 @@ struct ContentView: View {
     @State private var showingBottomMenu = false
     @State var showingImportWalletView = false
 
+    
     let tabs = ["LIVE", "1D", "1W", "1M", "3M", "All"]
     @State private var selectedTab = "All"
 
@@ -55,34 +56,8 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading) {
-                    TotalBalanceView(balance: totalBalance, isBalanceLoaded: isTotalBalanceLoaded)
+                    BalanceView(balance: totalBalance, isBalanceLoaded: isTotalBalanceLoaded)
                         .padding(.leading)
-
-
-                    // Uncomment to code below
-//                    HStack(spacing: 3) {
-//                        Image(systemName: "arrowtriangle.up.fill")
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 15, height: 15)
-//                            .foregroundColor(.green)
-//
-//                        Text("$645.55")
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//
-//                        Text("(0.69%)")
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//
-//                        Text("Today")
-//                            .font(.subheadline)
-//                            .fontWeight(.light)
-//
-//                        Spacer()
-//
-//                    }
-//                    .padding(.leading)
                     
                     ChartTabView(selectedTab: $selectedTab, balanceChart: totalBalanceChart, isDataLoaded: isTotalBalanceChartDataLoaded, totalBalance: totalBalance)
 

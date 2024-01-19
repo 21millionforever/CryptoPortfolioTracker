@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ActivitiesResponse: Codable {
+struct ActivitiesResponse: Codable, Hashable{
     let id = UUID()
     let type, chian, timeStamp, blockNumber: String
     let hash, status: String
@@ -15,7 +15,7 @@ struct ActivitiesResponse: Codable {
     
 }
 
-struct ExtraInfo: Codable {
+struct ExtraInfo: Codable, Hashable {
     let sender, receiver: String?
     let tokenPrice: Double?
     let tokenSymbol: String?

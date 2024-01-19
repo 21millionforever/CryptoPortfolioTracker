@@ -1,50 +1,164 @@
 //
-//  TotalBalanceChartView.swift
+//  BalanceChartView.swift
 //  CryptoPortfolioTracker
 //
-//  Created by Zhendong Chen on 1/9/24.
+//  Created by Zhendong Chen on 1/18/24.
 //
 
 import SwiftUI
 import Charts
 
 struct BalanceChartView: View {
-    
-    var balanceChart : [[Double]]
+    var totalBalanceChart : BalanceChartData?
+   
+    var isTotalBalanceChartDataLoaded : Bool
+    var timeInterval: String
     var timeBefore : Date?
     @State private var startIndex: Int = 0
-    
+    var width: CGFloat?
+    var height: CGFloat
+
     var body: some View {
-        if (balanceChart.isEmpty) {
+        if (isTotalBalanceChartDataLoaded) {
+            if (timeInterval == "All") {
+                VStack {
+                    HStack {
+                        Chart {
+                                if let dataPoints = totalBalanceChart?.all {
+                                    ForEach(0..<(dataPoints.count), id: \.self) { index in
+                                        let entry = dataPoints[index]
+                                        if entry.count >= 2 {
+                                            LineMark(
+                                                x: .value("Day", entry[0]),
+                                                y: .value("Value", entry[1])
+                                            )
+                                        }
+
+                                    }
+                                }
+                        }
+                        .chartXScale(domain: createRange(from: totalBalanceChart?.all?.first?.first ?? 0, to: totalBalanceChart?.all?.last?.first ?? 200))
+                        .frame(width: width ?? nil, height: height)
+                        .aspectRatio(contentMode: .fit)
+                        .padding()
+
+
+                    }
+                    .chartYAxis(.hidden)
+                    .chartXAxis(.hidden)
+                    .foregroundStyle(.green)
+                }
+            }
+            else if (timeInterval == "1M") {
+                if let dataPoints = totalBalanceChart?.all {
+                    Chart {
+                        ForEach(startIndex..<dataPoints.count, id: \.self) { index in
+                            let entry = dataPoints[index]
+                            LineMark(
+                                x: .value("Day", entry[0]),
+                                y: .value("Value", entry[1])
+                            )
+                        }
+                    }
+                    .chartXScale(domain: createRange(from: dataPoints[startIndex][0], to: dataPoints[dataPoints.count - 1][0]))
+                    .frame(height: 200)
+                    .aspectRatio(contentMode: .fit)
+                    .padding()
+                    .chartYAxis(.hidden)
+                    .chartXAxis(.hidden)
+                    .foregroundStyle(.green)
+                    .onAppear {
+                        startIndex = getStartIndex(totalBalanceChart: dataPoints)
+                    }
+                }
+            }
+            else if (timeInterval == "3M") {
+                if let dataPoints = totalBalanceChart?.all {
+                    Chart {
+                        ForEach(startIndex..<dataPoints.count, id: \.self) { index in
+                            let entry = dataPoints[index]
+                            LineMark(
+                                x: .value("Day", entry[0]),
+                                y: .value("Value", entry[1])
+                            )
+                        }
+                    }
+                    .chartXScale(domain: createRange(from: dataPoints[startIndex][0], to: dataPoints[dataPoints.count - 1][0]))
+                    .frame(height: 200)
+                    .aspectRatio(contentMode: .fit)
+                    .padding()
+                    .chartYAxis(.hidden)
+                    .chartXAxis(.hidden)
+                    .foregroundStyle(.green)
+                    .onAppear {
+                        startIndex = getStartIndex(totalBalanceChart: dataPoints)
+                    }
+                }
+            }
+            else if (timeInterval == "7") {
+                HStack {
+                    Chart {
+                            if let dataPoints = totalBalanceChart?.oneWeek {
+                                ForEach(0..<(dataPoints.count), id: \.self) { index in
+                                    let entry = dataPoints[index]
+                                    if entry.count >= 2 {
+                                        LineMark(
+                                            x: .value("Day", entry[0]),
+                                            y: .value("Value", entry[1])
+                                        )
+                                    }
+
+                                }
+                            }
+                    }
+                    .chartXScale(domain: createRange(from: totalBalanceChart?.oneWeek?.first?.first ?? 0, to: totalBalanceChart?.oneWeek?.last?.first ?? 200))
+                    .frame(height: height)
+                    .aspectRatio(contentMode: .fit)
+                    .padding()
+
+
+                }
+                .chartYAxis(.hidden)
+                .chartXAxis(.hidden)
+                .foregroundStyle(.green)
+            }
+            else if (timeInterval == "1") {
+                HStack {
+                    Chart {
+                            if let dataPoints = totalBalanceChart?.oneDay {
+                                ForEach(0..<(dataPoints.count), id: \.self) { index in
+                                    let entry = dataPoints[index]
+                                    if entry.count >= 2 {
+                                        LineMark(
+                                            x: .value("Day", entry[0]),
+                                            y: .value("Value", entry[1])
+                                        )
+                                    }
+
+                                }
+                            }
+                    }
+                    .chartXScale(domain: createRange(from: totalBalanceChart?.oneDay?.first?.first ?? 0, to: totalBalanceChart?.oneDay?.last?.first ?? 200))
+                    .frame(height: height)
+                    .aspectRatio(contentMode: .fit)
+                    .padding()
+
+
+                }
+                .chartYAxis(.hidden)
+                .chartXAxis(.hidden)
+                .foregroundStyle(.green)
+            }
+
+        }
+        else {
             Rectangle()
                 .foregroundColor(Color.gray.opacity(0.2)) // Set the color first
                 .frame(height: 250) // Then set the frame
                 .cornerRadius(20) // Apply corner radius after setting the frame
                 .padding(10) // Finally, apply padding
-        } else {
-            Chart {
-                ForEach(startIndex..<balanceChart.count, id: \.self) { index in
-                    let entry = balanceChart[index]
-                    LineMark(
-                        x: .value("Day", entry[0]),
-                        y: .value("Value", entry[1])
-                    )
-                }
-            }
-            .chartXScale(domain: createRange(from: balanceChart[startIndex][0], to: balanceChart[balanceChart.count - 1][0]))
-            .frame(height: 200)
-            .aspectRatio(contentMode: .fit)
-            .padding()
-            .chartYAxis(.hidden)
-            .chartXAxis(.hidden)
-            .foregroundStyle(.green)
-            .onAppear {
-                startIndex = getStartIndex(totalBalanceChart: balanceChart)
-            }
         }
-
     }
-    
     
     func getStartIndex(totalBalanceChart: [[Double]]) -> Int {
 
@@ -67,10 +181,13 @@ struct BalanceChartView: View {
         
         return 0
     }
+    
 }
 
-//struct TotalBalanceChartView_Previews: PreviewProvider {
+
+
+//struct BalanceChartView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        TotalBalanceChartView()
+//        BalanceChartView()
 //    }
 //}

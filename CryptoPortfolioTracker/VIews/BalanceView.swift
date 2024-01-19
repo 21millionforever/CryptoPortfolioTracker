@@ -1,5 +1,5 @@
 //
-//  TotalBalanceView.swift
+//  BalanceView.swift
 //  CryptoPortfolioTracker
 //
 //  Created by Zhendong Chen on 12/26/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TotalBalanceView: View {
+struct BalanceView: View {
     var balance: Double?
     var isBalanceLoaded: Bool
 
@@ -21,6 +21,7 @@ struct TotalBalanceView: View {
                     .fontWeight(.bold)
                     .foregroundColor(.black)
                     .redacted(reason: isBalanceLoaded ? [] : .placeholder)
+                   
                 Spacer()
             }
             

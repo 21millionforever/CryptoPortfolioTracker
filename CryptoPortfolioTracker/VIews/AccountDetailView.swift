@@ -21,7 +21,7 @@ struct AccountDetailView: View {
     var body: some View {
             ScrollView {
                 VStack(alignment: .leading) {
-                    TotalBalanceView(balance: walletInfo.balanceInUSD, isBalanceLoaded: isTotalBalanceChartDataLoaded)
+                    BalanceView(balance: walletInfo.balanceInUSD, isBalanceLoaded: isTotalBalanceChartDataLoaded)
                         
                     
 //                    HStack(spacing: 3) {
