@@ -38,15 +38,15 @@ struct AccountCellView: View {
                     
                     
                     
-                    if (istotalBalanceChartDataLoaded) {
-                        if let balanceChart = walletToBalanceChart[walletInfo.address] {
-                            BalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: istotalBalanceChartDataLoaded, timeInterval: "All", width: 200, height: 30)
-
-                        } else {
-                            // Handle the case where totalBalanceChart is nil
-                            Text(walletInfo.address)
-                        }
-                    }
+//                    if (istotalBalanceChartDataLoaded) {
+//                        if let balanceChart = walletToBalanceChart[walletInfo.address] {
+//                            BalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: istotalBalanceChartDataLoaded, timeInterval: "All", width: 200, height: 30)
+//
+//                        } else {
+//                            // Handle the case where totalBalanceChart is nil
+//                            Text(walletInfo.address)
+//                        }
+//                    }
 
                     
                     

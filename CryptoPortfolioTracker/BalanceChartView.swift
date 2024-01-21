@@ -22,133 +22,152 @@ struct BalanceChartView: View {
         if (isTotalBalanceChartDataLoaded) {
             if (timeInterval == "All") {
                 VStack {
-                    HStack {
+                    if let dataPoints = totalBalanceChart?.all {
                         Chart {
-                                if let dataPoints = totalBalanceChart?.all {
-                                    ForEach(0..<(dataPoints.count), id: \.self) { index in
-                                        let entry = dataPoints[index]
-                                        if entry.count >= 2 {
-                                            LineMark(
-                                                x: .value("Day", entry[0]),
-                                                y: .value("Value", entry[1])
-                                            )
-                                        }
-
-                                    }
-                                }
+                            ForEach(dataPoints) { dataPoint in
+                                LineMark(
+                                    x: .value("Day", dataPoint.date),
+                                    y: .value("Value", dataPoint.value)
+                                )
+                            }
                         }
-                        .chartXScale(domain: createRange(from: totalBalanceChart?.all?.first?.first ?? 0, to: totalBalanceChart?.all?.last?.first ?? 200))
-                        .frame(width: width ?? nil, height: height)
-                        .aspectRatio(contentMode: .fit)
+                        .chartXScale(domain: createRange(from: dataPoints.first?.date ?? Date(), to: dataPoints.last?.date ?? Date()))
+                        .frame(maxWidth: .infinity) // Use maximum width available
+                        .frame(height: height)
                         .padding()
-
-
-                    }
-                    .chartYAxis(.hidden)
-                    .chartXAxis(.hidden)
-                    .foregroundStyle(.green)
-                }
-            }
-            else if (timeInterval == "1M") {
-                if let dataPoints = totalBalanceChart?.all {
-                    Chart {
-                        ForEach(startIndex..<dataPoints.count, id: \.self) { index in
-                            let entry = dataPoints[index]
-                            LineMark(
-                                x: .value("Day", entry[0]),
-                                y: .value("Value", entry[1])
-                            )
-                        }
-                    }
-                    .chartXScale(domain: createRange(from: dataPoints[startIndex][0], to: dataPoints[dataPoints.count - 1][0]))
-                    .frame(height: 200)
-                    .aspectRatio(contentMode: .fit)
-                    .padding()
-                    .chartYAxis(.hidden)
-                    .chartXAxis(.hidden)
-                    .foregroundStyle(.green)
-                    .onAppear {
-                        startIndex = getStartIndex(totalBalanceChart: dataPoints)
                     }
                 }
+                .edgesIgnoringSafeArea(.horizontal) // Extend to the horizontal edges of the screen
+                .chartYAxis(.hidden)
+                .chartXAxis(.hidden)
+                .foregroundStyle(.green)
             }
             else if (timeInterval == "3M") {
-                if let dataPoints = totalBalanceChart?.all {
-                    Chart {
-                        ForEach(startIndex..<dataPoints.count, id: \.self) { index in
-                            let entry = dataPoints[index]
-                            LineMark(
-                                x: .value("Day", entry[0]),
-                                y: .value("Value", entry[1])
-                            )
+                VStack {
+                    if let dataPoints = totalBalanceChart?.all {
+                        Chart {
+                            ForEach(dataPoints.suffix(from: startIndex), id: \.id) { dataPoint in
+
+                                LineMark(
+                                    x: .value("Day", dataPoint.date),
+                                    y: .value("Value", dataPoint.value)
+                                )
+                            }
+                        }
+                        .chartXScale(domain: createRange(from: dataPoints[startIndex].date, to: dataPoints[dataPoints.count - 1].date))
+                        .frame(maxWidth: .infinity) // Use maximum width available
+                        .frame(height: height)
+                        .padding()
+                        .onAppear {
+                            startIndex = getStartIndex(totalBalanceChart: dataPoints)
                         }
                     }
-                    .chartXScale(domain: createRange(from: dataPoints[startIndex][0], to: dataPoints[dataPoints.count - 1][0]))
-                    .frame(height: 200)
-                    .aspectRatio(contentMode: .fit)
-                    .padding()
-                    .chartYAxis(.hidden)
-                    .chartXAxis(.hidden)
-                    .foregroundStyle(.green)
-                    .onAppear {
-                        startIndex = getStartIndex(totalBalanceChart: dataPoints)
-                    }
-                }
-            }
-            else if (timeInterval == "7") {
-                HStack {
-                    Chart {
-                            if let dataPoints = totalBalanceChart?.oneWeek {
-                                ForEach(0..<(dataPoints.count), id: \.self) { index in
-                                    let entry = dataPoints[index]
-                                    if entry.count >= 2 {
-                                        LineMark(
-                                            x: .value("Day", entry[0]),
-                                            y: .value("Value", entry[1])
-                                        )
-                                    }
-
-                                }
-                            }
-                    }
-                    .chartXScale(domain: createRange(from: totalBalanceChart?.oneWeek?.first?.first ?? 0, to: totalBalanceChart?.oneWeek?.last?.first ?? 200))
-                    .frame(height: height)
-                    .aspectRatio(contentMode: .fit)
-                    .padding()
-
-
                 }
                 .chartYAxis(.hidden)
                 .chartXAxis(.hidden)
                 .foregroundStyle(.green)
             }
-            else if (timeInterval == "1") {
-                HStack {
-                    Chart {
-                            if let dataPoints = totalBalanceChart?.oneDay {
-                                ForEach(0..<(dataPoints.count), id: \.self) { index in
-                                    let entry = dataPoints[index]
-                                    if entry.count >= 2 {
-                                        LineMark(
-                                            x: .value("Day", entry[0]),
-                                            y: .value("Value", entry[1])
-                                        )
-                                    }
+            else if (timeInterval == "1M") {
+                VStack {
+                    if let dataPoints = totalBalanceChart?.all {
+                        Chart {
+                            ForEach(dataPoints.suffix(from: startIndex), id: \.id) { dataPoint in
 
-                                }
+                                LineMark(
+                                    x: .value("Day", dataPoint.date),
+                                    y: .value("Value", dataPoint.value)
+                                )
                             }
+                        }
+                        .chartXScale(domain: createRange(from: dataPoints[startIndex].date, to: dataPoints[dataPoints.count - 1].date))
+                        .frame(maxWidth: .infinity) // Use maximum width available
+                        .frame(height: height)
+                        .padding()
+                        .onAppear {
+                            startIndex = getStartIndex(totalBalanceChart: dataPoints)
+                        }
                     }
-                    .chartXScale(domain: createRange(from: totalBalanceChart?.oneDay?.first?.first ?? 0, to: totalBalanceChart?.oneDay?.last?.first ?? 200))
-                    .frame(height: height)
-                    .aspectRatio(contentMode: .fit)
-                    .padding()
-
-
                 }
                 .chartYAxis(.hidden)
                 .chartXAxis(.hidden)
                 .foregroundStyle(.green)
             }
+            else if (timeInterval == "1W") {
+                VStack {
+                    if let dataPoints = totalBalanceChart?.oneWeek {
+                        Chart {
+                            ForEach(dataPoints) { dataPoint in
+                                LineMark(
+                                    x: .value("Day", dataPoint.date),
+                                    y: .value("Value", dataPoint.value)
+                                )
+                            }
+                        }
+                        .chartXScale(domain: createRange(from: dataPoints.first?.date ?? Date(), to: dataPoints.last?.date ?? Date()))
+                        .frame(maxWidth: .infinity) // Use maximum width available
+                        .frame(height: height)
+                        .padding()
+                    }
+                }
+                .edgesIgnoringSafeArea(.horizontal) // Extend to the horizontal edges of the screen
+                .chartYAxis(.hidden)
+                .chartXAxis(.hidden)
+                .foregroundStyle(.green)
+                
+                
+//                HStack {
+//                    Chart {
+//                            if let dataPoints = totalBalanceChart?.oneWeek {
+//                                ForEach(0..<(dataPoints.count), id: \.self) { index in
+//                                    let entry = dataPoints[index]
+//                                    if entry.count >= 2 {
+//                                        LineMark(
+//                                            x: .value("Day", entry[0]),
+//                                            y: .value("Value", entry[1])
+//                                        )
+//                                    }
+//
+//                                }
+//                            }
+//                    }
+//                    .chartXScale(domain: createRange(from: totalBalanceChart?.oneWeek?.first?.first ?? 0, to: totalBalanceChart?.oneWeek?.last?.first ?? 200))
+//                    .frame(height: height)
+//                    .aspectRatio(contentMode: .fit)
+//                    .padding()
+//
+//
+//                }
+//                .chartYAxis(.hidden)
+//                .chartXAxis(.hidden)
+//                .foregroundStyle(.green)
+            }
+//            else if (timeInterval == "1") {
+//                HStack {
+//                    Chart {
+//                            if let dataPoints = totalBalanceChart?.oneDay {
+//                                ForEach(0..<(dataPoints.count), id: \.self) { index in
+//                                    let entry = dataPoints[index]
+//                                    if entry.count >= 2 {
+//                                        LineMark(
+//                                            x: .value("Day", entry[0]),
+//                                            y: .value("Value", entry[1])
+//                                        )
+//                                    }
+//
+//                                }
+//                            }
+//                    }
+//                    .chartXScale(domain: createRange(from: totalBalanceChart?.oneDay?.first?.first ?? 0, to: totalBalanceChart?.oneDay?.last?.first ?? 200))
+//                    .frame(height: height)
+//                    .aspectRatio(contentMode: .fit)
+//                    .padding()
+//
+//
+//                }
+//                .chartYAxis(.hidden)
+//                .chartXAxis(.hidden)
+//                .foregroundStyle(.green)
+//            }
 
         }
         else {
@@ -160,20 +179,15 @@ struct BalanceChartView: View {
         }
     }
     
-    func getStartIndex(totalBalanceChart: [[Double]]) -> Int {
-
+    func getStartIndex(totalBalanceChart: [ChartDataPoint]) -> Int {
         if let timeBefore = timeBefore {
-            print("timeBefore: \(timeBefore.timeIntervalSince1970 * 1000)")
-        }
-        
-        for (index, data) in totalBalanceChart.enumerated() {
+            print("timeBefore: \(timeBefore)")
 
-            if let timeBefore = timeBefore{
-                let timestamp = timeBefore.timeIntervalSince1970 * 1000
-                // Use the timestamp as needed
-                if data[0] >= timestamp {
-                    print("data timestamp: \(data[0])")
-                    print(index)
+            for (index, dataPoint) in totalBalanceChart.enumerated() {
+                // Use the date directly for comparison
+                if dataPoint.date >= timeBefore {
+//                    print("data date: \(dataPoint.date)")
+//                    print(index)
                     return index
                 }
             }
@@ -184,7 +198,9 @@ struct BalanceChartView: View {
     
 }
 
-
+func createRange(from: Date, to: Date) -> ClosedRange<Date> {
+    return from...to
+}
 
 //struct BalanceChartView_Previews: PreviewProvider {
 //    static var previews: some View {

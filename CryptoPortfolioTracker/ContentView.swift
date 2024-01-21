@@ -9,10 +9,10 @@ import Charts
 import SwiftUI
 
 struct BalanceChartData {
-    var all: [[Double]]?
-    var oneWeek: [[Double]]?
-    var oneDay: [[Double]]?
-    var live: [[Double]]?
+    var all: [ChartDataPoint]?
+    var oneWeek: [ChartDataPoint]?
+    var oneDay: [ChartDataPoint]?
+    var live: [ChartDataPoint]?
 }
 
 
@@ -111,9 +111,10 @@ struct ContentView: View {
                 }
             }
             .task {
+                // Get wallet info for each wallet and calculate total balance
                 if walletsInfo.isEmpty {
                     var totalBalanceTmp = 0.00
-                    var fetchedWalletsInfo = [WalletInfo]() // Replace WalletInfoType with your actual type
+                    var fetchedWalletsInfo = [WalletInfo]()
 
                     do {
                         for address in addresses {
@@ -127,7 +128,6 @@ struct ContentView: View {
                             self.totalBalance = totalBalanceTmp
                             self.isTotalBalanceLoaded = true
                         }
-
                     } catch APIError.invalidURL {
                         print("Invalid url")
                     } catch APIError.invalidResponse {
@@ -144,67 +144,36 @@ struct ContentView: View {
                 if walletToBalanceChart.isEmpty {
                     do {
                         var tempWalletToBalanceChart = [String: BalanceChartData]()
-
                         for address in addresses {
-                            let tempAllBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "max")
                             let lowerCaseAddress = address.lowercased()
                             var existingChartData = tempWalletToBalanceChart[lowerCaseAddress] ?? BalanceChartData()
-                            existingChartData.all = tempAllBalanceChart
+                            
+                            let tempMaxBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "max")
+                            existingChartData.all = tempMaxBalanceChart
                             
                             let tempOneWeekBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "7")
                             existingChartData.oneWeek = tempOneWeekBalanceChart
+                            print("Test")
+                            print(tempOneWeekBalanceChart)
                             
-                            let tempOneDayBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "1")
-                            existingChartData.oneDay = tempOneDayBalanceChart
-                            
+//                            let tempOneDayBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "1")
+//                            existingChartData.oneDay = tempOneDayBalanceChart
+
                             tempWalletToBalanceChart[lowerCaseAddress] = existingChartData
                         }
-                        let allchartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "All")
-                        let oneWeekChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "7")
-                        let oneDayChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "1")
+                        let tempMaxChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "max")
+                        let tempOneWeekChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "7")
+//                        let tempOneDayChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "1")
                         
-
                         DispatchQueue.main.async {
                             self.walletToBalanceChart = tempWalletToBalanceChart
-                            self.totalBalanceChart.all = allchartData
-                            self.totalBalanceChart.oneWeek = oneWeekChartData
-                            self.totalBalanceChart.oneDay = oneDayChartData
+                            self.totalBalanceChart.all = tempMaxChartData
+                            self.totalBalanceChart.oneWeek = tempOneWeekChartData
+//                            self.totalBalanceChart.oneDay = tempOneDayChartData
                             self.isTotalBalanceChartDataLoaded = true
                         }
-
-                    } catch APIError.invalidURL {
-                        print("Invalid url")
-                    } catch APIError.invalidResponse {
-                        print("Invalid response")
-                    } catch APIError.invalidData {
-                        print("Invalid Data")
-                    } catch {
-                        // Handle other errors
-                        print("An unexpected error")
-                    }
-
-                }
-
-            }
-            .onReceive(timer) { _ in
-                Task {
-
-                    do {
-                        var totalBalanceTmp = 0.00
-                        var fetchedWalletsInfo = [WalletInfo]() // Replace WalletInfoType with your actual type
                         
-                        for address in addresses {
-                            let walletInfo = try await fetchWalletInfo(walletAddress: address)
-                            totalBalanceTmp += walletInfo.balanceInUSD
-                            fetchedWalletsInfo.append(walletInfo)
-                        }
-
-                        DispatchQueue.main.async {
-                            self.walletsInfo = fetchedWalletsInfo
-                            self.totalBalance = totalBalanceTmp
-                            self.isTotalBalanceLoaded = true
-                        }
-
+                        
                     } catch APIError.invalidURL {
                         print("Invalid url")
                     } catch APIError.invalidResponse {
@@ -215,58 +184,90 @@ struct ContentView: View {
                         // Handle other errors
                         print("An unexpected error: \(error.localizedDescription)")
                     }
-                    
-                    
-                    
-                    do {
-                        var tempWalletToBalanceChart = [String: BalanceChartData]()
-
-                        for address in addresses {
-                            let tempAllBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "max")
-                            let lowerCaseAddress = address.lowercased()
-                            var existingChartData = tempWalletToBalanceChart[lowerCaseAddress] ?? BalanceChartData()
-                            existingChartData.all = tempAllBalanceChart
-                            
-                            let tempOneWeekBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "7")
-                            existingChartData.oneWeek = tempOneWeekBalanceChart
-                            
-                            let tempOneDayBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "1")
-                            existingChartData.oneDay = tempOneDayBalanceChart
-                            
-                            tempWalletToBalanceChart[lowerCaseAddress] = existingChartData
-                        }
-                        let allchartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "All")
-                        let oneWeekChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "7")
-                        let oneDayChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "1")
-                        
-                        
-
-                        DispatchQueue.main.async {
-                            self.walletToBalanceChart = tempWalletToBalanceChart
-                            self.totalBalanceChart.all = allchartData
-                            self.totalBalanceChart.oneWeek = oneWeekChartData
-                            self.totalBalanceChart.oneDay = oneDayChartData
-                            self.isTotalBalanceChartDataLoaded = true
-                        }
-                    } catch APIError.invalidURL {
-                        print("Invalid url")
-                    } catch APIError.invalidResponse {
-                        print("Invalid response")
-                    } catch APIError.invalidData {
-                        print("Invalid Data")
-                    } catch {
-                        // Handle other errors
-                        print("An unexpected error")
-                    }
                 }
             }
+//            .onReceive(timer) { _ in
+//                Task {
+//
+//                    do {
+//                        var totalBalanceTmp = 0.00
+//                        var fetchedWalletsInfo = [WalletInfo]() // Replace WalletInfoType with your actual type
+//
+//                        for address in addresses {
+//                            let walletInfo = try await fetchWalletInfo(walletAddress: address)
+//                            totalBalanceTmp += walletInfo.balanceInUSD
+//                            fetchedWalletsInfo.append(walletInfo)
+//                        }
+//
+//                        DispatchQueue.main.async {
+//                            self.walletsInfo = fetchedWalletsInfo
+//                            self.totalBalance = totalBalanceTmp
+//                            self.isTotalBalanceLoaded = true
+//                        }
+//
+//                    } catch APIError.invalidURL {
+//                        print("Invalid url")
+//                    } catch APIError.invalidResponse {
+//                        print("Invalid response")
+//                    } catch APIError.invalidData {
+//                        print("Invalid Data")
+//                    } catch {
+//                        // Handle other errors
+//                        print("An unexpected error: \(error.localizedDescription)")
+//                    }
+//
+//
+//
+//                    do {
+//                        var tempWalletToBalanceChart = [String: BalanceChartData]()
+//
+//                        for address in addresses {
+//                            let tempAllBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "max")
+//                            let lowerCaseAddress = address.lowercased()
+//                            var existingChartData = tempWalletToBalanceChart[lowerCaseAddress] ?? BalanceChartData()
+//                            existingChartData.all = tempAllBalanceChart
+//
+//                            let tempOneWeekBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "7")
+//                            existingChartData.oneWeek = tempOneWeekBalanceChart
+//
+//                            let tempOneDayBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "1")
+//                            existingChartData.oneDay = tempOneDayBalanceChart
+//
+//                            tempWalletToBalanceChart[lowerCaseAddress] = existingChartData
+//                        }
+//                        let allchartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "All")
+//                        let oneWeekChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "7")
+//                        let oneDayChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInteval: "1")
+//
+//
+//
+//                        DispatchQueue.main.async {
+//                            self.walletToBalanceChart = tempWalletToBalanceChart
+//                            self.totalBalanceChart.all = allchartData
+//                            self.totalBalanceChart.oneWeek = oneWeekChartData
+//                            self.totalBalanceChart.oneDay = oneDayChartData
+//                            self.isTotalBalanceChartDataLoaded = true
+//                        }
+//                    } catch APIError.invalidURL {
+//                        print("Invalid url")
+//                    } catch APIError.invalidResponse {
+//                        print("Invalid response")
+//                    } catch APIError.invalidData {
+//                        print("Invalid Data")
+//                    } catch {
+//                        // Handle other errors
+//                        print("An unexpected error")
+//                    }
+//                }
+//            }
+            
+            // When a new wallet is added, add the balance of the new wallet to the Total Balance and get the wallet Info for the wallet
             .onChange(of: addresses) { newValue in
                 guard let lastAddress = addresses.last else { return }
                 
                 Task {
                     do {
                         let walletInfo = try await fetchWalletInfo(walletAddress: lastAddress)
-                        
                         DispatchQueue.main.async {
                             self.totalBalance = (self.totalBalance ?? 0) + walletInfo.balanceInUSD
                             self.walletsInfo.append(walletInfo)

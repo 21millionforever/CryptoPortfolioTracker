@@ -27,50 +27,47 @@ struct ChartTabView: View {
     var body: some View {
         switch selectedTab {
             case "1D":
-            BalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "1", height: 200)
-                
+//            BalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "1", height: 200)
+            Text("Place Holder")
+
             case "1W":
             VStack {
-                HStack(spacing: 3) {
-                    Image(systemName: "arrowtriangle.up.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 15, height: 15)
-                        .foregroundColor(.green)
-                    
-                    Spacer()
-                        .frame(width: 5)
-
-                    Text(formatAsCurrency(number: totalBalance))
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-
-                    Text("(\(getPricePercentageDiff(data: balanceChart.oneWeek, currentBalance: totalBalance)))")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-
-                    Text("3M")
-                        .font(.subheadline)
-                        .fontWeight(.light)
-                    
-                    Spacer()
-
-                }
-                .padding(.leading)
-                BalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "7", height: 200)
+//                HStack(spacing: 3) {
+//                    Image(systemName: "arrowtriangle.up.fill")
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fit)
+//                        .frame(width: 15, height: 15)
+//                        .foregroundColor(.green)
+//
+//                    Spacer()
+//                        .frame(width: 5)
+//
+//                    Text(formatAsCurrency(number: totalBalance))
+//                        .font(.subheadline)
+//                        .fontWeight(.semibold)
+//
+//                    Text("(\(getPricePercentageDiff(data: balanceChart.oneWeek, currentBalance: totalBalance)))")
+//                        .font(.subheadline)
+//                        .fontWeight(.semibold)
+//
+//                    Text("3M")
+//                        .font(.subheadline)
+//                        .fontWeight(.light)
+//
+//                    Spacer()
+//
+//                }
+//                .padding(.leading)
+                BalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "1W", height: 200)
             }
-
+//            Text("Place Holder")
+            
             case "1M":
                 let currentDate = Date()
-//            BalanceChartView(balanceChart: balanceChart.all ?? [], timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
             BalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "1M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200)
             case "3M":
-            VStack {
                 let currentDate = Date()
                 BalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate), height: 200)
-              
-            }
-            
             case "All":
             VStack {
                 HStack(spacing: 3) {
