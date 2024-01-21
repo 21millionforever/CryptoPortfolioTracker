@@ -150,8 +150,9 @@
 			isa = PBXGroup;
 			children = (
 				44D3CF5B2B3A275700DAE5C9 /* CryptoPortfolioTrackerApp.swift */,
-				442F36F32B5A0D410013DC96 /* BalanceChartView.swift */,
+				441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */,
 				44D3CF5D2B3A275700DAE5C9 /* ContentView.swift */,
+				442F36F32B5A0D410013DC96 /* BalanceChartView.swift */,
 				442F36E22B55D5730013DC96 /* AccountCellSectionPlaceHolderView.swift */,
 				442F36E02B526CA90013DC96 /* ChartTabView.swift */,
 				442F36DF2B526BCE0013DC96 /* TestViews */,
@@ -192,7 +193,6 @@
 			isa = PBXGroup;
 			children = (
 				442F36E42B5604A70013DC96 /* AssetsView.swift */,
-				441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */,
 				441D14112B49040F00A051B7 /* SettingsView.swift */,
 				44EB87442B47219800EBF063 /* StartView.swift */,
 				44D3CF692B3BCD2300DAE5C9 /* BalanceView.swift */,

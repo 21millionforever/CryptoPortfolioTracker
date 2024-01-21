@@ -21,7 +21,7 @@ struct BottomNavigationBarView: View {
         TabView {
             ContentView()
                 .tabItem {
-                    Label("First", systemImage: "chart.line.uptrend.xyaxis")
+                    Label("Home", systemImage: "chart.line.uptrend.xyaxis")
                         .foregroundColor(.black)
 
                 }
