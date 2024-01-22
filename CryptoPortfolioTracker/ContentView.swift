@@ -78,7 +78,7 @@ struct ContentView: View {
             .navigationDestination(for: WalletInfo.self) { walletInfo in
                 AccountDetailView(walletInfo: walletInfo)
             }
-//            .navigationDestination(isPresented: $showingImportWalletView, destination: {ImportWalletView(addresses: $addresses, showingImportWalletView: $showingImportWalletView)})
+            .navigationDestination(isPresented: $showingImportWalletView, destination: {ImportWalletView(showingImportWalletView: $showingImportWalletView)})
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button(action: {showBottomMenu.toggle()})

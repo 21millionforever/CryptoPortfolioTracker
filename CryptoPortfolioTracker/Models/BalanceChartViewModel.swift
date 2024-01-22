@@ -21,21 +21,20 @@ struct ChartDataPoint: Identifiable {
 }
 
 class BalanceChartViewModel: ObservableObject {
-    @Published var addresses: [String] = ["0x98BEe23f076bE7B00fA0A2e243f821EE1344De77"]
-    // TODO: 暂时commnet掉
-//    {
-        // The didSet observer on addresses saves the new value to UserDefaults whenever the addresses array changes.
-//        didSet {
-//            UserDefaults.standard.set(addresses, forKey: "addresses")
-//        }
-//    }
+    @Published var addresses = [String]()
+    {
+//         The didSet observer on addresses saves the new value to UserDefaults whenever the addresses array changes.
+        didSet {
+            UserDefaults.standard.set(addresses, forKey: "addresses")
+        }
+    }
     @Published var walletToBalanceChart = [String: BalanceChartData]()
     @Published var totalBalanceChart = BalanceChartData()
     @Published var isTotalBalanceChartDataLoaded = false
     
     init() {
         // TODO: 暂时commnet掉
-//        addresses = UserDefaults.standard.object(forKey: "addresses") as? [String] ?? []
+        addresses = UserDefaults.standard.object(forKey: "addresses") as? [String] ?? []
         
         if (!(self.addresses.isEmpty)) {
             Task {
