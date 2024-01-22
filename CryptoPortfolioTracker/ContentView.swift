@@ -21,15 +21,8 @@ struct ContentView: View {
 
     // The sum of the balance of all the wallets
     @State var totalBalance: Double?
-
-    // wallet address maps to balance chart
-    @State private var walletToBalanceChart: [String: BalanceChartData] = [:]
-
-    // The balance chart of all the wallets combine
-    @State var totalBalanceChart = BalanceChartData()
     
     @State var isTotalBalanceLoaded: Bool = false
-//    @State var isTotalBalanceChartDataLoaded: Bool = false
     @State private var showBottomMenu: Bool = false
     @State var showingImportWalletView: Bool = false
 
@@ -133,52 +126,6 @@ struct ContentView: View {
                         print("An unexpected error: \(error.localizedDescription)")
                     }
                 }
-
-                // Get historical balance for all the wallets
-//                if walletToBalanceChart.isEmpty {
-//                    do {
-//                        var tempWalletToBalanceChart = [String: BalanceChartData]()
-//                        for address in addresses {
-//                            let lowerCaseAddress = address.lowercased()
-//                            var existingChartData = tempWalletToBalanceChart[lowerCaseAddress] ?? BalanceChartData()
-//
-//                            let tempMaxBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "max")
-//                            existingChartData.all = tempMaxBalanceChart
-//
-//                            let tempOneWeekBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "7")
-//                            existingChartData.oneWeek = tempOneWeekBalanceChart
-//                            print("Test")
-//                            print(tempOneWeekBalanceChart)
-//
-////                            let tempOneDayBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "1")
-////                            existingChartData.oneDay = tempOneDayBalanceChart
-//
-//                            tempWalletToBalanceChart[lowerCaseAddress] = existingChartData
-//                        }
-//                        let tempMaxChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "max")
-//                        let tempOneWeekChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "7")
-////                        let tempOneDayChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "1")
-//
-//                        DispatchQueue.main.async {
-//                            self.walletToBalanceChart = tempWalletToBalanceChart
-//                            self.totalBalanceChart.all = tempMaxChartData
-//                            self.totalBalanceChart.oneWeek = tempOneWeekChartData
-////                            self.totalBalanceChart.oneDay = tempOneDayChartData
-//                            self.isTotalBalanceChartDataLoaded = true
-//                        }
-//
-//
-//                    } catch APIError.invalidURL {
-//                        print("Invalid url")
-//                    } catch APIError.invalidResponse {
-//                        print("Invalid response")
-//                    } catch APIError.invalidData {
-//                        print("Invalid Data")
-//                    } catch {
-//                        // Handle other errors
-//                        print("An unexpected error: \(error.localizedDescription)")
-//                    }
-//                }
             }
             
             

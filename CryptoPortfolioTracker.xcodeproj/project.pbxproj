@@ -24,7 +24,6 @@
 		442F36F82B5E0A070013DC96 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36F72B5E0A070013DC96 /* Color.swift */; };
 		442F36FF2B5E0D530013DC96 /* CrossButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36FE2B5E0D530013DC96 /* CrossButtonView.swift */; };
 		442F37022B5E19110013DC96 /* BalanceChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37012B5E19110013DC96 /* BalanceChartViewModel.swift */; };
-		44570CC92B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44570CC82B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift */; };
 		4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */; };
 		4499E8A72B43E4EC0077CBEB /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A62B43E4EC0077CBEB /* ActivityView.swift */; };
 		449C55C82B44776C005E1593 /* ActivityReceiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */; };
@@ -67,7 +66,6 @@
 		442F36F72B5E0A070013DC96 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		442F36FE2B5E0D530013DC96 /* CrossButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossButtonView.swift; sourceTree = "<group>"; };
 		442F37012B5E19110013DC96 /* BalanceChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceChartViewModel.swift; sourceTree = "<group>"; };
-		44570CC82B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetWalletHistoricalValueApi.swift; sourceTree = "<group>"; };
 		4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetActivityTabView.swift; sourceTree = "<group>"; };
 		4499E8A62B43E4EC0077CBEB /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityReceiveCell.swift; sourceTree = "<group>"; };
@@ -221,7 +219,6 @@
 				44D3CF6E2B3BD06500DAE5C9 /* GetBalanceApi.swift */,
 				44F3D6382B428EF800801719 /* GetActivitiesApi.swift */,
 				44EB87482B47CF2100EBF063 /* GetWalletInfoApi.swift */,
-				44570CC82B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift */,
 				442F36E62B565A420013DC96 /* GetTokenImageApi.swift */,
 			);
 			path = "API calls";
@@ -317,7 +314,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44570CC92B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift in Sources */,
 				449C55C82B44776C005E1593 /* ActivityReceiveCell.swift in Sources */,
 				442F36E72B565A420013DC96 /* GetTokenImageApi.swift in Sources */,
 				44EB87452B47219800EBF063 /* StartView.swift in Sources */,

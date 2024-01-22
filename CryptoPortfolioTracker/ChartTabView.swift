@@ -12,9 +12,6 @@ struct ChartTabView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
     let tabs = ["1D", "1W", "1M", "3M", "All"]
     @Binding var selectedTab: String
-//    var balanceChart:  BalanceChartData
-//    var isDataLoaded: Bool
-//    var totalBalance: Double?
     
     var body: some View {
         switch selectedTab {

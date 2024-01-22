@@ -186,46 +186,5 @@ class BalanceChartViewModel: ObservableObject {
     }
 }
     
-    
-    
-    
-// Old
-//    func loadChartData(addresses: [String]) async {
-//        var tempWalletToBalanceChart = [String: BalanceChartData]()
-//
-//        for address in addresses {
-//            let lowerCaseAddress = address.lowercased()
-//            var existingChartData = tempWalletToBalanceChart[lowerCaseAddress] ?? BalanceChartData()
-//
-//            do {
-//                let tempMaxBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "max")
-//                existingChartData.all = tempMaxBalanceChart
-//
-//                let tempOneWeekBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "7")
-//                existingChartData.oneWeek = tempOneWeekBalanceChart
-//
-////                let tempOneDayBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "1")
-////                existingChartData.oneDay = tempOneDayBalanceChart
-//
-//                tempWalletToBalanceChart[lowerCaseAddress] = existingChartData
-//            } catch {
-//                // Handle errors
-//                print("Error fetching data for address \(address): \(error)")
-//            }
-//
-//        }
-//
-//        let tempMaxChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "max")
-//        let tempOneWeekChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "7")
-//
-//        DispatchQueue.main.async {
-//            self.walletToBalanceChart = tempWalletToBalanceChart
-//            self.totalBalanceChart.all = tempMaxChartData
-//            self.totalBalanceChart.oneWeek = tempOneWeekChartData
-////            self.totalBalanceChart.oneDay = tempOneDayChartData
-//            self.isTotalBalanceChartDataLoaded = true
-//        }
-//    }
-
 
 
