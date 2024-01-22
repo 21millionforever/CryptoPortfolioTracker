@@ -40,7 +40,7 @@ struct AccountCellView: View {
                     
 //                    if (istotalBalanceChartDataLoaded) {
 //                        if let balanceChart = walletToBalanceChart[walletInfo.address] {
-//                            BalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: istotalBalanceChartDataLoaded, timeInterval: "All", width: 200, height: 30)
+//                            BalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: istotalBalanceChartDataLoaded, timeInterval: "All", height: 50)
 //
 //                        } else {
 //                            // Handle the case where totalBalanceChart is nil

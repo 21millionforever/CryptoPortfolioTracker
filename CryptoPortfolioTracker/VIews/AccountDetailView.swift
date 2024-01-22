@@ -22,8 +22,8 @@ struct AccountDetailView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     BalanceView(balance: walletInfo.balanceInUSD, isBalanceLoaded: isTotalBalanceChartDataLoaded)
-                        
-                    
+                        .padding(.leading)
+            
 //                    HStack(spacing: 3) {
 //                        Image(systemName: "arrowtriangle.up.fill")
 //                            .resizable()
@@ -44,10 +44,10 @@ struct AccountDetailView: View {
 //                            .fontWeight(.light)
 //
 //                    }
-                    
-                    ChartTabView(selectedTab: $selectedTab, balanceChart: balanceChart, isDataLoaded: isTotalBalanceChartDataLoaded)
+                  
+//                    ChartTabView(selectedTab: $selectedTab, balanceChart: balanceChart, isDataLoaded: isTotalBalanceChartDataLoaded)
                 }
-                .padding([.leading], 20)
+//                .padding(.leading)
                 
                 AssetActivityTabView(walletInfo: walletInfo)
           

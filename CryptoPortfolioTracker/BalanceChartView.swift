@@ -9,9 +9,7 @@ import SwiftUI
 import Charts
 
 struct BalanceChartView: View {
-    var totalBalanceChart : BalanceChartData?
-   
-    var isTotalBalanceChartDataLoaded : Bool
+    @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
     var timeInterval: String
     var timeBefore : Date?
     @State private var startIndex: Int = 0
@@ -19,10 +17,10 @@ struct BalanceChartView: View {
     var height: CGFloat
 
     var body: some View {
-        if (isTotalBalanceChartDataLoaded) {
+        if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
             if (timeInterval == "All") {
                 VStack {
-                    if let dataPoints = totalBalanceChart?.all {
+                    if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
                         Chart {
                             ForEach(dataPoints) { dataPoint in
                                 LineMark(
@@ -34,7 +32,7 @@ struct BalanceChartView: View {
                         .chartXScale(domain: createRange(from: dataPoints.first?.date ?? Date(), to: dataPoints.last?.date ?? Date()))
                         .frame(maxWidth: .infinity) // Use maximum width available
                         .frame(height: height)
-                        .padding()
+//                        .padding()
                     }
                 }
                 .edgesIgnoringSafeArea(.horizontal) // Extend to the horizontal edges of the screen
@@ -44,7 +42,7 @@ struct BalanceChartView: View {
             }
             else if (timeInterval == "3M") {
                 VStack {
-                    if let dataPoints = totalBalanceChart?.all {
+                    if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
                         Chart {
                             ForEach(dataPoints.suffix(from: startIndex), id: \.id) { dataPoint in
 
@@ -57,7 +55,7 @@ struct BalanceChartView: View {
                         .chartXScale(domain: createRange(from: dataPoints[startIndex].date, to: dataPoints[dataPoints.count - 1].date))
                         .frame(maxWidth: .infinity) // Use maximum width available
                         .frame(height: height)
-                        .padding()
+//                        .padding()
                         .onAppear {
                             startIndex = getStartIndex(totalBalanceChart: dataPoints)
                         }
@@ -69,7 +67,7 @@ struct BalanceChartView: View {
             }
             else if (timeInterval == "1M") {
                 VStack {
-                    if let dataPoints = totalBalanceChart?.all {
+                    if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
                         Chart {
                             ForEach(dataPoints.suffix(from: startIndex), id: \.id) { dataPoint in
 
@@ -82,7 +80,7 @@ struct BalanceChartView: View {
                         .chartXScale(domain: createRange(from: dataPoints[startIndex].date, to: dataPoints[dataPoints.count - 1].date))
                         .frame(maxWidth: .infinity) // Use maximum width available
                         .frame(height: height)
-                        .padding()
+//                        .padding()
                         .onAppear {
                             startIndex = getStartIndex(totalBalanceChart: dataPoints)
                         }
@@ -94,7 +92,7 @@ struct BalanceChartView: View {
             }
             else if (timeInterval == "1W") {
                 VStack {
-                    if let dataPoints = totalBalanceChart?.oneWeek {
+                    if let dataPoints = balanceChartViewModel.totalBalanceChart.oneWeek {
                         Chart {
                             ForEach(dataPoints) { dataPoint in
                                 LineMark(
@@ -106,40 +104,13 @@ struct BalanceChartView: View {
                         .chartXScale(domain: createRange(from: dataPoints.first?.date ?? Date(), to: dataPoints.last?.date ?? Date()))
                         .frame(maxWidth: .infinity) // Use maximum width available
                         .frame(height: height)
-                        .padding()
+//                        .padding()
                     }
                 }
                 .edgesIgnoringSafeArea(.horizontal) // Extend to the horizontal edges of the screen
                 .chartYAxis(.hidden)
                 .chartXAxis(.hidden)
                 .foregroundStyle(.green)
-                
-                
-//                HStack {
-//                    Chart {
-//                            if let dataPoints = totalBalanceChart?.oneWeek {
-//                                ForEach(0..<(dataPoints.count), id: \.self) { index in
-//                                    let entry = dataPoints[index]
-//                                    if entry.count >= 2 {
-//                                        LineMark(
-//                                            x: .value("Day", entry[0]),
-//                                            y: .value("Value", entry[1])
-//                                        )
-//                                    }
-//
-//                                }
-//                            }
-//                    }
-//                    .chartXScale(domain: createRange(from: totalBalanceChart?.oneWeek?.first?.first ?? 0, to: totalBalanceChart?.oneWeek?.last?.first ?? 200))
-//                    .frame(height: height)
-//                    .aspectRatio(contentMode: .fit)
-//                    .padding()
-//
-//
-//                }
-//                .chartYAxis(.hidden)
-//                .chartXAxis(.hidden)
-//                .foregroundStyle(.green)
             }
 //            else if (timeInterval == "1") {
 //                HStack {

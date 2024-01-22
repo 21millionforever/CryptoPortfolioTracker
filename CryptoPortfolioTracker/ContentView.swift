@@ -8,16 +8,10 @@ import Charts
 
 import SwiftUI
 
-struct BalanceChartData {
-    var all: [ChartDataPoint]?
-    var oneWeek: [ChartDataPoint]?
-    var oneDay: [ChartDataPoint]?
-    var live: [ChartDataPoint]?
-}
-
-
 
 struct ContentView: View {
+    @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
+    
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
 
     // An array of wallet addresses
@@ -34,10 +28,10 @@ struct ContentView: View {
     // The balance chart of all the wallets combine
     @State var totalBalanceChart = BalanceChartData()
     
-    @State var isTotalBalanceLoaded = false
-    @State var isTotalBalanceChartDataLoaded = false
-    @State private var showingBottomMenu = false
-    @State var showingImportWalletView = false
+    @State var isTotalBalanceLoaded: Bool = false
+//    @State var isTotalBalanceChartDataLoaded: Bool = false
+    @State private var showBottomMenu: Bool = false
+    @State var showingImportWalletView: Bool = false
 
     
     let tabs = ["LIVE", "1D", "1W", "1M", "3M", "All"]
@@ -59,7 +53,7 @@ struct ContentView: View {
                     BalanceView(balance: totalBalance, isBalanceLoaded: isTotalBalanceLoaded)
                         .padding(.leading)
                     
-                    ChartTabView(selectedTab: $selectedTab, balanceChart: totalBalanceChart, isDataLoaded: isTotalBalanceChartDataLoaded, totalBalance: totalBalance)
+                    ChartTabView(selectedTab: $selectedTab)
 
                     HStack() {
                         Text("Accounts")
@@ -70,40 +64,40 @@ struct ContentView: View {
                     .padding(.leading)
 
 
-                    if (isTotalBalanceChartDataLoaded) {
-                        ForEach(walletsInfo, id: \.id) { walletInfo in
-                            NavigationLink(value: walletInfo) {
-                                AccountCellView(walletInfo: walletInfo, walletToBalanceChart: walletToBalanceChart, istotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
-
-                                    .padding(.leading)
-                            }
-                        }
-                    }
-                    else {
-                        AccountCellSectionPlaceHolderView()
-                    }
+//                    if (isTotalBalanceChartDataLoaded) {
+//                        ForEach(walletsInfo, id: \.id) { walletInfo in
+//                            NavigationLink(value: walletInfo) {
+//                                AccountCellView(walletInfo: walletInfo, walletToBalanceChart: walletToBalanceChart, istotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
+//
+//                                    .padding(.leading)
+//                            }
+//                        }
+//                    }
+//                    else {
+//                        AccountCellSectionPlaceHolderView()
+//                    }
                     
 
                 }
                 .navigationTitle("Total Balance")
 
             }
-            .navigationDestination(for: WalletInfo.self) { walletInfo in
-                AccountDetailView(walletInfo: walletInfo, balanceChart: walletToBalanceChart[walletInfo.address] ?? BalanceChartData() , isTotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
-            }
+//            .navigationDestination(for: WalletInfo.self) { walletInfo in
+//                AccountDetailView(walletInfo: walletInfo, balanceChart: walletToBalanceChart[walletInfo.address] ?? BalanceChartData() , isTotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
+//            }
             .navigationDestination(isPresented: $showingImportWalletView, destination: {ImportWalletView(addresses: $addresses, showingImportWalletView: $showingImportWalletView)})
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-
                     Button(action: {
-                        showingBottomMenu = true})
+                        showBottomMenu.toggle()
+                        })
                     {
-                        Image(systemName: "plus")
-                            .foregroundColor(.green)
-                            .font(.system(size: 20, weight: .bold))
+                        CrossButtonView()
                     }
-                    .sheet(isPresented: $showingBottomMenu) {
-                        BottomSheetView(navigateToImportWalletView: $showingImportWalletView, showingBottomMenu: $showingBottomMenu)
+                    .rotationEffect(Angle(degrees: showBottomMenu ? 45 : 0))
+                    .animation(.spring(), value: showBottomMenu) // Apply the animation to the rotation effect based on the `showBottomMenu` value
+                    .sheet(isPresented: $showBottomMenu) {
+                        BottomSheetView(navigateToImportWalletView: $showingImportWalletView, showingBottomMenu: $showBottomMenu)
                             .padding()
                             .presentationDetents([.fraction(0.2)])
                             .presentationDragIndicator(.visible)
@@ -141,51 +135,54 @@ struct ContentView: View {
                 }
 
                 // Get historical balance for all the wallets
-                if walletToBalanceChart.isEmpty {
-                    do {
-                        var tempWalletToBalanceChart = [String: BalanceChartData]()
-                        for address in addresses {
-                            let lowerCaseAddress = address.lowercased()
-                            var existingChartData = tempWalletToBalanceChart[lowerCaseAddress] ?? BalanceChartData()
-                            
-                            let tempMaxBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "max")
-                            existingChartData.all = tempMaxBalanceChart
-                            
-                            let tempOneWeekBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "7")
-                            existingChartData.oneWeek = tempOneWeekBalanceChart
-                            print("Test")
-                            print(tempOneWeekBalanceChart)
-                            
-//                            let tempOneDayBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "1")
-//                            existingChartData.oneDay = tempOneDayBalanceChart
-
-                            tempWalletToBalanceChart[lowerCaseAddress] = existingChartData
-                        }
-                        let tempMaxChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "max")
-                        let tempOneWeekChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "7")
-//                        let tempOneDayChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "1")
-                        
-                        DispatchQueue.main.async {
-                            self.walletToBalanceChart = tempWalletToBalanceChart
-                            self.totalBalanceChart.all = tempMaxChartData
-                            self.totalBalanceChart.oneWeek = tempOneWeekChartData
-//                            self.totalBalanceChart.oneDay = tempOneDayChartData
-                            self.isTotalBalanceChartDataLoaded = true
-                        }
-                        
-                        
-                    } catch APIError.invalidURL {
-                        print("Invalid url")
-                    } catch APIError.invalidResponse {
-                        print("Invalid response")
-                    } catch APIError.invalidData {
-                        print("Invalid Data")
-                    } catch {
-                        // Handle other errors
-                        print("An unexpected error: \(error.localizedDescription)")
-                    }
-                }
+//                if walletToBalanceChart.isEmpty {
+//                    do {
+//                        var tempWalletToBalanceChart = [String: BalanceChartData]()
+//                        for address in addresses {
+//                            let lowerCaseAddress = address.lowercased()
+//                            var existingChartData = tempWalletToBalanceChart[lowerCaseAddress] ?? BalanceChartData()
+//
+//                            let tempMaxBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "max")
+//                            existingChartData.all = tempMaxBalanceChart
+//
+//                            let tempOneWeekBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "7")
+//                            existingChartData.oneWeek = tempOneWeekBalanceChart
+//                            print("Test")
+//                            print(tempOneWeekBalanceChart)
+//
+////                            let tempOneDayBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: address, days: "1")
+////                            existingChartData.oneDay = tempOneDayBalanceChart
+//
+//                            tempWalletToBalanceChart[lowerCaseAddress] = existingChartData
+//                        }
+//                        let tempMaxChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "max")
+//                        let tempOneWeekChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "7")
+////                        let tempOneDayChartData = CalculateTotalBalanceChart(walletToBalanceChart: tempWalletToBalanceChart, timeInterval: "1")
+//
+//                        DispatchQueue.main.async {
+//                            self.walletToBalanceChart = tempWalletToBalanceChart
+//                            self.totalBalanceChart.all = tempMaxChartData
+//                            self.totalBalanceChart.oneWeek = tempOneWeekChartData
+////                            self.totalBalanceChart.oneDay = tempOneDayChartData
+//                            self.isTotalBalanceChartDataLoaded = true
+//                        }
+//
+//
+//                    } catch APIError.invalidURL {
+//                        print("Invalid url")
+//                    } catch APIError.invalidResponse {
+//                        print("Invalid response")
+//                    } catch APIError.invalidData {
+//                        print("Invalid Data")
+//                    } catch {
+//                        // Handle other errors
+//                        print("An unexpected error: \(error.localizedDescription)")
+//                    }
+//                }
             }
+            
+            
+            
 //            .onReceive(timer) { _ in
 //                Task {
 //
@@ -262,35 +259,40 @@ struct ContentView: View {
 //            }
             
             // When a new wallet is added, add the balance of the new wallet to the Total Balance and get the wallet Info for the wallet
-            .onChange(of: addresses) { newValue in
+//            .onChange(of: addresses) { newValue in
+//                guard let lastAddress = addresses.last else { return }
+//
+//                Task {
+//                    do {
+//                        let walletInfo = try await fetchWalletInfo(walletAddress: lastAddress)
+//                        DispatchQueue.main.async {
+//                            self.totalBalance = (self.totalBalance ?? 0) + walletInfo.balanceInUSD
+//                            self.walletsInfo.append(walletInfo)
+//                        }
+//
+//                    } catch APIError.invalidURL {
+//                        print("Invalid url")
+//                    } catch APIError.invalidResponse {
+//                        print("Invalid response")
+//                    } catch APIError.invalidData {
+//                        print("Invalid Data")
+//                    } catch {
+//                        print("An unexpected error: \(error.localizedDescription)")
+//                    }
+//                }
+//            }
+            .onChange(of: balanceChartViewModel.addresses) { newValue in
                 guard let lastAddress = addresses.last else { return }
-                
                 Task {
-                    do {
-                        let walletInfo = try await fetchWalletInfo(walletAddress: lastAddress)
-                        DispatchQueue.main.async {
-                            self.totalBalance = (self.totalBalance ?? 0) + walletInfo.balanceInUSD
-                            self.walletsInfo.append(walletInfo)
-                        }
-
-                    } catch APIError.invalidURL {
-                        print("Invalid url")
-                    } catch APIError.invalidResponse {
-                        print("Invalid response")
-                    } catch APIError.invalidData {
-                        print("Invalid Data")
-                    } catch {
-                        print("An unexpected error: \(error.localizedDescription)")
-                    }
+                    await balanceChartViewModel.loadSingleAddressChartData(address: lastAddress)
+                    
                 }
             }
             
             
             
             
-            
-            
-            
+     
         }
 
     }

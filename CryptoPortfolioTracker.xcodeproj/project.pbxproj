@@ -21,8 +21,10 @@
 		442F36F02B5A0ABA0013DC96 /* record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36EF2B5A0ABA0013DC96 /* record.swift */; };
 		442F36F42B5A0D410013DC96 /* BalanceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36F32B5A0D410013DC96 /* BalanceChartView.swift */; };
 		442F36F62B5A36030013DC96 /* ActivityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36F52B5A36030013DC96 /* ActivityDetailView.swift */; };
+		442F36F82B5E0A070013DC96 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36F72B5E0A070013DC96 /* Color.swift */; };
+		442F36FF2B5E0D530013DC96 /* CrossButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36FE2B5E0D530013DC96 /* CrossButtonView.swift */; };
+		442F37022B5E19110013DC96 /* BalanceChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37012B5E19110013DC96 /* BalanceChartViewModel.swift */; };
 		44570CC92B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44570CC82B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift */; };
-		44570CCD2B4C95D700ADA80B /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44570CCC2B4C95D700ADA80B /* UtilityFunctions.swift */; };
 		4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */; };
 		4499E8A72B43E4EC0077CBEB /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A62B43E4EC0077CBEB /* ActivityView.swift */; };
 		449C55C82B44776C005E1593 /* ActivityReceiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */; };
@@ -62,8 +64,10 @@
 		442F36EF2B5A0ABA0013DC96 /* record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = record.swift; sourceTree = "<group>"; };
 		442F36F32B5A0D410013DC96 /* BalanceChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceChartView.swift; sourceTree = "<group>"; };
 		442F36F52B5A36030013DC96 /* ActivityDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailView.swift; sourceTree = "<group>"; };
+		442F36F72B5E0A070013DC96 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		442F36FE2B5E0D530013DC96 /* CrossButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossButtonView.swift; sourceTree = "<group>"; };
+		442F37012B5E19110013DC96 /* BalanceChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceChartViewModel.swift; sourceTree = "<group>"; };
 		44570CC82B4C7B0000ADA80B /* GetWalletHistoricalValueApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetWalletHistoricalValueApi.swift; sourceTree = "<group>"; };
-		44570CCC2B4C95D700ADA80B /* UtilityFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctions.swift; sourceTree = "<group>"; };
 		4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetActivityTabView.swift; sourceTree = "<group>"; };
 		4499E8A62B43E4EC0077CBEB /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityReceiveCell.swift; sourceTree = "<group>"; };
@@ -119,6 +123,38 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
+		442F36F92B5E0A1D0013DC96 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				442F36F72B5E0A070013DC96 /* Color.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		442F36FA2B5E0CD80013DC96 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				442F36FB2B5E0CEA0013DC96 /* Components */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		442F36FB2B5E0CEA0013DC96 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				442F36FE2B5E0D530013DC96 /* CrossButtonView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		442F37002B5E18910013DC96 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				442F37012B5E19110013DC96 /* BalanceChartViewModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		449C55C92B44E715005E1593 /* DifferentActivityCellViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,10 +191,12 @@
 				442F36F32B5A0D410013DC96 /* BalanceChartView.swift */,
 				442F36E22B55D5730013DC96 /* AccountCellSectionPlaceHolderView.swift */,
 				442F36E02B526CA90013DC96 /* ChartTabView.swift */,
+				442F37002B5E18910013DC96 /* Models */,
+				442F36F92B5E0A1D0013DC96 /* Extensions */,
+				442F36FA2B5E0CD80013DC96 /* Core */,
 				442F36DF2B526BCE0013DC96 /* TestViews */,
 				44F3D63A2B43442400801719 /* VIews */,
 				44D3CF6D2B3BD02000DAE5C9 /* API calls */,
-				44570CCC2B4C95D700ADA80B /* UtilityFunctions.swift */,
 				442F36ED2B58B4160013DC96 /* CustomizedWidges.swift */,
 				441D140B2B48FAAF00A051B7 /* formatters.swift */,
 				44D3CF722B3BE7DE00DAE5C9 /* Errors.swift */,
@@ -289,11 +327,12 @@
 				4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */,
 				441D140E2B48FDDB00A051B7 /* AssetTokenCellView.swift in Sources */,
 				441D140C2B48FAAF00A051B7 /* formatters.swift in Sources */,
+				442F36F82B5E0A070013DC96 /* Color.swift in Sources */,
+				442F37022B5E19110013DC96 /* BalanceChartViewModel.swift in Sources */,
 				442F36E32B55D5730013DC96 /* AccountCellSectionPlaceHolderView.swift in Sources */,
 				442F36F42B5A0D410013DC96 /* BalanceChartView.swift in Sources */,
 				44F3D63C2B43444600801719 /* AccountCellView.swift in Sources */,
 				441D14102B49000300A051B7 /* BottomNavigationBarView.swift in Sources */,
-				44570CCD2B4C95D700ADA80B /* UtilityFunctions.swift in Sources */,
 				441D14122B49040F00A051B7 /* SettingsView.swift in Sources */,
 				44D3CF712B3BE48B00DAE5C9 /* confi.swift in Sources */,
 				442F36E12B526CA90013DC96 /* ChartTabView.swift in Sources */,
@@ -305,6 +344,7 @@
 				442F36EB2B5733ED0013DC96 /* AssetEthCellView.swift in Sources */,
 				442F36EE2B58B4160013DC96 /* CustomizedWidges.swift in Sources */,
 				44D3CF6F2B3BD06500DAE5C9 /* GetBalanceApi.swift in Sources */,
+				442F36FF2B5E0D530013DC96 /* CrossButtonView.swift in Sources */,
 				442F36F62B5A36030013DC96 /* ActivityDetailView.swift in Sources */,
 				449C55D92B463E3B005E1593 /* BottomSheetView.swift in Sources */,
 				44D3CF732B3BE7DE00DAE5C9 /* Errors.swift in Sources */,
@@ -449,8 +489,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -478,8 +518,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
