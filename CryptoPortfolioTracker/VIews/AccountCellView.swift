@@ -11,9 +11,11 @@ import Foundation
 
 
 struct AccountCellView: View {
+    @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
+    
     var walletInfo: WalletInfo
-    var walletToBalanceChart: [String: BalanceChartData]
-    var istotalBalanceChartDataLoaded: Bool
+//    var walletToBalanceChart: [String: BalanceChartData]
+//    var istotalBalanceChartDataLoaded: Bool
     
     var body: some View {
         VStack(alignment: .trailing) {
@@ -38,15 +40,9 @@ struct AccountCellView: View {
                     
                     
                     
-//                    if (istotalBalanceChartDataLoaded) {
-//                        if let balanceChart = walletToBalanceChart[walletInfo.address] {
-//                            BalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: istotalBalanceChartDataLoaded, timeInterval: "All", height: 50)
-//
-//                        } else {
-//                            // Handle the case where totalBalanceChart is nil
-//                            Text(walletInfo.address)
-//                        }
-//                    }
+                    if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
+                            BalanceChartView(timeInterval: "All", height: 50)
+                    }
 
                     
                     

@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct AccountDetailView: View {
+    @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
+    
     var walletInfo: WalletInfo
     @Environment(\.presentationMode) var presentationMode
-    var balanceChart: BalanceChartData
-    var isTotalBalanceChartDataLoaded: Bool
     
     let tabs = ["LIVE", "1D", "1W", "1M", "3M", "All"]
     @State private var selectedTab = "All"
@@ -21,7 +21,7 @@ struct AccountDetailView: View {
     var body: some View {
             ScrollView {
                 VStack(alignment: .leading) {
-                    BalanceView(balance: walletInfo.balanceInUSD, isBalanceLoaded: isTotalBalanceChartDataLoaded)
+                    BalanceView(balance: walletInfo.balanceInUSD, isBalanceLoaded: balanceChartViewModel.isTotalBalanceChartDataLoaded)
                         .padding(.leading)
             
 //                    HStack(spacing: 3) {

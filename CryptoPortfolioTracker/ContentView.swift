@@ -15,9 +15,9 @@ struct ContentView: View {
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
 
     // An array of wallet addresses
-    @State var addresses: [String] = [Config.test_wallet]
+//    @State var addresses: [String] = [Config.test_wallet]
 
-    @State var walletsInfo: [WalletInfo] = []
+//    @State var walletsInfo: [WalletInfo] = []
 
     // The sum of the balance of all the wallets
     @State var totalBalance: Double?
@@ -57,10 +57,10 @@ struct ContentView: View {
                     .padding(.leading)
 
 
-//                    if (isTotalBalanceChartDataLoaded) {
+//                    if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
 //                        ForEach(walletsInfo, id: \.id) { walletInfo in
 //                            NavigationLink(value: walletInfo) {
-//                                AccountCellView(walletInfo: walletInfo, walletToBalanceChart: walletToBalanceChart, istotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
+//                                AccountCellView(walletInfo: walletInfo)
 //
 //                                    .padding(.leading)
 //                            }
@@ -75,15 +75,13 @@ struct ContentView: View {
                 .navigationTitle("Total Balance")
 
             }
-//            .navigationDestination(for: WalletInfo.self) { walletInfo in
-//                AccountDetailView(walletInfo: walletInfo, balanceChart: walletToBalanceChart[walletInfo.address] ?? BalanceChartData() , isTotalBalanceChartDataLoaded: isTotalBalanceChartDataLoaded)
-//            }
-            .navigationDestination(isPresented: $showingImportWalletView, destination: {ImportWalletView(addresses: $addresses, showingImportWalletView: $showingImportWalletView)})
+            .navigationDestination(for: WalletInfo.self) { walletInfo in
+                AccountDetailView(walletInfo: walletInfo)
+            }
+//            .navigationDestination(isPresented: $showingImportWalletView, destination: {ImportWalletView(addresses: $addresses, showingImportWalletView: $showingImportWalletView)})
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showBottomMenu.toggle()
-                        })
+                    Button(action: {showBottomMenu.toggle()})
                     {
                         CrossButtonView()
                     }
@@ -97,36 +95,36 @@ struct ContentView: View {
                     }
                 }
             }
-            .task {
+//            .task {
                 // Get wallet info for each wallet and calculate total balance
-                if walletsInfo.isEmpty {
-                    var totalBalanceTmp = 0.00
-                    var fetchedWalletsInfo = [WalletInfo]()
-
-                    do {
-                        for address in addresses {
-                            let walletInfo = try await fetchWalletInfo(walletAddress: address)
-                            totalBalanceTmp += walletInfo.balanceInUSD
-                            fetchedWalletsInfo.append(walletInfo)
-                        }
-
-                        DispatchQueue.main.async {
-                            self.walletsInfo = fetchedWalletsInfo
-                            self.totalBalance = totalBalanceTmp
-                            self.isTotalBalanceLoaded = true
-                        }
-                    } catch APIError.invalidURL {
-                        print("Invalid url")
-                    } catch APIError.invalidResponse {
-                        print("Invalid response")
-                    } catch APIError.invalidData {
-                        print("Invalid Data")
-                    } catch {
-                        // Handle other errors
-                        print("An unexpected error: \(error.localizedDescription)")
-                    }
-                }
-            }
+//                if walletsInfo.isEmpty {
+//                    var totalBalanceTmp = 0.00
+//                    var fetchedWalletsInfo = [WalletInfo]()
+//
+//                    do {
+//                        for address in addresses {
+//                            let walletInfo = try await fetchWalletInfo(walletAddress: address)
+//                            totalBalanceTmp += walletInfo.balanceInUSD
+//                            fetchedWalletsInfo.append(walletInfo)
+//                        }
+//
+//                        DispatchQueue.main.async {
+//                            self.walletsInfo = fetchedWalletsInfo
+//                            self.totalBalance = totalBalanceTmp
+//                            self.isTotalBalanceLoaded = true
+//                        }
+//                    } catch APIError.invalidURL {
+//                        print("Invalid url")
+//                    } catch APIError.invalidResponse {
+//                        print("Invalid response")
+//                    } catch APIError.invalidData {
+//                        print("Invalid Data")
+//                    } catch {
+//                        // Handle other errors
+//                        print("An unexpected error: \(error.localizedDescription)")
+//                    }
+//                }
+//            }
             
             
             
@@ -228,8 +226,8 @@ struct ContentView: View {
 //                    }
 //                }
 //            }
-            .onChange(of: balanceChartViewModel.addresses) { newValue in
-                guard let lastAddress = addresses.last else { return }
+            .onChange(of: balanceChartViewModel.addresses) { newAddresses in
+                guard let lastAddress = newAddresses.last else { return }
                 Task {
                     await balanceChartViewModel.loadSingleAddressChartData(address: lastAddress)
                     
