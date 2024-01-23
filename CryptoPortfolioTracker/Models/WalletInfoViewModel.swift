@@ -78,10 +78,6 @@ class WalletInfoViewModel: ObservableObject {
     @Published var totalBalance: Double?
     @Published var isWalletsInfoLoaded: Bool = false
     
-    init() {
-        
-    }
-    
     func fetchWalletInfo(walletAddress: String) async throws -> WalletInfo {
         
         let endpoint = "\(Config.server_url)/getWalletInfo/\(walletAddress)"
@@ -121,6 +117,9 @@ class WalletInfoViewModel: ObservableObject {
             }
             
             for await walletInfo in group {
+                DispatchQueue.main.async {
+                    self.walletsInfo = []
+                }
                 if let walletInfo = walletInfo {
                     DispatchQueue.main.async { [weak self] in
                         self?.walletsInfo.append(walletInfo)

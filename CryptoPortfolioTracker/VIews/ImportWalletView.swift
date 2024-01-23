@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ImportWalletView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
+    @EnvironmentObject var sharedDataModel : SharedDataModel
     
     @State private var walletAddress: String = ""
     @Binding var showingImportWalletView: Bool
@@ -56,10 +57,10 @@ struct ImportWalletView: View {
     }
     
     func saveAddress() {
-        if (balanceChartViewModel.addresses.contains(walletAddress)) {
+        if (sharedDataModel.addresses.contains(walletAddress)) {
             print("The wallet is already in balanceChartViewModel.addresses")
         } else {
-            balanceChartViewModel.addresses.append(walletAddress)
+            sharedDataModel.addresses.append(walletAddress)
         }
     }
     

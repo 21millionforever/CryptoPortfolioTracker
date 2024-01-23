@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct BottomNavigationBarView: View {
+    @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
+    @EnvironmentObject var walletInfoViewModel: WalletInfoViewModel
+    @EnvironmentObject var sharedDataModel : SharedDataModel
+    
+    let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
+    
     init() {
         // Set the unselected item color
         UITabBar.appearance().unselectedItemTintColor = UIColor.gray
@@ -23,17 +29,24 @@ struct BottomNavigationBarView: View {
                 .tabItem {
                     Label("Home", systemImage: "chart.line.uptrend.xyaxis")
                         .foregroundColor(.black)
-
                 }
 
             SettingsView()
                 .tabItem {
                     Label("Second", systemImage: "gearshape")
                 }
-            
-            // Add more tabs as needed
         }
         .accentColor(.black)
+        .task {
+            await balanceChartViewModel.loadChartData(addresses: sharedDataModel.addresses)
+            await walletInfoViewModel.loadWalletInfo(addresses: sharedDataModel.addresses)
+        }
+        .onReceive(timer) { _ in
+            Task {
+                await balanceChartViewModel.loadChartData(addresses: sharedDataModel.addresses)
+                await walletInfoViewModel.loadWalletInfo(addresses: sharedDataModel.addresses)
+            }
+        }
     }
 }
 

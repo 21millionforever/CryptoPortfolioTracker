@@ -13,7 +13,6 @@
 		441D14122B49040F00A051B7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D14112B49040F00A051B7 /* SettingsView.swift */; };
 		442F36DE2B5205CD0013DC96 /* TestViewTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36DD2B5205CD0013DC96 /* TestViewTwo.swift */; };
 		442F36E12B526CA90013DC96 /* ChartTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36E02B526CA90013DC96 /* ChartTabView.swift */; };
-		442F36E32B55D5730013DC96 /* AccountCellSectionPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36E22B55D5730013DC96 /* AccountCellSectionPlaceHolderView.swift */; };
 		442F36E52B5604A70013DC96 /* AssetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36E42B5604A70013DC96 /* AssetsView.swift */; };
 		442F36E72B565A420013DC96 /* GetTokenImageApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36E62B565A420013DC96 /* GetTokenImageApi.swift */; };
 		442F36EB2B5733ED0013DC96 /* AssetEthCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36EA2B5733ED0013DC96 /* AssetEthCellView.swift */; };
@@ -25,6 +24,8 @@
 		442F36FF2B5E0D530013DC96 /* CrossButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36FE2B5E0D530013DC96 /* CrossButtonView.swift */; };
 		442F37022B5E19110013DC96 /* BalanceChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37012B5E19110013DC96 /* BalanceChartViewModel.swift */; };
 		442F37042B5ED66A0013DC96 /* WalletInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37032B5ED66A0013DC96 /* WalletInfoViewModel.swift */; };
+		442F37082B6015C30013DC96 /* SharedDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37072B6015C30013DC96 /* SharedDataModel.swift */; };
+		442F370A2B60396E0013DC96 /* LargeTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37092B60396E0013DC96 /* LargeTitleView.swift */; };
 		4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */; };
 		4499E8A72B43E4EC0077CBEB /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A62B43E4EC0077CBEB /* ActivityView.swift */; };
 		449C55C82B44776C005E1593 /* ActivityReceiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */; };
@@ -56,7 +57,6 @@
 		441D14112B49040F00A051B7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		442F36DD2B5205CD0013DC96 /* TestViewTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewTwo.swift; sourceTree = "<group>"; };
 		442F36E02B526CA90013DC96 /* ChartTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTabView.swift; sourceTree = "<group>"; };
-		442F36E22B55D5730013DC96 /* AccountCellSectionPlaceHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCellSectionPlaceHolderView.swift; sourceTree = "<group>"; };
 		442F36E42B5604A70013DC96 /* AssetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsView.swift; sourceTree = "<group>"; };
 		442F36E62B565A420013DC96 /* GetTokenImageApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTokenImageApi.swift; sourceTree = "<group>"; };
 		442F36EA2B5733ED0013DC96 /* AssetEthCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetEthCellView.swift; sourceTree = "<group>"; };
@@ -68,6 +68,8 @@
 		442F36FE2B5E0D530013DC96 /* CrossButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossButtonView.swift; sourceTree = "<group>"; };
 		442F37012B5E19110013DC96 /* BalanceChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceChartViewModel.swift; sourceTree = "<group>"; };
 		442F37032B5ED66A0013DC96 /* WalletInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoViewModel.swift; sourceTree = "<group>"; };
+		442F37072B6015C30013DC96 /* SharedDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataModel.swift; sourceTree = "<group>"; };
+		442F37092B60396E0013DC96 /* LargeTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTitleView.swift; sourceTree = "<group>"; };
 		4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetActivityTabView.swift; sourceTree = "<group>"; };
 		4499E8A62B43E4EC0077CBEB /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityReceiveCell.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				442F36FE2B5E0D530013DC96 /* CrossButtonView.swift */,
+				442F37092B60396E0013DC96 /* LargeTitleView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -152,6 +155,7 @@
 			children = (
 				442F37012B5E19110013DC96 /* BalanceChartViewModel.swift */,
 				442F37032B5ED66A0013DC96 /* WalletInfoViewModel.swift */,
+				442F37072B6015C30013DC96 /* SharedDataModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -190,7 +194,6 @@
 				441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */,
 				44D3CF5D2B3A275700DAE5C9 /* ContentView.swift */,
 				442F36F32B5A0D410013DC96 /* BalanceChartView.swift */,
-				442F36E22B55D5730013DC96 /* AccountCellSectionPlaceHolderView.swift */,
 				442F36E02B526CA90013DC96 /* ChartTabView.swift */,
 				442F37002B5E18910013DC96 /* Models */,
 				442F36F92B5E0A1D0013DC96 /* Extensions */,
@@ -329,7 +332,6 @@
 				441D140C2B48FAAF00A051B7 /* formatters.swift in Sources */,
 				442F36F82B5E0A070013DC96 /* Color.swift in Sources */,
 				442F37022B5E19110013DC96 /* BalanceChartViewModel.swift in Sources */,
-				442F36E32B55D5730013DC96 /* AccountCellSectionPlaceHolderView.swift in Sources */,
 				442F36F42B5A0D410013DC96 /* BalanceChartView.swift in Sources */,
 				44F3D63C2B43444600801719 /* AccountCellView.swift in Sources */,
 				441D14102B49000300A051B7 /* BottomNavigationBarView.swift in Sources */,
@@ -346,7 +348,9 @@
 				44D3CF6F2B3BD06500DAE5C9 /* GetBalanceApi.swift in Sources */,
 				442F36FF2B5E0D530013DC96 /* CrossButtonView.swift in Sources */,
 				442F36F62B5A36030013DC96 /* ActivityDetailView.swift in Sources */,
+				442F37082B6015C30013DC96 /* SharedDataModel.swift in Sources */,
 				449C55D92B463E3B005E1593 /* BottomSheetView.swift in Sources */,
+				442F370A2B60396E0013DC96 /* LargeTitleView.swift in Sources */,
 				44D3CF732B3BE7DE00DAE5C9 /* Errors.swift in Sources */,
 				442F36E52B5604A70013DC96 /* AssetsView.swift in Sources */,
 				449C55CB2B44F8D9005E1593 /* ActivitySendCell.swift in Sources */,
