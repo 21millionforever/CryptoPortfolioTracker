@@ -22,7 +22,7 @@ struct BalanceView: View {
                     .redacted(reason: walletInfoViewModel.isWalletsInfoLoaded ? [] : .placeholder)
                    
                 Spacer()
-            }      
+            }
         }
 
     }

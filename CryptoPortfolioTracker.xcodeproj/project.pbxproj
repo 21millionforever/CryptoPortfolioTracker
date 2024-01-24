@@ -26,6 +26,7 @@
 		442F37042B5ED66A0013DC96 /* WalletInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37032B5ED66A0013DC96 /* WalletInfoViewModel.swift */; };
 		442F37082B6015C30013DC96 /* SharedDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37072B6015C30013DC96 /* SharedDataModel.swift */; };
 		442F370A2B60396E0013DC96 /* LargeTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37092B60396E0013DC96 /* LargeTitleView.swift */; };
+		442F370C2B6048540013DC96 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F370B2B6048540013DC96 /* BalanceView.swift */; };
 		4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */; };
 		4499E8A72B43E4EC0077CBEB /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A62B43E4EC0077CBEB /* ActivityView.swift */; };
 		449C55C82B44776C005E1593 /* ActivityReceiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */; };
@@ -39,7 +40,6 @@
 		44D3CF5E2B3A275700DAE5C9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D3CF5D2B3A275700DAE5C9 /* ContentView.swift */; };
 		44D3CF602B3A275800DAE5C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44D3CF5F2B3A275800DAE5C9 /* Assets.xcassets */; };
 		44D3CF632B3A275800DAE5C9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44D3CF622B3A275800DAE5C9 /* Preview Assets.xcassets */; };
-		44D3CF6A2B3BCD2300DAE5C9 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D3CF692B3BCD2300DAE5C9 /* BalanceView.swift */; };
 		44D3CF6F2B3BD06500DAE5C9 /* GetBalanceApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D3CF6E2B3BD06500DAE5C9 /* GetBalanceApi.swift */; };
 		44D3CF712B3BE48B00DAE5C9 /* confi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D3CF702B3BE48B00DAE5C9 /* confi.swift */; };
 		44D3CF732B3BE7DE00DAE5C9 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D3CF722B3BE7DE00DAE5C9 /* Errors.swift */; };
@@ -70,6 +70,7 @@
 		442F37032B5ED66A0013DC96 /* WalletInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoViewModel.swift; sourceTree = "<group>"; };
 		442F37072B6015C30013DC96 /* SharedDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataModel.swift; sourceTree = "<group>"; };
 		442F37092B60396E0013DC96 /* LargeTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTitleView.swift; sourceTree = "<group>"; };
+		442F370B2B6048540013DC96 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetActivityTabView.swift; sourceTree = "<group>"; };
 		4499E8A62B43E4EC0077CBEB /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityReceiveCell.swift; sourceTree = "<group>"; };
@@ -84,7 +85,6 @@
 		44D3CF5D2B3A275700DAE5C9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		44D3CF5F2B3A275800DAE5C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		44D3CF622B3A275800DAE5C9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		44D3CF692B3BCD2300DAE5C9 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		44D3CF6E2B3BD06500DAE5C9 /* GetBalanceApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBalanceApi.swift; sourceTree = "<group>"; };
 		44D3CF702B3BE48B00DAE5C9 /* confi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = confi.swift; sourceTree = "<group>"; };
 		44D3CF722B3BE7DE00DAE5C9 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -236,9 +236,9 @@
 				442F36E42B5604A70013DC96 /* AssetsView.swift */,
 				441D14112B49040F00A051B7 /* SettingsView.swift */,
 				44EB87442B47219800EBF063 /* StartView.swift */,
-				44D3CF692B3BCD2300DAE5C9 /* BalanceView.swift */,
 				44F3D63B2B43444600801719 /* AccountCellView.swift */,
 				44F3D63F2B43ABAD00801719 /* AccountDetailView.swift */,
+				442F370B2B6048540013DC96 /* BalanceView.swift */,
 				4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */,
 				4499E8A62B43E4EC0077CBEB /* ActivityView.swift */,
 				442F36F52B5A36030013DC96 /* ActivityDetailView.swift */,
@@ -332,6 +332,7 @@
 				441D140C2B48FAAF00A051B7 /* formatters.swift in Sources */,
 				442F36F82B5E0A070013DC96 /* Color.swift in Sources */,
 				442F37022B5E19110013DC96 /* BalanceChartViewModel.swift in Sources */,
+				442F370C2B6048540013DC96 /* BalanceView.swift in Sources */,
 				442F36F42B5A0D410013DC96 /* BalanceChartView.swift in Sources */,
 				44F3D63C2B43444600801719 /* AccountCellView.swift in Sources */,
 				441D14102B49000300A051B7 /* BottomNavigationBarView.swift in Sources */,
@@ -341,7 +342,6 @@
 				449C55CF2B44FA67005E1593 /* ActivityApproveCell.swift in Sources */,
 				44EB87492B47CF2100EBF063 /* GetWalletInfoApi.swift in Sources */,
 				449C55D52B45FCFC005E1593 /* TestView.swift in Sources */,
-				44D3CF6A2B3BCD2300DAE5C9 /* BalanceView.swift in Sources */,
 				44D3CF5E2B3A275700DAE5C9 /* ContentView.swift in Sources */,
 				442F36EB2B5733ED0013DC96 /* AssetEthCellView.swift in Sources */,
 				442F36EE2B58B4160013DC96 /* CustomizedWidges.swift in Sources */,

@@ -16,10 +16,15 @@ struct CryptoPortfolioTrackerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            BottomNavigationBarView()
-                .environmentObject(balanceChartViewModel)
-                .environmentObject(sharedDataModel)
-                .environmentObject(walletInfoViewModel)
+            if(sharedDataModel.addresses.isEmpty) {
+                StartView()
+                    .environmentObject(sharedDataModel)
+            } else {
+                BottomNavigationBarView()
+                    .environmentObject(balanceChartViewModel)
+                    .environmentObject(sharedDataModel)
+                    .environmentObject(walletInfoViewModel)
+            }
         }
     }
 }

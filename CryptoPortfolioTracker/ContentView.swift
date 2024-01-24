@@ -25,7 +25,7 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading) {
-                    BalanceView()
+                    TotalBalanceView
                         .padding(.leading)
                     
                     ChartTabView(selectedTab: $selectedTab)
@@ -33,7 +33,7 @@ struct ContentView: View {
                     AccountsHeaderView
                         .padding(.leading)
 
-                    AccountsSection
+                    AccountsSectionView
                     
 
                 }
@@ -46,7 +46,7 @@ struct ContentView: View {
             .navigationDestination(isPresented: $showingImportWalletView, destination: {ImportWalletView(showingImportWalletView: $showingImportWalletView)})
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    TopMenuButton
+                    TopMenuButtonView
                     .sheet(isPresented: $showBottomMenu) {
                         bottomSheetView()
                     }
@@ -61,8 +61,25 @@ struct ContentView: View {
             
             
         }
-
     }
+}
+
+extension ContentView {
+    private var TotalBalanceView: some View {
+        VStack(spacing: 10) {
+            HStack() {
+                Text(formatAsCurrency(number: walletInfoViewModel.totalBalance ?? 12))
+                    .contentTransition(.numericText())
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .redacted(reason: walletInfoViewModel.isWalletsInfoLoaded ? [] : .placeholder)
+                   
+                Spacer()
+            }
+        }
+    }
+    
+    
     
     private var AccountsHeaderView: some View {
         HStack {
@@ -71,7 +88,7 @@ struct ContentView: View {
         }
     }
     
-    private var TopMenuButton: some View {
+    private var TopMenuButtonView: some View {
         Button(action: { showBottomMenu.toggle() }) {
             CrossButtonView()
                 .rotationEffect(Angle(degrees: showBottomMenu ? 45 : 0))
@@ -101,7 +118,7 @@ struct ContentView: View {
         }
     }
     
-    private var AccountsSection: some View {
+    private var AccountsSectionView: some View {
         Group {
             if balanceChartViewModel.isTotalBalanceChartDataLoaded {
                 ForEach(walletInfoViewModel.walletsInfo, id: \.id) { walletInfo in
@@ -115,7 +132,6 @@ struct ContentView: View {
             }
         }
     }
-    
 }
 
 
