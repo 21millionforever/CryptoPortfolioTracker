@@ -27,13 +27,8 @@ struct ChartTabView: View {
                     if let dataPoints = balanceChartViewModel.totalBalanceChart.oneWeek {
                         let usdDiff = calculatUsdDiff(dataPoints: dataPoints, timeBefore: nil)
                         let percDiff = caculateRateDiff(dataPoints: dataPoints, timeBefore: nil)
-                        var iconName = "arrowtriangle.up.fill"
-                        var iconColor = Color.theme.green
-
-                        if usdDiff.contains("-") {
-                            var iconName = "arrowtriangle.down.fill"
-                            var iconColor = Color.theme.red
-                        }
+                        let iconName = usdDiff.contains("-") ? "arrowtriangle.down.fill" : "arrowtriangle.up.fill"
+                        let iconColor = usdDiff.contains("-") ? Color.theme.red : Color.theme.green
 
                         ChartHeaderView(iconName: iconName, iconColor: iconColor, usdDiff: usdDiff, percDiff: percDiff, timeFrame: "1W")
                     } else {
@@ -48,77 +43,119 @@ struct ChartTabView: View {
             }
             case "1M":
             VStack {
-                let currentDate = Date()
-
-                HStack(spacing: 3) {
-                    Image(systemName: "arrowtriangle.up.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 15, height: 15)
-                        .foregroundColor(.green)
-
-                    if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
-                        Text(calculatUsdDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate)))
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-
-                        Text("(\(caculateRateDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))))")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-
-                        Text("1M")
-                            .font(.subheadline)
-                            .fontWeight(.light)
+                Group {
+                    let currentDate = Date()
+                    Group {
+                        if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
+                            let usdDiff = calculatUsdDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
+                            let percDiff = caculateRateDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
+                            let iconName = usdDiff.contains("-") ? "arrowtriangle.down.fill" : "arrowtriangle.up.fill"
+                            let iconColor = usdDiff.contains("-") ? Color.theme.red : Color.theme.green
+                            
+                            ChartHeaderView(iconName: iconName, iconColor: iconColor, usdDiff: usdDiff, percDiff: percDiff, timeFrame: "1M")
+                        } else {
+                            Text("No data available")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                        }
                     }
-                    else {
-                        Text("Unknown")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                    }
-
-
+                    .padding(.leading)
                     Spacer()
 
+                    BalanceChartView(timeInterval: "1M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200)
                 }
-                .padding(.leading)
-
-                BalanceChartView(timeInterval: "1M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200)
             }
+            
+//            VStack {
+//                let currentDate = Date()
+//
+//                HStack(spacing: 3) {
+//                    Image(systemName: "arrowtriangle.up.fill")
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fit)
+//                        .frame(width: 15, height: 15)
+//                        .foregroundColor(.green)
+//
+//                    if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
+//                        Text(calculatUsdDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate)))
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//
+//                        Text("(\(caculateRateDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))))")
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//
+//                        Text("1M")
+//                            .font(.subheadline)
+//                            .fontWeight(.light)
+//                    }
+//                    else {
+//                        Text("Unknown")
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//                    }
+//                    Spacer()
+//
+//                }
+//            }
             
             case "3M":
             VStack {
-                let currentDate = Date()
-                HStack(spacing: 3) {
-                    Image(systemName: "arrowtriangle.up.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 15, height: 15)
-                        .foregroundColor(.green)
-
-                    if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
-                        Text(calculatUsdDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate)))
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-
-                        Text("(\(caculateRateDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))))")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-
-                        Text("3M")
-                            .font(.subheadline)
-                            .fontWeight(.light)
+                Group {
+                    let currentDate = Date()
+                    Group {
+                        if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
+                            let usdDiff = calculatUsdDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
+                            let percDiff = caculateRateDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
+                            let iconName = usdDiff.contains("-") ? "arrowtriangle.down.fill" : "arrowtriangle.up.fill"
+                            let iconColor = usdDiff.contains("-") ? Color.theme.red : Color.theme.green
+                            
+                            ChartHeaderView(iconName: iconName, iconColor: iconColor, usdDiff: usdDiff, percDiff: percDiff, timeFrame: "1M")
+                        } else {
+                            Text("No data available")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                        }
                     }
-                    else {
-                        Text("Unknown")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                    }
+                    .padding(.leading)
                     Spacer()
 
+                    BalanceChartView(timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200)
                 }
-                .padding(.leading)
-                BalanceChartView(timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate), height: 200)
             }
+//            VStack {
+//                let currentDate = Date()
+//                HStack(spacing: 3) {
+//                    Image(systemName: "arrowtriangle.up.fill")
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fit)
+//                        .frame(width: 15, height: 15)
+//                        .foregroundColor(.green)
+//
+//                    if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
+//                        Text(calculatUsdDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate)))
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//
+//                        Text("(\(caculateRateDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))))")
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//
+//                        Text("3M")
+//                            .font(.subheadline)
+//                            .fontWeight(.light)
+//                    }
+//                    else {
+//                        Text("Unknown")
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//                    }
+//                    Spacer()
+//
+//                }
+//                .padding(.leading)
+//                BalanceChartView(timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate), height: 200)
+//            }
             case "All":
             VStack {
 //                HStack(spacing: 3) {
@@ -157,22 +194,29 @@ struct ChartTabView: View {
         VStack {
             HStack {
                 ForEach(tabs, id: \.self) { tab in
-                    Button(action: {
-                        self.selectedTab = tab
-                    }) {
-                        Spacer()
-                        VStack {
-                            Text(tab)
-                                .foregroundColor(self.selectedTab == tab ? .white : .green)
-                                .frame(width: 50, height: 30)
-                                .background(self.selectedTab == tab ? .green : .white)
-                                .cornerRadius(10)
-
-                        }
-                        Spacer()
-                    }
-
+                    TabButtonView(tab: tab, selectedTab: $selectedTab)
                 }
+            }
+        }
+    }
+    
+    struct TabButtonView: View {
+        let tab: String
+        @Binding var selectedTab: String
+
+        var body: some View {
+            Button(action: {
+                self.selectedTab = tab
+            }) {
+                Spacer()
+                VStack {
+                    Text(tab)
+                        .foregroundColor(self.selectedTab == tab ? .white : .green)
+                        .frame(width: 50, height: 30)
+                        .background(self.selectedTab == tab ? .green : .white)
+                        .cornerRadius(10)
+                }
+                Spacer()
             }
         }
     }
