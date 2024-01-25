@@ -31,7 +31,7 @@ struct BottomNavigationBarView: View {
                         .foregroundColor(.black)
                 }
 
-            SettingsView()
+            MarketView()
                 .tabItem {
                     Label("Second", systemImage: "gearshape")
                 }

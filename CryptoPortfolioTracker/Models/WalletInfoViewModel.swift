@@ -86,21 +86,8 @@ class WalletInfoViewModel: ObservableObject {
             throw APIError.invalidURL
         }
         
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
-        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            throw APIError.invalidResponse
-        }
-
-        do {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let response = try decoder.decode(WalletInfo.self, from: data)
-            return response
-        } catch {
-            throw APIError.invalidData
-        }
-        
+        let data: WalletInfo = try await NetworkingManager.fetchData(from: url)
+        return data
     }
     func loadWalletInfo(addresses: [String]) async {
         await withTaskGroup(of: WalletInfo?.self) { group in

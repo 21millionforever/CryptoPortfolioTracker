@@ -9,12 +9,46 @@ import SwiftUI
 
 struct MarketView: View {
     @EnvironmentObject private var marketViewModel: MarketViewModel
+    
     var body: some View {
-        List {
-            CoinRowView(coin: DeveloperPreview.instance.coin, showHoldingsColumn: false)
+        VStack {
+            headerView
+            
+            allCoinsList
+                .listStyle(PlainListStyle())
         }
-        .listStyle(PlainListStyle())
     }
+}
+
+extension MarketView {
+    private var allCoinsList: some View {
+        List {
+            ForEach(marketViewModel.allCoins) { coin in
+                CoinRowView(coin: coin)
+                    .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
+            }
+        }
+    }
+    
+    private var headerView: some View {
+        HStack(spacing: 0) {
+            Text("#")
+                .padding(.leading, 10)
+            Text("Coin")
+                .padding(.leading, 10)
+            
+            Spacer()
+            Text("Holdings")
+            
+            Text("Price")
+                .frame(width: UIScreen.main.bounds.width / 3, alignment: .trailing)
+                .padding(.trailing, 10)
+        }
+        .font(.caption)
+        .foregroundColor(Color.theme.secondaryText)
+    }
+    
+    
 }
 
 struct MarketView_Previews: PreviewProvider {

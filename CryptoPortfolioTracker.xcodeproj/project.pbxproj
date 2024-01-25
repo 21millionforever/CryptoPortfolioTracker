@@ -15,6 +15,8 @@
 		44086D9E2B623D45009CD4A2 /* MarketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44086D9D2B623D45009CD4A2 /* MarketView.swift */; };
 		44086DA02B623E6E009CD4A2 /* MarketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44086D9F2B623E6E009CD4A2 /* MarketViewModel.swift */; };
 		44086DA32B62D781009CD4A2 /* ChartDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44086DA22B62D781009CD4A2 /* ChartDataService.swift */; };
+		44086DA82B62F1E6009CD4A2 /* CoinDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44086DA72B62F1E6009CD4A2 /* CoinDataService.swift */; };
+		44086DAA2B62F9C3009CD4A2 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44086DA92B62F9C3009CD4A2 /* NetworkingManager.swift */; };
 		441D140C2B48FAAF00A051B7 /* formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D140B2B48FAAF00A051B7 /* formatters.swift */; };
 		441D140E2B48FDDB00A051B7 /* AssetTokenCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D140D2B48FDDB00A051B7 /* AssetTokenCellView.swift */; };
 		441D14102B49000300A051B7 /* BottomNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */; };
@@ -67,6 +69,8 @@
 		44086D9D2B623D45009CD4A2 /* MarketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketView.swift; sourceTree = "<group>"; };
 		44086D9F2B623E6E009CD4A2 /* MarketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewModel.swift; sourceTree = "<group>"; };
 		44086DA22B62D781009CD4A2 /* ChartDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDataService.swift; sourceTree = "<group>"; };
+		44086DA72B62F1E6009CD4A2 /* CoinDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDataService.swift; sourceTree = "<group>"; };
+		44086DA92B62F9C3009CD4A2 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		441D140B2B48FAAF00A051B7 /* formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = formatters.swift; sourceTree = "<group>"; };
 		441D140D2B48FDDB00A051B7 /* AssetTokenCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetTokenCellView.swift; sourceTree = "<group>"; };
 		441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigationBarView.swift; sourceTree = "<group>"; };
@@ -126,8 +130,17 @@
 			isa = PBXGroup;
 			children = (
 				44086DA22B62D781009CD4A2 /* ChartDataService.swift */,
+				44086DA72B62F1E6009CD4A2 /* CoinDataService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		44086DAB2B62F9CF009CD4A2 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				44086DA92B62F9C3009CD4A2 /* NetworkingManager.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		442F36DF2B526BCE0013DC96 /* TestViews */ = {
@@ -220,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				44D3CF5B2B3A275700DAE5C9 /* CryptoPortfolioTrackerApp.swift */,
+				44086DAB2B62F9CF009CD4A2 /* Utilities */,
 				44086DA12B62D71C009CD4A2 /* Services */,
 				442F37002B5E18910013DC96 /* Models */,
 				442F36F92B5E0A1D0013DC96 /* Extensions */,
@@ -259,6 +273,7 @@
 		44F3D63A2B43442400801719 /* VIews */ = {
 			isa = PBXGroup;
 			children = (
+				44086D9B2B61F3CE009CD4A2 /* CoinRowView.swift */,
 				44086D9D2B623D45009CD4A2 /* MarketView.swift */,
 				44EB87442B47219800EBF063 /* StartView.swift */,
 				441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */,
@@ -277,7 +292,6 @@
 				449C55D62B463DEE005E1593 /* ImportWalletView.swift */,
 				442F36EC2B5734060013DC96 /* Assets */,
 				449C55C92B44E715005E1593 /* DifferentActivityCellViews */,
-				44086D9B2B61F3CE009CD4A2 /* CoinRowView.swift */,
 			);
 			path = VIews;
 			sourceTree = "<group>";
@@ -379,6 +393,7 @@
 				44EB87492B47CF2100EBF063 /* GetWalletInfoApi.swift in Sources */,
 				449C55D52B45FCFC005E1593 /* TestView.swift in Sources */,
 				44D3CF5E2B3A275700DAE5C9 /* ContentView.swift in Sources */,
+				44086DAA2B62F9C3009CD4A2 /* NetworkingManager.swift in Sources */,
 				442F36EB2B5733ED0013DC96 /* AssetEthCellView.swift in Sources */,
 				442F36EE2B58B4160013DC96 /* CustomizedWidges.swift in Sources */,
 				44D3CF6F2B3BD06500DAE5C9 /* GetBalanceApi.swift in Sources */,
@@ -388,6 +403,7 @@
 				442F37082B6015C30013DC96 /* SharedDataModel.swift in Sources */,
 				449C55D92B463E3B005E1593 /* BottomSheetView.swift in Sources */,
 				44086D9A2B61EC8C009CD4A2 /* Double.swift in Sources */,
+				44086DA82B62F1E6009CD4A2 /* CoinDataService.swift in Sources */,
 				442F370A2B60396E0013DC96 /* LargeTitleView.swift in Sources */,
 				44D3CF732B3BE7DE00DAE5C9 /* Errors.swift in Sources */,
 				44086D942B6188BB009CD4A2 /* ImageModel.swift in Sources */,

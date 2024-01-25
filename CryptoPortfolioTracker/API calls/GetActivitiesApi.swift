@@ -41,18 +41,6 @@ func fetchActivities(walletAddress: String) async throws -> [ActivitiesResponse]
         throw APIError.invalidURL
     }
     
-    let (data, response) = try await URLSession.shared.data(from: url)
-    
-    guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-        throw APIError.invalidResponse
-    }
-    
-    do {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return try decoder.decode([ActivitiesResponse].self, from: data)
-    } catch {
-        throw APIError.invalidData
-    }
-    
+    let data: [ActivitiesResponse] = try await NetworkingManager.fetchData(from: url)
+    return data
 }

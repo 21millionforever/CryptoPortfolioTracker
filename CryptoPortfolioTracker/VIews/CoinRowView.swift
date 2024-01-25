@@ -10,15 +10,15 @@ import SwiftUI
 struct CoinRowView: View {
     
     let coin: CoinModel
-    let showHoldingsColumn: Bool
+//    let showHoldingsColumn: Bool
     
     var body: some View {
         HStack(spacing: 0) {
             leftColumn
             Spacer()
-            if showHoldingsColumn {
-                centerColumn
-            }
+//            if showHoldingsColumn {
+            centerColumn
+//            }
             rightColumn
         }
         .font(.subheadline)
@@ -28,7 +28,7 @@ struct CoinRowView: View {
 struct CoinRowView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            CoinRowView(coin: dev.coin, showHoldingsColumn: true)
+            CoinRowView(coin: dev.coin)
                 .previewLayout(.sizeThatFits)
         }
 
