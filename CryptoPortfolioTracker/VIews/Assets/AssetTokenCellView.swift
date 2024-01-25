@@ -109,7 +109,7 @@ struct AssetTokenCellView: View {
         let decimals = Double(tokenInfo.tokenInfo.decimals) ?? 18
         let formattedBalance = balance / pow(10.0, decimals)
         let tokenValueInUSD = formattedBalance * tokenInfo.tokenInfo.price.rate
-        return formatAsCurrency(number: tokenValueInUSD)
+        return tokenValueInUSD.asCurrencyWith2Decimals()
     }
 }
 

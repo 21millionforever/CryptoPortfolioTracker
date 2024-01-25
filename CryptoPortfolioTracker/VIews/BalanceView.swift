@@ -14,7 +14,7 @@ struct BalanceView: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack() {
-                Text(formatAsCurrency(number: walletInfoViewModel.totalBalance ?? 12))
+                Text(walletInfoViewModel.totalBalance?.asCurrencyWith2Decimals() ?? "$0.00")
                     .contentTransition(.numericText())
                     .font(.largeTitle)
                     .fontWeight(.bold)

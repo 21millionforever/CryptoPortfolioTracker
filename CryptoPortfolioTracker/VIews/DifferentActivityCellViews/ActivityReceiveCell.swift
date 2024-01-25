@@ -43,7 +43,8 @@ struct ActivityReceiveCell: View {
             Spacer()
             
             VStack() {
-                Text("+\(formatNumber(activity.extraInfo.tokenAmount)) \(activity.extraInfo.tokenSymbol ?? "Unknown")")
+//                Text("+\(formatNumber(activity.extraInfo.tokenAmount)) \(activity.extraInfo.tokenSymbol ?? "Unknown")")
+                Text("+\(activity.extraInfo.tokenAmount?.asNumberString() ?? "Unknown") \(activity.extraInfo.tokenSymbol ?? "Unknown")")
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.green)

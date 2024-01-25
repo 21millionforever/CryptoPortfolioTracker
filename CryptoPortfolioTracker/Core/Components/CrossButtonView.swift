@@ -20,10 +20,6 @@ struct CrossButtonView_Previews: PreviewProvider {
         Group {
             CrossButtonView()
                 .previewLayout(.sizeThatFits)
-                .colorScheme(.light)
-            CrossButtonView()
-                .previewLayout(.sizeThatFits)
-                .colorScheme(.dark)
         }
 
     }

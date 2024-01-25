@@ -30,10 +30,10 @@ struct AccountCellView: View {
                         Text("MetaMask")
                             .font(.title2)
                             .fontWeight(.medium)
-                            .foregroundColor(.black)
+                            .foregroundColor(Color.theme.mainText)
                         
                         Text(walletInfo.address)
-                            .foregroundColor(.black)
+                            .foregroundColor(Color.theme.mainText)
                     }
                     .frame(height:40)
                     Spacer()
@@ -47,16 +47,14 @@ struct AccountCellView: View {
                     
                     
                 }
-//                .frame(height: 110)
 
                 VStack(spacing: 0) {
-//                    balanceValue = walletInfo.balanceInUSD {
-                    Text("$\(String(format: "%.2f", walletInfo.balanceInUSD))")
+                    Text(walletInfo.balanceInUSD.asCurrencyWith2Decimals())
                         .font(.body)
                         .fontWeight(.regular)
-                        .foregroundColor(.black)
+                        .foregroundColor(Color.theme.mainText)
 
-//                    }
+
                 }
                 .frame(width: 100, height: 110)
                 Spacer()
@@ -64,9 +62,6 @@ struct AccountCellView: View {
             }
             GrayDivider()
                 .padding()
-//            Divider()
-//                .frame(height: 1)
-//                .overlay(Color.gray.opacity(0.3))
         }
         
     }

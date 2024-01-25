@@ -181,7 +181,9 @@ struct ChartTabView: View {
 //
 //                }
 //                .padding(.leading)
-                ChartHeaderView(iconName: "arrowtriangle.up.fill", iconColor: Color.theme.green, usdDiff: formatAsCurrency(number: balanceChartViewModel.totalBalanceChart.all?.last?.value), percDiff: "(100.0%)", timeFrame: "All Time")
+//                ChartHeaderView(iconName: "arrowtriangle.up.fill", iconColor: Color.theme.green, usdDiff: formatAsCurrency(number: balanceChartViewModel.totalBalanceChart.all?.last?.value), percDiff: "(100.0%)", timeFrame: "All Time")
+//                    .padding(.leading)
+                ChartHeaderView(iconName: "arrowtriangle.up.fill", iconColor: Color.theme.green, usdDiff: balanceChartViewModel.totalBalanceChart.all?.last?.value.asCurrencyWith2Decimals() ?? "$0.00", percDiff: "(100.0%)", timeFrame: "All Time")
                     .padding(.leading)
               
                 BalanceChartView(timeInterval: "All", height: 200)
@@ -198,28 +200,9 @@ struct ChartTabView: View {
                 }
             }
         }
+     
     }
-    
-    struct TabButtonView: View {
-        let tab: String
-        @Binding var selectedTab: String
 
-        var body: some View {
-            Button(action: {
-                self.selectedTab = tab
-            }) {
-                Spacer()
-                VStack {
-                    Text(tab)
-                        .foregroundColor(self.selectedTab == tab ? .white : .green)
-                        .frame(width: 50, height: 30)
-                        .background(self.selectedTab == tab ? .green : .white)
-                        .cornerRadius(10)
-                }
-                Spacer()
-            }
-        }
-    }
     
     
     
@@ -258,6 +241,28 @@ extension ChartTabView {
         }
     }
     
+    struct TabButtonView: View {
+        let tab: String
+        @Binding var selectedTab: String
+
+        var body: some View {
+            Button(action: {
+                self.selectedTab = tab
+            }) {
+                Spacer()
+                VStack {
+                    Text(tab)
+                        .foregroundColor(self.selectedTab == tab ? .white : Color.theme.green)
+                        .frame(width: 50, height: 30)
+                        .background(self.selectedTab == tab ? Color.theme.green : .white)
+                        .cornerRadius(10)
+                }
+                Spacer()
+            }
+        }
+    }
+    
+    
     private func getStartIndex(dataPoints: [ChartDataPoint], timeBefore : Date?) -> Int {
         if let timeBefore = timeBefore {
             print("timeBefore: \(timeBefore)")
@@ -281,14 +286,14 @@ extension ChartTabView {
             let startIndex = getStartIndex(dataPoints: dataPoints, timeBefore: timeBefore)
             if let lastValue = dataPoints.last?.value {
                 output = lastValue - dataPoints[startIndex].value
-                return String(formatAsCurrency(number: output))
+                return String(output.asCurrencyWith2Decimals())
             }
         }
         else {
             if let firstValue = dataPoints.first?.value {
                 if let lastValue = dataPoints.last?.value {
                     output = lastValue - firstValue
-                    return String(formatAsCurrency(number: output))
+                    return String(output.asCurrencyWith2Decimals())
                 }
             }
         }
@@ -301,15 +306,15 @@ extension ChartTabView {
             let startIndex = getStartIndex(dataPoints: dataPoints, timeBefore: timeBefore)
             if let lastValue = dataPoints.last?.value {
                 let diffUsd = lastValue - dataPoints[startIndex].value
-                output = (diffUsd / lastValue)
-                return formatAsPercentage(number: output)
+                output = (diffUsd / lastValue) * 100
+                return output.asPercentString()
             }
         }
         else {
             if let firstValue = dataPoints.first?.value {
                 if let lastValue = dataPoints.last?.value {
-                    output = ((lastValue - firstValue) / lastValue)
-                    return formatAsPercentage(number: output)
+                    output = ((lastValue - firstValue) / lastValue) * 100
+                    return output.asPercentString()
                 }
             }
         }

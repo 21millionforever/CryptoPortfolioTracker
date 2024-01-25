@@ -38,7 +38,7 @@ struct BalanceChartView: View {
                 .edgesIgnoringSafeArea(.horizontal) // Extend to the horizontal edges of the screen
                 .chartYAxis(.hidden)
                 .chartXAxis(.hidden)
-                .foregroundStyle(.green)
+                .foregroundStyle(Color.theme.green)
             }
             else if (timeInterval == "3M") {
                 VStack {
@@ -63,7 +63,7 @@ struct BalanceChartView: View {
                 }
                 .chartYAxis(.hidden)
                 .chartXAxis(.hidden)
-                .foregroundStyle(.green)
+                .foregroundStyle(Color.theme.green)
             }
             else if (timeInterval == "1M") {
                 VStack {
@@ -88,7 +88,7 @@ struct BalanceChartView: View {
                 }
                 .chartYAxis(.hidden)
                 .chartXAxis(.hidden)
-                .foregroundStyle(.green)
+                .foregroundStyle(Color.theme.green)
             }
             else if (timeInterval == "1W") {
                 VStack {
@@ -110,7 +110,7 @@ struct BalanceChartView: View {
                 .edgesIgnoringSafeArea(.horizontal) // Extend to the horizontal edges of the screen
                 .chartYAxis(.hidden)
                 .chartXAxis(.hidden)
-                .foregroundStyle(.green)
+                .foregroundStyle(Color.theme.green)
             }
 //            else if (timeInterval == "1") {
 //                HStack {

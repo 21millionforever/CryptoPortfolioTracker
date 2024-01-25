@@ -54,12 +54,12 @@ struct ActivitySwapCell: View {
             
             
             VStack() {
-                Text("+\(formatNumber(activity.extraInfo.receivedTokenAmount)) \(activity.extraInfo.receivedTokenSymbol ?? "Unknown")")
+                Text("+\(activity.extraInfo.receivedTokenAmount?.asNumberString() ?? "Unknown") \(activity.extraInfo.receivedTokenSymbol ?? "Unknown")")
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.green)
                     .frame(maxWidth: .infinity, alignment: .trailing)
-                Text("-\(formatNumber(activity.extraInfo.sentTokenAmount)) \(activity.extraInfo.sentTokenSymbol ?? "Unknown")")
+                Text("-\(activity.extraInfo.sentTokenAmount?.asNumberString() ?? "Unknown") \(activity.extraInfo.sentTokenSymbol ?? "Unknown")")
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.red)

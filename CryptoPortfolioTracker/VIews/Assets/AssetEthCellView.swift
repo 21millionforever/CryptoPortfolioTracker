@@ -104,7 +104,7 @@ struct AssetEthCellView: View {
     func calculateEthValueInUSD(eth: Eth) -> String {
         let balance = Double(eth.balance)
         let tokenValueInUSD = balance * Double(eth.price.rate)
-        return formatAsCurrency(number: tokenValueInUSD)
+        return tokenValueInUSD.asCurrencyWith2Decimals()
 //        return String(format: "%.2f", tokenValueInUSD)
     }
 }

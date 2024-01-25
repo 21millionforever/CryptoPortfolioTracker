@@ -16,10 +16,10 @@ struct BottomNavigationBarView: View {
     
     init() {
         // Set the unselected item color
-        UITabBar.appearance().unselectedItemTintColor = UIColor.gray
+        UITabBar.appearance().unselectedItemTintColor = UIColor(Color.theme.secondaryText)
         
         // Set the tab bar background color (optional)
-        UITabBar.appearance().backgroundColor = UIColor.white
+        UITabBar.appearance().backgroundColor = UIColor(Color.theme.background)
     }
     
     var body: some View {
@@ -36,7 +36,7 @@ struct BottomNavigationBarView: View {
                     Label("Second", systemImage: "gearshape")
                 }
         }
-        .accentColor(.black)
+        .accentColor(Color.theme.accent)
         .task {
             await balanceChartViewModel.loadChartData(addresses: sharedDataModel.addresses)
             await walletInfoViewModel.loadWalletInfo(addresses: sharedDataModel.addresses)
@@ -50,8 +50,8 @@ struct BottomNavigationBarView: View {
     }
 }
 
-struct BottomNavigationBar_Previews: PreviewProvider {
-    static var previews: some View {
-        BottomNavigationBarView()
-    }
-}
+//struct BottomNavigationBar_Previews: PreviewProvider {
+//    static var previews: some View {
+//        BottomNavigationBarView()
+//    }
+//}

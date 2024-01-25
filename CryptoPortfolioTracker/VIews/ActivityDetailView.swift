@@ -70,7 +70,7 @@ struct ActivityDetailView: View {
                     VStack(alignment: .leading) {
                         Text("Token Amount")
                             .font(.headline)
-                        Text(activity.extraInfo.tokenAmount != nil ? String(formatNumber(activity.extraInfo.tokenAmount!)) : "Unknown")
+                        Text(activity.extraInfo.tokenAmount?.asNumberString() ?? "Error")
                     }
                     
                     VStack(alignment: .leading) {
@@ -127,7 +127,7 @@ struct ActivityDetailView: View {
                     VStack(alignment: .leading) {
                         Text("Token Amount")
                             .font(.headline)
-                        Text(activity.extraInfo.tokenAmount != nil ? String(formatNumber(activity.extraInfo.tokenAmount!)) : "Unknown")
+                        Text(activity.extraInfo.tokenAmount?.asNumberString() ?? "Error")
                     }
                     
                     VStack(alignment: .leading) {
@@ -187,7 +187,9 @@ struct ActivityDetailView: View {
                     VStack(alignment: .leading) {
                         Text("Sent Token Amount")
                             .font(.headline)
-                        Text(activity.extraInfo.sentTokenAmount != nil ? String(formatNumber(activity.extraInfo.sentTokenAmount!)) : "Unknown")
+                        Text(activity.extraInfo.sentTokenAmount?.asNumberString() ?? "Error")
+                        
+                        
                     }
                     
                     VStack(alignment: .leading) {
@@ -205,7 +207,7 @@ struct ActivityDetailView: View {
                     VStack(alignment: .leading) {
                         Text("Received Token Amount")
                             .font(.headline)
-                        Text(activity.extraInfo.receivedTokenAmount != nil ? String(formatNumber(activity.extraInfo.receivedTokenAmount!)) : "Unknown")
+                        Text(activity.extraInfo.receivedTokenAmount?.asNumberString() ?? "Error")
                     }
 
                 }
