@@ -104,9 +104,9 @@ class WalletInfoViewModel: ObservableObject {
             }
             
             for await walletInfo in group {
-                DispatchQueue.main.async {
-                    self.walletsInfo = []
-                    self.totalBalance = 0.00
+                DispatchQueue.main.async { [weak self] in
+                    self?.walletsInfo = []
+                    self?.totalBalance = 0.00
                 }
                 if let walletInfo = walletInfo {
                     DispatchQueue.main.async { [weak self] in
