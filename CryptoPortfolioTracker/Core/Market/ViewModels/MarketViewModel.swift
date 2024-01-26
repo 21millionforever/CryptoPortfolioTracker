@@ -21,8 +21,8 @@ class MarketViewModel: ObservableObject {
     private func fetchCoins() async {
         do {
             let fetchedCoins = try await coinDataService.fetchCoinsData()
-            DispatchQueue.main.async {
-                self.allCoins = fetchedCoins
+            DispatchQueue.main.async { [weak self] in
+                self?.allCoins = fetchedCoins
             }
         } catch {
             print("Error fetching coins: \(error)")
