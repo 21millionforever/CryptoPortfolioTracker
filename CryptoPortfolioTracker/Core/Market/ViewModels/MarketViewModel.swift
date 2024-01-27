@@ -12,6 +12,8 @@ class MarketViewModel: ObservableObject {
     @Published var portfolioCoins: [CoinModel] = []
     private let coinDataService = CoinDataService()
     
+    @Published var searchText: String = ""
+    
     init() {
         Task {
             await fetchCoins()

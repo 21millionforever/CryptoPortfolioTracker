@@ -12,7 +12,10 @@ struct MarketView: View {
     
     var body: some View {
         VStack {
-            headerView
+            
+            SearchBarView(searchText: $marketViewModel.searchText)
+            
+            columnTitles
             
             allCoinsList
                 .listStyle(PlainListStyle())
@@ -20,17 +23,22 @@ struct MarketView: View {
     }
 }
 
+
+
+
 extension MarketView {
     private var allCoinsList: some View {
-        List {
-            ForEach(marketViewModel.allCoins) { coin in
-                CoinRowView(coin: coin)
-                    .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
+        NavigationStack {
+            List {
+                ForEach(marketViewModel.allCoins) { coin in
+                    CoinRowView(coin: coin)
+                        .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
+                }
             }
         }
     }
     
-    private var headerView: some View {
+    private var columnTitles: some View {
         HStack(spacing: 0) {
             Text("#")
                 .padding(.leading, 10)
