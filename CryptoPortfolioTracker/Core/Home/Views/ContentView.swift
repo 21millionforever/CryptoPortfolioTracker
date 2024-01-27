@@ -65,10 +65,11 @@ struct ContentView: View {
 }
 
 extension ContentView {
+    
     private var TotalBalanceView: some View {
         VStack(spacing: 10) {
             HStack() {
-                Text(walletInfoViewModel.totalBalance?.asCurrencyWith2Decimals() ?? "$0.00")
+                Text(walletInfoViewModel.totalBalance?.asCurrencyWith2Decimals() ?? "Error")
                     .contentTransition(.numericText())
                     .font(.largeTitle)
                     .fontWeight(.bold)

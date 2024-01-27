@@ -72,7 +72,7 @@ struct TokenInfo: Codable, Hashable {
 }
 
 
-
+// TODO: Put wallat info into a service, and change the name of the model to
 class WalletInfoViewModel: ObservableObject {
     @Published var walletsInfo = [WalletInfo]()
     @Published var totalBalance: Double?

@@ -30,7 +30,7 @@ extension MarketView {
     private var allCoinsList: some View {
         NavigationStack {
             List {
-                ForEach(marketViewModel.allCoins) { coin in
+                ForEach(marketViewModel.filteredCoins) { coin in
                     CoinRowView(coin: coin)
                         .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
                 }
