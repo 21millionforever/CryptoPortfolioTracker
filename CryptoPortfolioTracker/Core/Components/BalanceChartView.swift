@@ -16,7 +16,7 @@ struct BalanceChartView: View {
     @State private var startIndex: Int = 0
     var width: CGFloat?
     var height: CGFloat
-    @State private var selectedIndex: Int? = nil
+    @State private var selectedDataPoint: ChartDataPoint?
     @State private var dragPosition: CGFloat? = nil
     @State private var isDragging: Bool = false
     var body: some View {
@@ -69,7 +69,7 @@ struct BalanceChartView: View {
                                 }
                         )
                         .overlay(
-                            RectangleOverlayView(dragPosition: dragPosition)
+                            RectangleOverlayView(dragPosition: dragPosition, dataPoints: dataPoints, selectedDataPoint: $selectedDataPoint)
                         )
                     }
                 }
@@ -223,21 +223,58 @@ func createRange(from: Date, to: Date) -> ClosedRange<Date> {
 //}
 
 
+//struct RectangleOverlayView: View {
+//    var dragPosition: CGFloat?
+//
+//    var body: some View {
+//        GeometryReader { geometry in
+//            if let dragPosition = dragPosition {
+//                let point = CGPoint(x: dragPosition, y: 0)
+//                if geometry.frame(in: .local).contains(point) {
+//                    // This is where you use 'geometry'
+//                    Rectangle()
+//                        .fill(Color.red.opacity(0.5))
+//                        .frame(width: 2)
+//                        .offset(x: dragPosition - 1, y: 0)
+//                }
+//            }
+//        }
+//    }
+//}
+
+
 struct RectangleOverlayView: View {
     var dragPosition: CGFloat?
+    var dataPoints: [ChartDataPoint]
+    @Binding var selectedDataPoint: ChartDataPoint?
 
     var body: some View {
         GeometryReader { geometry in
-            if let dragPosition = dragPosition {
-                let point = CGPoint(x: dragPosition, y: 0)
-                if geometry.frame(in: .local).contains(point) {
-                    // This is where you use 'geometry'
-                    Rectangle()
-                        .fill(Color.red.opacity(0.5))
-                        .frame(width: 2)
-                        .offset(x: dragPosition - 1, y: 0)
-                }
+            if let dragPosition = dragPosition, let closestDataPoint = getClosestDataPoint(to: dragPosition, geometry: geometry) {
+                // Draw the vertical line
+                Rectangle()
+                    .fill(Color.red.opacity(0.5))
+                    .frame(width: 2)
+                    .offset(x: dragPosition - 1, y: 0)
             }
         }
     }
+
+    func getClosestDataPoint(to dragPosition: CGFloat, geometry: GeometryProxy) -> ChartDataPoint? {
+        // Convert drag position to chart data point
+        // This is an example, you'll need to implement the logic based on your data
+        let index = Int(dragPosition / geometry.size.width * CGFloat(dataPoints.count))
+        let output = index >= 0 && index < dataPoints.count ? dataPoints[index] : nil
+        
+        DispatchQueue.main.async {
+            selectedDataPoint = output
+        }
+        if let closestDataPoint = output {
+            print("Date: \(closestDataPoint.date), Value: \(closestDataPoint.value)")
+        } else {
+            print("No closest data point found")
+        }
+        return output
+    }
+    
 }
