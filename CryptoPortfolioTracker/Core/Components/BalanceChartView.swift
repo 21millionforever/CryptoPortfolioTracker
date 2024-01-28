@@ -18,31 +18,9 @@ struct BalanceChartView: View {
     var height: CGFloat
     @State private var selectedDataPoint: ChartDataPoint?
     @State private var dragPosition: CGFloat? = nil
-    @State private var isDragging: Bool = false
+//    @State private var isDragging: Bool = false
     var body: some View {
         if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
-//            if (timeInterval == "All") {
-//                VStack {
-//                    if let dataPoints = balanceChartData.all {
-//                        Chart {
-//                            ForEach(dataPoints) { dataPoint in
-//                                LineMark(
-//                                    x: .value("Day", dataPoint.date),
-//                                    y: .value("Value", dataPoint.value)
-//                                )
-//                            }
-//                        }
-//                        .chartXScale(domain: createRange(from: dataPoints.first?.date ?? Date(), to: dataPoints.last?.date ?? Date()))
-//                        .frame(maxWidth: .infinity) // Use maximum width available
-//                        .frame(height: height)
-////                        .padding()
-//                    }
-//                }
-//                .edgesIgnoringSafeArea(.horizontal) // Extend to the horizontal edges of the screen
-//                .chartYAxis(.hidden)
-//                .chartXAxis(.hidden)
-//                .foregroundStyle(Color.theme.green)
-//            }
             if (timeInterval == "All") {
                 VStack {
                     if let dataPoints = balanceChartData.all {
@@ -60,11 +38,11 @@ struct BalanceChartView: View {
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
-                                    isDragging = true
+//                                    isDragging = true
                                     dragPosition = value.location.x
                                 }
                                 .onEnded { _ in
-                                    isDragging = false
+//                                    isDragging = false
                                     dragPosition = nil
                                 }
                         )
@@ -223,26 +201,6 @@ func createRange(from: Date, to: Date) -> ClosedRange<Date> {
 //}
 
 
-//struct RectangleOverlayView: View {
-//    var dragPosition: CGFloat?
-//
-//    var body: some View {
-//        GeometryReader { geometry in
-//            if let dragPosition = dragPosition {
-//                let point = CGPoint(x: dragPosition, y: 0)
-//                if geometry.frame(in: .local).contains(point) {
-//                    // This is where you use 'geometry'
-//                    Rectangle()
-//                        .fill(Color.red.opacity(0.5))
-//                        .frame(width: 2)
-//                        .offset(x: dragPosition - 1, y: 0)
-//                }
-//            }
-//        }
-//    }
-//}
-
-
 struct RectangleOverlayView: View {
     var dragPosition: CGFloat?
     var dataPoints: [ChartDataPoint]
@@ -252,10 +210,16 @@ struct RectangleOverlayView: View {
         GeometryReader { geometry in
             if let dragPosition = dragPosition, let closestDataPoint = getClosestDataPoint(to: dragPosition, geometry: geometry) {
                 // Draw the vertical line
-                Rectangle()
-                    .fill(Color.red.opacity(0.5))
-                    .frame(width: 2)
-                    .offset(x: dragPosition - 1, y: 0)
+                VStack {
+                    Text("\(closestDataPoint.date.asMediumDateString())")
+                        .font(.caption2)
+                    Rectangle()
+                        .fill(Color.theme.secondaryText)
+                        .frame(width: 2)
+                }
+                .offset(x: dragPosition - 1, y: 0)
+                .foregroundColor(Color.theme.secondaryText)
+                
             }
         }
     }
@@ -278,3 +242,4 @@ struct RectangleOverlayView: View {
     }
     
 }
+
