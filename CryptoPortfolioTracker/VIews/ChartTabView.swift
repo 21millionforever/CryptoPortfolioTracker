@@ -90,66 +90,8 @@ struct ChartTabView: View {
                     BalanceChartView(timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200)
                 }
             }
-//            VStack {
-//                let currentDate = Date()
-//                HStack(spacing: 3) {
-//                    Image(systemName: "arrowtriangle.up.fill")
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fit)
-//                        .frame(width: 15, height: 15)
-//                        .foregroundColor(.green)
-//
-//                    if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
-//                        Text(calculatUsdDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate)))
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//
-//                        Text("(\(caculateRateDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))))")
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//
-//                        Text("3M")
-//                            .font(.subheadline)
-//                            .fontWeight(.light)
-//                    }
-//                    else {
-//                        Text("Unknown")
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//                    }
-//                    Spacer()
-//
-//                }
-//                .padding(.leading)
-//                BalanceChartView(timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate), height: 200)
-//            }
             case "All":
             VStack {
-//                HStack(spacing: 3) {
-//                    Image(systemName: "arrowtriangle.up.fill")
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fit)
-//                        .frame(width: 15, height: 15)
-//                        .foregroundColor(.green)
-//
-//                    Text(formatAsCurrency(number: balanceChartViewModel.totalBalanceChart.all?.last?.value))
-//                        .font(.subheadline)
-//                        .fontWeight(.semibold)
-//
-//                    Text("(100.0%)")
-//                        .font(.subheadline)
-//                        .fontWeight(.semibold)
-//
-//                    Text("All Time")
-//                        .font(.subheadline)
-//                        .fontWeight(.light)
-//
-//                    Spacer()
-//
-//                }
-//                .padding(.leading)
-//                ChartHeaderView(iconName: "arrowtriangle.up.fill", iconColor: Color.theme.green, usdDiff: formatAsCurrency(number: balanceChartViewModel.totalBalanceChart.all?.last?.value), percDiff: "(100.0%)", timeFrame: "All Time")
-//                    .padding(.leading)
                 ChartHeaderView(iconName: "arrowtriangle.up.fill", iconColor: Color.theme.green, usdDiff: balanceChartViewModel.totalBalanceChart.all?.last?.value.asCurrencyWith2Decimals() ?? "$0.00", percDiff: "(100.0%)", timeFrame: "All Time")
                     .padding(.leading)
               
@@ -160,11 +102,10 @@ struct ChartTabView: View {
 
         }
         
-        VStack {
-            HStack {
-                ForEach(tabs, id: \.self) { tab in
-                    TabButtonView(tab: tab, selectedTab: $selectedTab)
-                }
+        
+        HStack {
+            ForEach(tabs, id: \.self) { tab in
+                TabButtonView(tab: tab, selectedTab: $selectedTab)
             }
         }
      
