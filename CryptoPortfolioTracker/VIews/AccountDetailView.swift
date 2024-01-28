@@ -21,31 +21,9 @@ struct AccountDetailView: View {
     var body: some View {
             ScrollView {
                 VStack(alignment: .leading) {
-                    BalanceView()
+                    BalanceView
                         .padding(.leading)
-            
-//                    HStack(spacing: 3) {
-//                        Image(systemName: "arrowtriangle.up.fill")
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 15, height: 15)
-//                            .foregroundColor(.green)
-//
-//                        Text("$645.55")
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//
-//                        Text("(0.69%)")
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//
-//                        Text("Today")
-//                            .font(.subheadline)
-//                            .fontWeight(.light)
-//
-//                    }
-                  
-//                    ChartTabView(selectedTab: $selectedTab, balanceChart: balanceChart, isDataLoaded: isTotalBalanceChartDataLoaded)
+                    ChartTabView(balanceChartData: balanceChartViewModel.walletToBalanceChart[walletInfo.address] ?? BalanceChartData(), selectedTab: $selectedTab)
                 }
 //                .padding(.leading)
                 
@@ -62,6 +40,23 @@ struct AccountDetailView: View {
                     }
             )
     
+    }
+    
+}
+extension AccountDetailView {
+    
+    private var BalanceView: some View {
+        VStack(spacing: 10) {
+            HStack() {
+                Text(balanceChartViewModel.walletToBalanceChart[walletInfo.address]?.all?.last?.value.asCurrencyWith2Decimals() ?? "$Error")
+                    .contentTransition(.numericText())
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .redacted(reason: balanceChartViewModel.isTotalBalanceChartDataLoaded ? [] : .placeholder)
+                   
+                Spacer()
+            }
+        }
     }
     
 }

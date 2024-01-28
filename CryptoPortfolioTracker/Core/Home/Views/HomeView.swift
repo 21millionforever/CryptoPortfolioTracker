@@ -28,7 +28,7 @@ struct HomeView: View {
                     TotalBalanceView
                         .padding(.leading)
                     
-                    ChartTabView(selectedTab: $selectedTab)
+                    ChartTabView(balanceChartData: balanceChartViewModel.totalBalanceChart, selectedTab: $selectedTab)
                     
                     AccountsHeaderView
                         .padding(.leading)
@@ -51,12 +51,6 @@ struct HomeView: View {
                         bottomSheetView()
                     }
                 }
-//                ToolbarItemGroup(placement: .navigationBarTrailing) {
-//                    TopMenuButtonView
-//                    .sheet(isPresented: $showBottomMenu) {
-//                        bottomSheetView()
-//                    }
-//                }
             }
             .onChange(of: sharedDataModel.addresses) { newAddresses in
                 guard let lastAddress = newAddresses.last else { return }
@@ -71,15 +65,14 @@ struct HomeView: View {
 }
 
 extension HomeView {
-    
     private var TotalBalanceView: some View {
         VStack(spacing: 10) {
             HStack() {
-                Text(walletInfoViewModel.totalBalance?.asCurrencyWith2Decimals() ?? "Error")
+                Text(balanceChartViewModel.totalBalanceChart.all?.last?.value.asCurrencyWith2Decimals() ?? "$Error")
                     .contentTransition(.numericText())
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .redacted(reason: walletInfoViewModel.isWalletsInfoLoaded ? [] : .placeholder)
+                    .redacted(reason: balanceChartViewModel.isTotalBalanceChartDataLoaded ? [] : .placeholder)
                    
                 Spacer()
             }
@@ -130,7 +123,8 @@ extension HomeView {
             if balanceChartViewModel.isTotalBalanceChartDataLoaded {
                 ForEach(walletInfoViewModel.walletsInfo, id: \.id) { walletInfo in
                     NavigationLink(value: walletInfo) {
-                        AccountCellView(walletInfo: walletInfo)
+                        
+                        AccountRowView(balanceChartData: balanceChartViewModel.walletToBalanceChart[walletInfo.address] ?? BalanceChartData(), walletInfo: walletInfo)
                             .padding(.leading)
                     }
                 }

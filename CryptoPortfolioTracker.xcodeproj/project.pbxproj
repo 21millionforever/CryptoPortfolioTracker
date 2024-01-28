@@ -44,7 +44,6 @@
 		442F37042B5ED66A0013DC96 /* WalletsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37032B5ED66A0013DC96 /* WalletsViewModel.swift */; };
 		442F37082B6015C30013DC96 /* SharedDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37072B6015C30013DC96 /* SharedDataModel.swift */; };
 		442F370A2B60396E0013DC96 /* LargeTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37092B60396E0013DC96 /* LargeTitleView.swift */; };
-		442F370C2B6048540013DC96 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F370B2B6048540013DC96 /* BalanceView.swift */; };
 		4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */; };
 		4499E8A72B43E4EC0077CBEB /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A62B43E4EC0077CBEB /* ActivityView.swift */; };
 		449C55C82B44776C005E1593 /* ActivityReceiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */; };
@@ -61,7 +60,7 @@
 		44D3CF732B3BE7DE00DAE5C9 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D3CF722B3BE7DE00DAE5C9 /* Errors.swift */; };
 		44EB87452B47219800EBF063 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EB87442B47219800EBF063 /* StartView.swift */; };
 		44F3D6392B428EF800801719 /* GetActivitiesApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F3D6382B428EF800801719 /* GetActivitiesApi.swift */; };
-		44F3D63C2B43444600801719 /* AccountCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F3D63B2B43444600801719 /* AccountCellView.swift */; };
+		44F3D63C2B43444600801719 /* AccountRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F3D63B2B43444600801719 /* AccountRowView.swift */; };
 		44F3D6402B43ABAD00801719 /* AccountDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F3D63F2B43ABAD00801719 /* AccountDetailView.swift */; };
 /* End PBXBuildFile section */
 
@@ -103,7 +102,6 @@
 		442F37032B5ED66A0013DC96 /* WalletsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsViewModel.swift; sourceTree = "<group>"; };
 		442F37072B6015C30013DC96 /* SharedDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataModel.swift; sourceTree = "<group>"; };
 		442F37092B60396E0013DC96 /* LargeTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTitleView.swift; sourceTree = "<group>"; };
-		442F370B2B6048540013DC96 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetActivityTabView.swift; sourceTree = "<group>"; };
 		4499E8A62B43E4EC0077CBEB /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		449C55C72B44776C005E1593 /* ActivityReceiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityReceiveCell.swift; sourceTree = "<group>"; };
@@ -121,7 +119,7 @@
 		44D3CF722B3BE7DE00DAE5C9 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		44EB87442B47219800EBF063 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		44F3D6382B428EF800801719 /* GetActivitiesApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetActivitiesApi.swift; sourceTree = "<group>"; };
-		44F3D63B2B43444600801719 /* AccountCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCellView.swift; sourceTree = "<group>"; };
+		44F3D63B2B43444600801719 /* AccountRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRowView.swift; sourceTree = "<group>"; };
 		44F3D63F2B43ABAD00801719 /* AccountDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -260,12 +258,15 @@
 		442F36FB2B5E0CEA0013DC96 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				442F36E02B526CA90013DC96 /* ChartTabView.swift */,
 				442F36FE2B5E0D530013DC96 /* CrossButtonView.swift */,
 				442F37092B60396E0013DC96 /* LargeTitleView.swift */,
 				44086DAC2B637D34009CD4A2 /* CoinImageView.swift */,
 				44086DB92B64BCC9009CD4A2 /* SearchBarView.swift */,
 				442F36ED2B58B4160013DC96 /* CustomizedWidges.swift */,
 				44086DC62B657134009CD4A2 /* StatisticView.swift */,
+				44F3D63B2B43444600801719 /* AccountRowView.swift */,
+				442F36F32B5A0D410013DC96 /* BalanceChartView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -350,12 +351,8 @@
 		44F3D63A2B43442400801719 /* VIews */ = {
 			isa = PBXGroup;
 			children = (
-				442F36F32B5A0D410013DC96 /* BalanceChartView.swift */,
-				442F36E02B526CA90013DC96 /* ChartTabView.swift */,
 				442F36E42B5604A70013DC96 /* AssetsView.swift */,
-				44F3D63B2B43444600801719 /* AccountCellView.swift */,
 				44F3D63F2B43ABAD00801719 /* AccountDetailView.swift */,
-				442F370B2B6048540013DC96 /* BalanceView.swift */,
 				4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */,
 				4499E8A62B43E4EC0077CBEB /* ActivityView.swift */,
 				442F36F52B5A36030013DC96 /* ActivityDetailView.swift */,
@@ -454,9 +451,8 @@
 				44086DCD2B659CEE009CD4A2 /* BalanceChart.swift in Sources */,
 				442F37022B5E19110013DC96 /* BalanceChartViewModel.swift in Sources */,
 				44086D9C2B61F3CE009CD4A2 /* CoinRowView.swift in Sources */,
-				442F370C2B6048540013DC96 /* BalanceView.swift in Sources */,
 				442F36F42B5A0D410013DC96 /* BalanceChartView.swift in Sources */,
-				44F3D63C2B43444600801719 /* AccountCellView.swift in Sources */,
+				44F3D63C2B43444600801719 /* AccountRowView.swift in Sources */,
 				441D14102B49000300A051B7 /* BottomNavigationBarView.swift in Sources */,
 				44086DBC2B64C54E009CD4A2 /* UIApplication.swift in Sources */,
 				44D3CF712B3BE48B00DAE5C9 /* confi.swift in Sources */,

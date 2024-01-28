@@ -10,6 +10,7 @@ import Charts
 
 struct BalanceChartView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
+    let balanceChartData: BalanceChartData
     var timeInterval: String
     var timeBefore : Date?
     @State private var startIndex: Int = 0
@@ -20,7 +21,7 @@ struct BalanceChartView: View {
         if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
             if (timeInterval == "All") {
                 VStack {
-                    if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
+                    if let dataPoints = balanceChartData.all {
                         Chart {
                             ForEach(dataPoints) { dataPoint in
                                 LineMark(
@@ -42,7 +43,7 @@ struct BalanceChartView: View {
             }
             else if (timeInterval == "3M") {
                 VStack {
-                    if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
+                    if let dataPoints = balanceChartData.all {
                         Chart {
                             ForEach(dataPoints.suffix(from: startIndex), id: \.id) { dataPoint in
 
@@ -67,7 +68,7 @@ struct BalanceChartView: View {
             }
             else if (timeInterval == "1M") {
                 VStack {
-                    if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
+                    if let dataPoints = balanceChartData.all {
                         Chart {
                             ForEach(dataPoints.suffix(from: startIndex), id: \.id) { dataPoint in
 
@@ -92,7 +93,7 @@ struct BalanceChartView: View {
             }
             else if (timeInterval == "1W") {
                 VStack {
-                    if let dataPoints = balanceChartViewModel.totalBalanceChart.oneWeek {
+                    if let dataPoints = balanceChartData.oneWeek {
                         Chart {
                             ForEach(dataPoints) { dataPoint in
                                 LineMark(

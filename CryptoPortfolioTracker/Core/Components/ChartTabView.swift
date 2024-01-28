@@ -11,7 +11,7 @@ import SwiftUI
 
 struct ChartTabView: View {
     
-    @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
+    let balanceChartData: BalanceChartData
     let tabs = ["1D", "1W", "1M", "3M", "All"]
     @Binding var selectedTab: String
     
@@ -24,7 +24,7 @@ struct ChartTabView: View {
             case "1W":
             VStack {
                 Group {
-                    if let dataPoints = balanceChartViewModel.totalBalanceChart.oneWeek {
+                    if let dataPoints = balanceChartData.oneWeek {
                         let usdDiff = calculatUsdDiff(dataPoints: dataPoints, timeBefore: nil)
                         let percDiff = caculateRateDiff(dataPoints: dataPoints, timeBefore: nil)
                         let iconName = usdDiff.contains("-") ? "arrowtriangle.down.fill" : "arrowtriangle.up.fill"
@@ -39,14 +39,14 @@ struct ChartTabView: View {
                 }
                 .padding(.leading)
             
-                BalanceChartView(timeInterval: "1W", height: 200)
+                BalanceChartView(balanceChartData: balanceChartData, timeInterval: "1W", height: 200)
             }
             case "1M":
             VStack {
                 Group {
                     let currentDate = Date()
                     Group {
-                        if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
+                        if let dataPoints = balanceChartData.all {
                             let usdDiff = calculatUsdDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
                             let percDiff = caculateRateDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
                             let iconName = usdDiff.contains("-") ? "arrowtriangle.down.fill" : "arrowtriangle.up.fill"
@@ -62,7 +62,7 @@ struct ChartTabView: View {
                     .padding(.leading)
                     Spacer()
 
-                    BalanceChartView(timeInterval: "1M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200)
+                    BalanceChartView(balanceChartData: balanceChartData, timeInterval: "1M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200)
                 }
             }
             
@@ -71,7 +71,7 @@ struct ChartTabView: View {
                 Group {
                     let currentDate = Date()
                     Group {
-                        if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
+                        if let dataPoints = balanceChartData.all {
                             let usdDiff = calculatUsdDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
                             let percDiff = caculateRateDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
                             let iconName = usdDiff.contains("-") ? "arrowtriangle.down.fill" : "arrowtriangle.up.fill"
@@ -87,15 +87,15 @@ struct ChartTabView: View {
                     .padding(.leading)
                     Spacer()
 
-                    BalanceChartView(timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200)
+                    BalanceChartView(balanceChartData: balanceChartData, timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200)
                 }
             }
             case "All":
             VStack {
-                ChartHeaderView(iconName: "arrowtriangle.up.fill", iconColor: Color.theme.green, usdDiff: balanceChartViewModel.totalBalanceChart.all?.last?.value.asCurrencyWith2Decimals() ?? "$0.00", percDiff: "(100.0%)", timeFrame: "All Time")
+                ChartHeaderView(iconName: "arrowtriangle.up.fill", iconColor: Color.theme.green, usdDiff: balanceChartData.all?.last?.value.asCurrencyWith2Decimals() ?? "$0.00", percDiff: "(100.0%)", timeFrame: "All Time")
                     .padding(.leading)
               
-                BalanceChartView(timeInterval: "All", height: 200)
+                BalanceChartView(balanceChartData: balanceChartData, timeInterval: "All", height: 200)
             }
             default:
                 Text("Defaualt")

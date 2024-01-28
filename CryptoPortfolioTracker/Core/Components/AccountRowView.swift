@@ -10,12 +10,10 @@ import Charts
 import Foundation
 
 
-struct AccountCellView: View {
+struct AccountRowView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
-    
+    let balanceChartData: BalanceChartData
     var walletInfo: WalletInfo
-//    var walletToBalanceChart: [String: BalanceChartData]
-//    var istotalBalanceChartDataLoaded: Bool
     
     var body: some View {
         VStack(alignment: .trailing) {
@@ -41,7 +39,7 @@ struct AccountCellView: View {
                     
                     
                     if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
-                            BalanceChartView(timeInterval: "All", height: 50)
+                            BalanceChartView(balanceChartData: balanceChartData, timeInterval: "All", height: 50)
                     }
 
                     
@@ -68,7 +66,7 @@ struct AccountCellView: View {
 }
 //struct AccountCellView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        AccountCellView(address: Config.test_wallet)
+//        AccountRowView(address: Config.test_wallet)
 //    }
 //}
 
