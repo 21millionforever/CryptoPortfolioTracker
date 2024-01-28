@@ -8,14 +8,14 @@
 import Foundation
 
 
-struct BalanceChartData {
+struct BalanceChartData: Hashable {
     var all: [ChartDataPoint]?
     var oneWeek: [ChartDataPoint]?
     var oneDay: [ChartDataPoint]?
     var live: [ChartDataPoint]?
 }
 
-struct ChartDataPoint: Identifiable {
+struct ChartDataPoint: Identifiable, Hashable {
     let id = UUID()
     let date: Date
     let value: Double

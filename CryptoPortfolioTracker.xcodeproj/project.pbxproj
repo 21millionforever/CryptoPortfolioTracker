@@ -28,6 +28,7 @@
 		44086DCD2B659CEE009CD4A2 /* BalanceChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44086DCC2B659CEE009CD4A2 /* BalanceChart.swift */; };
 		44086DCF2B659D61009CD4A2 /* MarketData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44086DCE2B659D61009CD4A2 /* MarketData.swift */; };
 		44086DD12B65B7E6009CD4A2 /* MarketDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44086DD02B65B7E6009CD4A2 /* MarketDataService.swift */; };
+		44086DD32B6635CF009CD4A2 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44086DD22B6635CF009CD4A2 /* Test.swift */; };
 		441D140C2B48FAAF00A051B7 /* formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D140B2B48FAAF00A051B7 /* formatters.swift */; };
 		441D140E2B48FDDB00A051B7 /* AssetTokenCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D140D2B48FDDB00A051B7 /* AssetTokenCellView.swift */; };
 		441D14102B49000300A051B7 /* BottomNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */; };
@@ -86,6 +87,7 @@
 		44086DCC2B659CEE009CD4A2 /* BalanceChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceChart.swift; sourceTree = "<group>"; };
 		44086DCE2B659D61009CD4A2 /* MarketData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketData.swift; sourceTree = "<group>"; };
 		44086DD02B65B7E6009CD4A2 /* MarketDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketDataService.swift; sourceTree = "<group>"; };
+		44086DD22B6635CF009CD4A2 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		441D140B2B48FAAF00A051B7 /* formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = formatters.swift; sourceTree = "<group>"; };
 		441D140D2B48FDDB00A051B7 /* AssetTokenCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetTokenCellView.swift; sourceTree = "<group>"; };
 		441D140F2B49000300A051B7 /* BottomNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigationBarView.swift; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 				44D3CF702B3BE48B00DAE5C9 /* confi.swift */,
 				44D3CF5F2B3A275800DAE5C9 /* Assets.xcassets */,
 				44D3CF612B3A275800DAE5C9 /* Preview Content */,
+				44086DD22B6635CF009CD4A2 /* Test.swift */,
 			);
 			path = CryptoPortfolioTracker;
 			sourceTree = "<group>";
@@ -481,6 +484,7 @@
 				449C55CB2B44F8D9005E1593 /* ActivitySendCell.swift in Sources */,
 				44086DCB2B6579AC009CD4A2 /* MarketStatisticView.swift in Sources */,
 				449C55D72B463DEE005E1593 /* ImportWalletView.swift in Sources */,
+				44086DD32B6635CF009CD4A2 /* Test.swift in Sources */,
 				44F3D6402B43ABAD00801719 /* AccountDetailView.swift in Sources */,
 				44F3D6392B428EF800801719 /* GetActivitiesApi.swift in Sources */,
 				44086DBA2B64BCC9009CD4A2 /* SearchBarView.swift in Sources */,

@@ -27,6 +27,7 @@ struct CryptoPortfolioTrackerApp: App {
                     .environmentObject(walletInfoViewModel)
                     .environmentObject(marketViewModel)
             }
+//            Test()
         }
     }
 }

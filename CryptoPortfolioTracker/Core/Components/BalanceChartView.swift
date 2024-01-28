@@ -16,9 +16,33 @@ struct BalanceChartView: View {
     @State private var startIndex: Int = 0
     var width: CGFloat?
     var height: CGFloat
-
+    @State private var selectedIndex: Int? = nil
+    @State private var dragPosition: CGFloat? = nil
+    @State private var isDragging: Bool = false
     var body: some View {
         if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
+//            if (timeInterval == "All") {
+//                VStack {
+//                    if let dataPoints = balanceChartData.all {
+//                        Chart {
+//                            ForEach(dataPoints) { dataPoint in
+//                                LineMark(
+//                                    x: .value("Day", dataPoint.date),
+//                                    y: .value("Value", dataPoint.value)
+//                                )
+//                            }
+//                        }
+//                        .chartXScale(domain: createRange(from: dataPoints.first?.date ?? Date(), to: dataPoints.last?.date ?? Date()))
+//                        .frame(maxWidth: .infinity) // Use maximum width available
+//                        .frame(height: height)
+////                        .padding()
+//                    }
+//                }
+//                .edgesIgnoringSafeArea(.horizontal) // Extend to the horizontal edges of the screen
+//                .chartYAxis(.hidden)
+//                .chartXAxis(.hidden)
+//                .foregroundStyle(Color.theme.green)
+//            }
             if (timeInterval == "All") {
                 VStack {
                     if let dataPoints = balanceChartData.all {
@@ -31,16 +55,32 @@ struct BalanceChartView: View {
                             }
                         }
                         .chartXScale(domain: createRange(from: dataPoints.first?.date ?? Date(), to: dataPoints.last?.date ?? Date()))
-                        .frame(maxWidth: .infinity) // Use maximum width available
+                        .frame(maxWidth: .infinity)
                         .frame(height: height)
-//                        .padding()
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    isDragging = true
+                                    dragPosition = value.location.x
+                                }
+                                .onEnded { _ in
+                                    isDragging = false
+                                    dragPosition = nil
+                                }
+                        )
+                        .overlay(
+                            RectangleOverlayView(dragPosition: dragPosition)
+                        )
                     }
                 }
-                .edgesIgnoringSafeArea(.horizontal) // Extend to the horizontal edges of the screen
+                .edgesIgnoringSafeArea(.horizontal)
                 .chartYAxis(.hidden)
                 .chartXAxis(.hidden)
                 .foregroundStyle(Color.theme.green)
             }
+            
+            
+            
             else if (timeInterval == "3M") {
                 VStack {
                     if let dataPoints = balanceChartData.all {
@@ -168,6 +208,8 @@ struct BalanceChartView: View {
         return 0
     }
     
+
+    
 }
 
 func createRange(from: Date, to: Date) -> ClosedRange<Date> {
@@ -179,3 +221,23 @@ func createRange(from: Date, to: Date) -> ClosedRange<Date> {
 //        BalanceChartView()
 //    }
 //}
+
+
+struct RectangleOverlayView: View {
+    var dragPosition: CGFloat?
+
+    var body: some View {
+        GeometryReader { geometry in
+            if let dragPosition = dragPosition {
+                let point = CGPoint(x: dragPosition, y: 0)
+                if geometry.frame(in: .local).contains(point) {
+                    // This is where you use 'geometry'
+                    Rectangle()
+                        .fill(Color.red.opacity(0.5))
+                        .frame(width: 2)
+                        .offset(x: dragPosition - 1, y: 0)
+                }
+            }
+        }
+    }
+}
