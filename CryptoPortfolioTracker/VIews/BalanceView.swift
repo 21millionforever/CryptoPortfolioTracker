@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BalanceView: View {
-    @EnvironmentObject var walletInfoViewModel: WalletInfoViewModel
+    @EnvironmentObject var walletInfoViewModel: WalletsViewModel
 
     
     var body: some View {

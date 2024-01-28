@@ -16,7 +16,7 @@ class CoinImageService {
     
     func getCoinImage(imageName: String, urlString: String) async throws -> UIImage? {
         if let image = fileManager.getImage(imageName: imageName, folderName: folderName) {
-            print("Retrieved image from File Manager")
+//            print("Retrieved image from File Manager")
             return image
         }
         else {
@@ -31,7 +31,7 @@ class CoinImageService {
     }
         
     func fetchCoinImage(imageName: String, urlString: String) async throws -> UIImage {
-        print("Downloading image now")
+//        print("Downloading image now")
         guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
         }

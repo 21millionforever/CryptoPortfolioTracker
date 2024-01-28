@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  HomeView.swift
 //  CryptoPortfolioTracker
 //
 //  Created by Zhendong Chen on 12/25/23.
@@ -9,9 +9,9 @@ import Charts
 import SwiftUI
 
 
-struct ContentView: View {
+struct HomeView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
-    @EnvironmentObject var walletInfoViewModel: WalletInfoViewModel
+    @EnvironmentObject var walletInfoViewModel: WalletsViewModel
     @EnvironmentObject var sharedDataModel : SharedDataModel
     
     @State private var showBottomMenu: Bool = false
@@ -45,12 +45,18 @@ struct ContentView: View {
             }
             .navigationDestination(isPresented: $showingImportWalletView, destination: {ImportWalletView(showingImportWalletView: $showingImportWalletView)})
             .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     TopMenuButtonView
                     .sheet(isPresented: $showBottomMenu) {
                         bottomSheetView()
                     }
                 }
+//                ToolbarItemGroup(placement: .navigationBarTrailing) {
+//                    TopMenuButtonView
+//                    .sheet(isPresented: $showBottomMenu) {
+//                        bottomSheetView()
+//                    }
+//                }
             }
             .onChange(of: sharedDataModel.addresses) { newAddresses in
                 guard let lastAddress = newAddresses.last else { return }
@@ -64,7 +70,7 @@ struct ContentView: View {
     }
 }
 
-extension ContentView {
+extension HomeView {
     
     private var TotalBalanceView: some View {
         VStack(spacing: 10) {
@@ -140,7 +146,7 @@ extension ContentView {
 
 //struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ContentView()
+//        HomeView()
 //    }
 //}
 

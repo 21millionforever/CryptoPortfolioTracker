@@ -7,24 +7,12 @@
 
 import Foundation
 
-struct BalanceChartData {
-    var all: [ChartDataPoint]?
-    var oneWeek: [ChartDataPoint]?
-    var oneDay: [ChartDataPoint]?
-    var live: [ChartDataPoint]?
-}
-
-struct ChartDataPoint: Identifiable {
-    let id = UUID()
-    let date: Date
-    let value: Double
-}
 
 class BalanceChartViewModel: ObservableObject {
     @Published var walletToBalanceChart = [String: BalanceChartData]()
     @Published var totalBalanceChart = BalanceChartData()
     @Published var isTotalBalanceChartDataLoaded = false
-    private let chartDataService = ChartDataService()
+    private let chartDataService = BalanceChartDataService()
     
     
     func CalculateTotalBalanceChart(walletToBalanceChart : [String: BalanceChartData], timeInterval: String) -> [ChartDataPoint] {

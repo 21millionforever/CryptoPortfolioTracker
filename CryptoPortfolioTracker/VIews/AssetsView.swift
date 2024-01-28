@@ -32,10 +32,10 @@ struct AssetsView: View {
         }
         .padding([.leading, .trailing])
         .navigationDestination(for: Token.self) {tokenInfo in
-            TestView()
+            Text("Token")
         }
         .navigationDestination(for: Eth.self) { Eth in
-            TestView()
+            Text("Eth")
             
         }
         

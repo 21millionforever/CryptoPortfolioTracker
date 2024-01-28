@@ -1,5 +1,5 @@
 //
-//  ChartDataService.swift
+//  BalanceChartDataService.swift
 //  CryptoPortfolioTracker
 //
 //  Created by Zhendong Chen on 1/25/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ChartDataService {
+class BalanceChartDataService {
     func fetchWalletChartData(walletAddress: String, days: String) async throws -> [ChartDataPoint] {
         let endpoint = "\(Config.server_url)/getWalletBalanceChart/\(walletAddress)/\(days)"
         

@@ -11,14 +11,22 @@ struct MarketView: View {
     @EnvironmentObject private var marketViewModel: MarketViewModel
     
     var body: some View {
-        VStack {
-            
-            SearchBarView(searchText: $marketViewModel.searchText)
-            
-            columnTitles
-            
-            allCoinsList
-                .listStyle(PlainListStyle())
+        NavigationStack {
+            ScrollView {
+                VStack {
+                    MarketStatisticView()
+                    SearchBarView(searchText: $marketViewModel.searchText)
+                    
+                    columnTitles
+                    
+                    allCoinsList
+                        .listStyle(PlainListStyle())
+                }
+                .navigationTitle("Market")
+                .toolbar {
+                    
+                }
+            }
         }
     }
 }
@@ -28,14 +36,13 @@ struct MarketView: View {
 
 extension MarketView {
     private var allCoinsList: some View {
-        NavigationStack {
-            List {
-                ForEach(marketViewModel.filteredCoins) { coin in
-                    CoinRowView(coin: coin)
-                        .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
-                }
+//            List {
+            ForEach(marketViewModel.filteredCoins) { coin in
+                CoinRowView(coin: coin)
+                    .padding(.trailing, 10)
+//                    .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
             }
-        }
+//            }
     }
     
     private var columnTitles: some View {

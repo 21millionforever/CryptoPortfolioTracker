@@ -66,39 +66,6 @@ struct ChartTabView: View {
                 }
             }
             
-//            VStack {
-//                let currentDate = Date()
-//
-//                HStack(spacing: 3) {
-//                    Image(systemName: "arrowtriangle.up.fill")
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fit)
-//                        .frame(width: 15, height: 15)
-//                        .foregroundColor(.green)
-//
-//                    if let dataPoints = balanceChartViewModel.totalBalanceChart.all {
-//                        Text(calculatUsdDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate)))
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//
-//                        Text("(\(caculateRateDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))))")
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//
-//                        Text("1M")
-//                            .font(.subheadline)
-//                            .fontWeight(.light)
-//                    }
-//                    else {
-//                        Text("Unknown")
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//                    }
-//                    Spacer()
-//
-//                }
-//            }
-            
             case "3M":
             VStack {
                 Group {
@@ -254,7 +221,7 @@ extension ChartTabView {
                     Text(tab)
                         .foregroundColor(self.selectedTab == tab ? .white : Color.theme.green)
                         .frame(width: 50, height: 30)
-                        .background(self.selectedTab == tab ? Color.theme.green : .white)
+                        .background(self.selectedTab == tab ? Color.theme.green : Color.theme.background)
                         .cornerRadius(10)
                 }
                 Spacer()

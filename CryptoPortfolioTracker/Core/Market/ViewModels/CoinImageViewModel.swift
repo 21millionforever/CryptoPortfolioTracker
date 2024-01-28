@@ -14,7 +14,7 @@ class CoinImageViewModel: ObservableObject {
     
     private let coinImageService = CoinImageService()
     
-    init(coin: CoinModel){
+    init(coin: Coin){
         Task {
             await getImage(urlString: coin.image, imageName: coin.id)
         }

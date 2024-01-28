@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BottomNavigationBarView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
-    @EnvironmentObject var walletInfoViewModel: WalletInfoViewModel
+    @EnvironmentObject var walletInfoViewModel: WalletsViewModel
     @EnvironmentObject var sharedDataModel : SharedDataModel
     
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
@@ -25,7 +25,7 @@ struct BottomNavigationBarView: View {
     var body: some View {
 
         TabView {
-            ContentView()
+            HomeView()
                 .tabItem {
                     Label("Home", systemImage: "chart.line.uptrend.xyaxis")
                         .foregroundColor(.black)
