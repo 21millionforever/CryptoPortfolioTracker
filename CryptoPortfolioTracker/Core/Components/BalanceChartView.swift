@@ -44,6 +44,9 @@ struct BalanceChartView: View {
                                 .onEnded { _ in
 //                                    isDragging = false
                                     dragPosition = nil
+                                    Task {
+                                        await balanceChartViewModel.loadTotalBalance()
+                                    }
                                 }
                         )
                         .overlay(
@@ -205,6 +208,7 @@ struct RectangleOverlayView: View {
     var dragPosition: CGFloat?
     var dataPoints: [ChartDataPoint]
     @Binding var selectedDataPoint: ChartDataPoint?
+    @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
 
     var body: some View {
         GeometryReader { geometry in
@@ -231,7 +235,8 @@ struct RectangleOverlayView: View {
         let output = index >= 0 && index < dataPoints.count ? dataPoints[index] : nil
         
         DispatchQueue.main.async {
-            selectedDataPoint = output
+            self.selectedDataPoint = output
+            balanceChartViewModel.totalBalance = output?.value ?? 0
         }
         if let closestDataPoint = output {
             print("Date: \(closestDataPoint.date), Value: \(closestDataPoint.value)")

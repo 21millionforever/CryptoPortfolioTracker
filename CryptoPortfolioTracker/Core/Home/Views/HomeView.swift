@@ -68,7 +68,7 @@ extension HomeView {
     private var TotalBalanceView: some View {
         VStack(spacing: 10) {
             HStack() {
-                Text(balanceChartViewModel.totalBalanceChart.all?.last?.value.asCurrencyWith2Decimals() ?? "$Error")
+                Text(balanceChartViewModel.totalBalance.asCurrencyWith2Decimals())
                     .contentTransition(.numericText())
                     .font(.largeTitle)
                     .fontWeight(.bold)

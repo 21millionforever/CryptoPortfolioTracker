@@ -39,11 +39,13 @@ struct BottomNavigationBarView: View {
         .accentColor(Color.theme.accent)
         .task {
             await balanceChartViewModel.loadChartData(addresses: sharedDataModel.addresses)
+            await balanceChartViewModel.loadTotalBalance()
             await walletInfoViewModel.loadWalletInfo(addresses: sharedDataModel.addresses)
         }
         .onReceive(timer) { _ in
             Task {
                 await balanceChartViewModel.loadChartData(addresses: sharedDataModel.addresses)
+                await balanceChartViewModel.loadTotalBalance()
                 await walletInfoViewModel.loadWalletInfo(addresses: sharedDataModel.addresses)
             }
         }
