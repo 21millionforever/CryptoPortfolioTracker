@@ -32,13 +32,13 @@ struct BalanceChartView: View {
                             }
                             
                             // PointMark for dots at each data point
-                            ForEach(dataPoints) { dataPoint in
-                                PointMark(
-                                    x: .value("Day", dataPoint.date),
-                                    y: .value("Value", dataPoint.value)
-                                )
-                              
-                            }
+//                            ForEach(dataPoints) { dataPoint in
+//                                PointMark(
+//                                    x: .value("Day", dataPoint.date),
+//                                    y: .value("Value", dataPoint.value)
+//                                )
+//
+//                            }
                         }
                         .padding([.leading, .trailing], CGFloat(10))
                         .chartXScale(domain: createRange(from: dataPoints.first?.date ?? Date(), to: dataPoints.last?.date ?? Date()))
@@ -89,8 +89,9 @@ struct BalanceChartView: View {
                                 )
                             }
                         }
+                        .padding([.leading, .trailing], CGFloat(10))
                         .chartXScale(domain: createRange(from: dataPoints[startIndex].date, to: dataPoints[dataPoints.count - 1].date))
-                        .frame(maxWidth: .infinity) // Use maximum width available
+                        .frame(maxWidth: .infinity)
                         .frame(height: height)
                         .onAppear {
                             startIndex = getStartIndex(totalBalanceChart: dataPoints)
@@ -98,6 +99,14 @@ struct BalanceChartView: View {
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
+                                    if(value.location.x <= 10) {
+                                        dragPosition = 10
+                                        return
+                                    }
+                                    else if (value.location.x >= UIScreen.main.bounds.width - 10) {
+                                        dragPosition = UIScreen.main.bounds.width - 10
+                                        return
+                                    }
                                     dragPosition = value.location.x
                                 }
                                 .onEnded { _ in
@@ -128,13 +137,36 @@ struct BalanceChartView: View {
                                 )
                             }
                         }
+                        .padding([.leading, .trailing], CGFloat(10))
                         .chartXScale(domain: createRange(from: dataPoints[startIndex].date, to: dataPoints[dataPoints.count - 1].date))
-                        .frame(maxWidth: .infinity) // Use maximum width available
+                        .frame(maxWidth: .infinity)
                         .frame(height: height)
-//                        .padding()
                         .onAppear {
                             startIndex = getStartIndex(totalBalanceChart: dataPoints)
                         }
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    if(value.location.x <= 10) {
+                                        dragPosition = 10
+                                        return
+                                    }
+                                    else if (value.location.x >= UIScreen.main.bounds.width - 10) {
+                                        dragPosition = UIScreen.main.bounds.width - 10
+                                        return
+                                    }
+                                    dragPosition = value.location.x
+                                }
+                                .onEnded { _ in
+                                    dragPosition = nil
+                                    Task {
+                                        await balanceChartViewModel.loadTotalBalance()
+                                    }
+                                }
+                        )
+                        .overlay(
+                            RectangleOverlayView(dataPoints: Array(dataPoints.suffix(from: startIndex)), startIndex: startIndex , dragPosition: dragPosition, selectedDataPoint: $selectedDataPoint)
+                        )
                     }
                 }
                 .chartYAxis(.hidden)
@@ -152,10 +184,33 @@ struct BalanceChartView: View {
                                 )
                             }
                         }
+                        .padding([.leading, .trailing], CGFloat(10))
                         .chartXScale(domain: createRange(from: dataPoints.first?.date ?? Date(), to: dataPoints.last?.date ?? Date()))
-                        .frame(maxWidth: .infinity) // Use maximum width available
+                        .frame(maxWidth: .infinity)
                         .frame(height: height)
-//                        .padding()
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    if(value.location.x <= 10) {
+                                        dragPosition = 10
+                                        return
+                                    }
+                                    else if (value.location.x >= UIScreen.main.bounds.width - 10) {
+                                        dragPosition = UIScreen.main.bounds.width - 10
+                                        return
+                                    }
+                                    dragPosition = value.location.x
+                                }
+                                .onEnded { _ in
+                                    dragPosition = nil
+                                    Task {
+                                        await balanceChartViewModel.loadTotalBalance()
+                                    }
+                                }
+                        )
+                        .overlay(
+                            RectangleOverlayView(dataPoints: dataPoints, dragPosition: dragPosition, selectedDataPoint: $selectedDataPoint)
+                        )
                     }
                 }
                 .edgesIgnoringSafeArea(.horizontal) // Extend to the horizontal edges of the screen
@@ -208,8 +263,6 @@ struct BalanceChartView: View {
             for (index, dataPoint) in totalBalanceChart.enumerated() {
                 // Use the date directly for comparison
                 if dataPoint.date >= timeBefore {
-//                    print("data date: \(dataPoint.date)")
-//                    print(index)
                     return index
                 }
             }
