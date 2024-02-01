@@ -77,7 +77,7 @@ struct ChartTabView: View {
                             let iconName = usdDiff.contains("-") ? "arrowtriangle.down.fill" : "arrowtriangle.up.fill"
                             let iconColor = usdDiff.contains("-") ? Color.theme.red : Color.theme.green
                             
-                            ChartHeaderView(iconName: iconName, iconColor: iconColor, usdDiff: usdDiff, percDiff: percDiff, timeFrame: "1M")
+                            ChartHeaderView(iconName: iconName, iconColor: iconColor, usdDiff: usdDiff, percDiff: percDiff, timeFrame: "3M")
                         } else {
                             Text("No data available")
                                 .font(.subheadline)
@@ -87,7 +87,7 @@ struct ChartTabView: View {
                     .padding(.leading)
                     Spacer()
 
-                    BalanceChartView(balanceChartData: balanceChartData, timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200)
+                    BalanceChartView(balanceChartData: balanceChartData, timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate), height: 200)
                 }
             }
             case "All":

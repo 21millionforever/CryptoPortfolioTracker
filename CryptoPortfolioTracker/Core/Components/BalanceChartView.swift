@@ -18,7 +18,6 @@ struct BalanceChartView: View {
     var height: CGFloat
     @State private var selectedDataPoint: ChartDataPoint?
     @State private var dragPosition: CGFloat? = nil
-//    @State private var isDragging: Bool = false
     var body: some View {
         if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
             if (timeInterval == "All") {
@@ -31,18 +30,34 @@ struct BalanceChartView: View {
                                     y: .value("Value", dataPoint.value)
                                 )
                             }
+                            
+                            // PointMark for dots at each data point
+                            ForEach(dataPoints) { dataPoint in
+                                PointMark(
+                                    x: .value("Day", dataPoint.date),
+                                    y: .value("Value", dataPoint.value)
+                                )
+                              
+                            }
                         }
+                        .padding([.leading, .trailing], CGFloat(10))
                         .chartXScale(domain: createRange(from: dataPoints.first?.date ?? Date(), to: dataPoints.last?.date ?? Date()))
                         .frame(maxWidth: .infinity)
                         .frame(height: height)
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
-//                                    isDragging = true
+                                    if(value.location.x <= 10) {
+                                        dragPosition = 10
+                                        return
+                                    }
+                                    else if (value.location.x >= UIScreen.main.bounds.width - 10) {
+                                        dragPosition = UIScreen.main.bounds.width - 10
+                                        return
+                                    }
                                     dragPosition = value.location.x
                                 }
                                 .onEnded { _ in
-//                                    isDragging = false
                                     dragPosition = nil
                                     Task {
                                         await balanceChartViewModel.loadTotalBalance()
@@ -50,7 +65,7 @@ struct BalanceChartView: View {
                                 }
                         )
                         .overlay(
-                            RectangleOverlayView(dragPosition: dragPosition, dataPoints: dataPoints, selectedDataPoint: $selectedDataPoint)
+                            RectangleOverlayView(dataPoints: dataPoints, dragPosition: dragPosition, selectedDataPoint: $selectedDataPoint)
                         )
                     }
                 }
@@ -77,10 +92,24 @@ struct BalanceChartView: View {
                         .chartXScale(domain: createRange(from: dataPoints[startIndex].date, to: dataPoints[dataPoints.count - 1].date))
                         .frame(maxWidth: .infinity) // Use maximum width available
                         .frame(height: height)
-//                        .padding()
                         .onAppear {
                             startIndex = getStartIndex(totalBalanceChart: dataPoints)
                         }
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    dragPosition = value.location.x
+                                }
+                                .onEnded { _ in
+                                    dragPosition = nil
+                                    Task {
+                                        await balanceChartViewModel.loadTotalBalance()
+                                    }
+                                }
+                        )
+                        .overlay(
+                            RectangleOverlayView(dataPoints: Array(dataPoints.suffix(from: startIndex)), startIndex: startIndex , dragPosition: dragPosition, selectedDataPoint: $selectedDataPoint)
+                        )
                     }
                 }
                 .chartYAxis(.hidden)
@@ -205,14 +234,15 @@ func createRange(from: Date, to: Date) -> ClosedRange<Date> {
 
 
 struct RectangleOverlayView: View {
+    let dataPoints: [ChartDataPoint]
+    var startIndex: Int?
     var dragPosition: CGFloat?
-    var dataPoints: [ChartDataPoint]
     @Binding var selectedDataPoint: ChartDataPoint?
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
 
     var body: some View {
         GeometryReader { geometry in
-            if let dragPosition = dragPosition, let closestDataPoint = getClosestDataPoint(to: dragPosition, geometry: geometry) {
+            if let dragPosition = dragPosition, let closestDataPoint = getClosestDataPoint(dataPoints: dataPoints , startIndex: startIndex, to: dragPosition, geometry: geometry) {
                 // Draw the vertical line
                 VStack {
                     Text("\(closestDataPoint.date.asMediumDateString())")
@@ -221,27 +251,27 @@ struct RectangleOverlayView: View {
                         .fill(Color.theme.secondaryText)
                         .frame(width: 2)
                 }
-                .offset(x: dragPosition - 1, y: 0)
+
+                .offset(x: dragPosition - 35, y: 0)
                 .foregroundColor(Color.theme.secondaryText)
                 
             }
         }
+
     }
 
-    func getClosestDataPoint(to dragPosition: CGFloat, geometry: GeometryProxy) -> ChartDataPoint? {
+    func getClosestDataPoint(dataPoints: [ChartDataPoint], startIndex: Int?, to dragPosition: CGFloat, geometry: GeometryProxy) -> ChartDataPoint? {
         // Convert drag position to chart data point
         // This is an example, you'll need to implement the logic based on your data
-        let index = Int(dragPosition / geometry.size.width * CGFloat(dataPoints.count))
+        let index = Int( (dragPosition - 10) / (UIScreen.main.bounds.width - 20) * CGFloat(dataPoints.count - 1))
+        
+        print("DragPosition: \(dragPosition), index: \(index), value: \(dataPoints[index].value)")
+        
         let output = index >= 0 && index < dataPoints.count ? dataPoints[index] : nil
         
         DispatchQueue.main.async {
             self.selectedDataPoint = output
             balanceChartViewModel.totalBalance = output?.value ?? 0
-        }
-        if let closestDataPoint = output {
-            print("Date: \(closestDataPoint.date), Value: \(closestDataPoint.value)")
-        } else {
-            print("No closest data point found")
         }
         return output
     }

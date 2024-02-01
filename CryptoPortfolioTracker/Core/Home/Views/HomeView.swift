@@ -73,6 +73,7 @@ extension HomeView {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .redacted(reason: balanceChartViewModel.isTotalBalanceChartDataLoaded ? [] : .placeholder)
+                    .animation(.easeInOut(duration: 0.3), value: balanceChartViewModel.totalBalance) // Add animation here
                    
                 Spacer()
             }

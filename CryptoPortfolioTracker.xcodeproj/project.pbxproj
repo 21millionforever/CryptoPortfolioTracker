@@ -386,6 +386,8 @@
 			dependencies = (
 			);
 			name = CryptoPortfolioTracker;
+			packageProductDependencies = (
+			);
 			productName = CryptoPortfolioTracker;
 			productReference = 44D3CF582B3A275700DAE5C9 /* CryptoPortfolioTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -414,6 +416,8 @@
 				Base,
 			);
 			mainGroup = 44D3CF4F2B3A275700DAE5C9;
+			packageReferences = (
+			);
 			productRefGroup = 44D3CF592B3A275700DAE5C9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
