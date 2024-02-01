@@ -13,6 +13,7 @@ struct CryptoPortfolioTrackerApp: App {
     @StateObject private var balanceChartViewModel = BalanceChartViewModel()
     @StateObject private var walletInfoViewModel = WalletsViewModel()
     @StateObject private var marketViewModel = MarketViewModel()
+    @StateObject private var chartHeaderViewModel = ChartHeaderViewModel()
 
     
     var body: some Scene {
@@ -26,8 +27,8 @@ struct CryptoPortfolioTrackerApp: App {
                     .environmentObject(sharedDataModel)
                     .environmentObject(walletInfoViewModel)
                     .environmentObject(marketViewModel)
+                    .environmentObject(chartHeaderViewModel)
             }
-//            Test()
         }
     }
 }

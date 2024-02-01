@@ -14,87 +14,61 @@ struct ChartTabView: View {
     let balanceChartData: BalanceChartData
     let tabs = ["1D", "1W", "1M", "3M", "All"]
     @Binding var selectedTab: String
+    @EnvironmentObject var chartHeaderViewModel: ChartHeaderViewModel
     
     var body: some View {
         switch selectedTab {
-            case "1D":
-//            BalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "1", height: 200)
-            Text("Place Holder")
+//            case "1D":
+////            BalanceChartView(totalBalanceChart: balanceChart, isTotalBalanceChartDataLoaded: isDataLoaded, timeInterval: "1", height: 200)
+//            Text("Place Holder")
 
-            case "1W":
-            VStack {
-                Group {
-                    if let dataPoints = balanceChartData.oneWeek {
-                        let usdDiff = calculatUsdDiff(dataPoints: dataPoints, timeBefore: nil)
-                        let percDiff = caculateRateDiff(dataPoints: dataPoints, timeBefore: nil)
-                        let iconName = usdDiff.contains("-") ? "arrowtriangle.down.fill" : "arrowtriangle.up.fill"
-                        let iconColor = usdDiff.contains("-") ? Color.theme.red : Color.theme.green
-
-                        ChartHeaderView(iconName: iconName, iconColor: iconColor, usdDiff: usdDiff, percDiff: percDiff, timeFrame: "1W")
-                    } else {
-                        Text("No data available")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                    }
-                }
-                .padding(.leading)
-            
-                BalanceChartView(balanceChartData: balanceChartData, timeInterval: "1W", height: 200)
-            }
-            case "1M":
-            VStack {
-                Group {
-                    let currentDate = Date()
-                    Group {
-                        if let dataPoints = balanceChartData.all {
-                            let usdDiff = calculatUsdDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
-                            let percDiff = caculateRateDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
-                            let iconName = usdDiff.contains("-") ? "arrowtriangle.down.fill" : "arrowtriangle.up.fill"
-                            let iconColor = usdDiff.contains("-") ? Color.theme.red : Color.theme.green
-                            
-                            ChartHeaderView(iconName: iconName, iconColor: iconColor, usdDiff: usdDiff, percDiff: percDiff, timeFrame: "1M")
-                        } else {
-                            Text("No data available")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                        }
-                    }
-                    .padding(.leading)
-                    Spacer()
-
-                    BalanceChartView(balanceChartData: balanceChartData, timeInterval: "1M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200)
-                }
-            }
-            
-            case "3M":
-            VStack {
-                Group {
-                    let currentDate = Date()
-                    Group {
-                        if let dataPoints = balanceChartData.all {
-                            let usdDiff = calculatUsdDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
-                            let percDiff = caculateRateDiff(dataPoints: dataPoints, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
-                            let iconName = usdDiff.contains("-") ? "arrowtriangle.down.fill" : "arrowtriangle.up.fill"
-                            let iconColor = usdDiff.contains("-") ? Color.theme.red : Color.theme.green
-                            
-                            ChartHeaderView(iconName: iconName, iconColor: iconColor, usdDiff: usdDiff, percDiff: percDiff, timeFrame: "3M")
-                        } else {
-                            Text("No data available")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                        }
-                    }
-                    .padding(.leading)
-                    Spacer()
-
-                    BalanceChartView(balanceChartData: balanceChartData, timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate), height: 200)
-                }
-            }
+//            case "1W":
+//            VStack {
+//                Group {
+//                    if let dataPoints = balanceChartData.oneWeek {
+//                        let usdDiff = calculatUsdDiff(dataPoints: dataPoints, timeBefore: nil)
+//                        let percDiff = caculateRateDiff(dataPoints: dataPoints, timeBefore: nil)
+//                        let iconName = usdDiff.contains("-") ? "arrowtriangle.down.fill" : "arrowtriangle.up.fill"
+//                        let iconColor = usdDiff.contains("-") ? Color.theme.red : Color.theme.green
+//
+//                        ChartHeaderView(iconName: iconName, iconColor: iconColor, usdDiff: usdDiff, percDiff: percDiff, timeFrame: "1W")
+//                    } else {
+//                        Text("No data available")
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//                    }
+//                }
+//                .padding(.leading)
+//
+//                BalanceChartView(balanceChartData: balanceChartData, timeInterval: "1W", height: 200)
+//            }
+//            case "1M":
+//            VStack {
+//                Group {
+//                    let currentDate = Date()
+//                    ChartHeaderView(usdDiff: usdDiff ?? 0.00, percDiff: percDiff ?? 0.00, timeFrame: "1M")
+//                        .padding(.leading)
+//                    Spacer()
+//
+//                    BalanceChartView(balanceChartData: balanceChartData, timeInterval: "1M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200, usdDiff: $usdDiff, percDiff: $percDiff)
+//                }
+//            }
+//
+//            case "3M":
+//            VStack {
+//                Group {
+//                    let currentDate = Date()
+//                    ChartHeaderView(usdDiff: usdDiff ?? 0.00, percDiff: percDiff ?? 0.00, timeFrame: "3M")
+//                        .padding(.leading)
+//                    Spacer()
+//
+//                    BalanceChartView(balanceChartData: balanceChartData, timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate), height: 200, usdDiff: $usdDiff, percDiff: $percDiff)
+//                }
+//            }
             case "All":
             VStack {
-                ChartHeaderView(iconName: "arrowtriangle.up.fill", iconColor: Color.theme.green, usdDiff: balanceChartData.all?.last?.value.asCurrencyWith2Decimals() ?? "$0.00", percDiff: "(100.0%)", timeFrame: "All Time")
+                ChartHeaderView(timeFrame: "All Time")
                     .padding(.leading)
-              
                 BalanceChartView(balanceChartData: balanceChartData, timeInterval: "All", height: 200)
             }
             default:
@@ -118,25 +92,22 @@ struct ChartTabView: View {
 
 extension ChartTabView {
     struct ChartHeaderView: View {
-        var iconName: String
-        var iconColor: Color
-        var usdDiff: String
-        var percDiff: String
         var timeFrame: String
+        @EnvironmentObject var chartHeaderViewModel: ChartHeaderViewModel
 
         var body: some View {
             HStack(spacing: 3) {
-                Image(systemName: iconName)
+                Image(systemName: chartHeaderViewModel.usdDiff ?? 0 >= 0 ? "arrowtriangle.up.fill" : "arrowtriangle.down.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 15, height: 15)
-                    .foregroundColor(iconColor)
+                    .foregroundColor(chartHeaderViewModel.usdDiff ?? 0 >= 0 ? Color.theme.green : Color.theme.red)
 
-                Text(usdDiff)
+                Text(chartHeaderViewModel.usdDiff?.asCurrencyWith2Decimals() ?? "Error")
                     .font(.subheadline)
                     .fontWeight(.semibold)
 
-                Text(percDiff)
+                Text(chartHeaderViewModel.percentageDiff?.asPercentString() ?? "Error")
                     .font(.subheadline)
                     .fontWeight(.semibold)
 
@@ -186,47 +157,6 @@ extension ChartTabView {
         }
         
         return 0
-    }
-    
-    private func calculatUsdDiff(dataPoints: [ChartDataPoint], timeBefore : Date?) -> String {
-        var output: Double
-        if let timeBefore = timeBefore {
-            let startIndex = getStartIndex(dataPoints: dataPoints, timeBefore: timeBefore)
-            if let lastValue = dataPoints.last?.value {
-                output = lastValue - dataPoints[startIndex].value
-                return String(output.asCurrencyWith2Decimals())
-            }
-        }
-        else {
-            if let firstValue = dataPoints.first?.value {
-                if let lastValue = dataPoints.last?.value {
-                    output = lastValue - firstValue
-                    return String(output.asCurrencyWith2Decimals())
-                }
-            }
-        }
-        return "Error"
-    }
-    
-    private func caculateRateDiff(dataPoints: [ChartDataPoint], timeBefore : Date?) -> String {
-        var output: Double
-        if let timeBefore = timeBefore {
-            let startIndex = getStartIndex(dataPoints: dataPoints, timeBefore: timeBefore)
-            if let lastValue = dataPoints.last?.value {
-                let diffUsd = lastValue - dataPoints[startIndex].value
-                output = (diffUsd / lastValue) * 100
-                return output.asPercentString()
-            }
-        }
-        else {
-            if let firstValue = dataPoints.first?.value {
-                if let lastValue = dataPoints.last?.value {
-                    output = ((lastValue - firstValue) / lastValue) * 100
-                    return output.asPercentString()
-                }
-            }
-        }
-        return "Error"
     }
 }
 

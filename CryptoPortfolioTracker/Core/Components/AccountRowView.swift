@@ -38,9 +38,9 @@ struct AccountRowView: View {
                     
                     
                     
-                    if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
-                            BalanceChartView(balanceChartData: balanceChartData, timeInterval: "All", height: 50)
-                    }
+//                    if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
+//                            BalanceChartView(balanceChartData: balanceChartData, timeInterval: "All", height: 50)
+//                    }
 
                     
                     

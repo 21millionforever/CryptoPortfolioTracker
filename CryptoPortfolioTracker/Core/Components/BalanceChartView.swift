@@ -10,6 +10,7 @@ import Charts
 
 struct BalanceChartView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
+    @EnvironmentObject var chartHeaderViewModel: ChartHeaderViewModel
     let balanceChartData: BalanceChartData
     var timeInterval: String
     var timeBefore : Date?
@@ -30,20 +31,14 @@ struct BalanceChartView: View {
                                     y: .value("Value", dataPoint.value)
                                 )
                             }
-                            
-                            // PointMark for dots at each data point
-//                            ForEach(dataPoints) { dataPoint in
-//                                PointMark(
-//                                    x: .value("Day", dataPoint.date),
-//                                    y: .value("Value", dataPoint.value)
-//                                )
-//
-//                            }
                         }
                         .padding([.leading, .trailing], CGFloat(10))
                         .chartXScale(domain: createRange(from: dataPoints.first?.date ?? Date(), to: dataPoints.last?.date ?? Date()))
                         .frame(maxWidth: .infinity)
                         .frame(height: height)
+                        .onAppear {
+                            chartHeaderViewModel.setHeaderInfoToDefault(dataPoints: dataPoints)
+                        }
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
@@ -51,14 +46,23 @@ struct BalanceChartView: View {
                                         dragPosition = 10
                                         return
                                     }
-                                    else if (value.location.x >= UIScreen.main.bounds.width - 10) {
-                                        dragPosition = UIScreen.main.bounds.width - 10
+                                    else if (value.location.x >= UIScreen.main.bounds.width - 7) {
+                                        dragPosition = UIScreen.main.bounds.width - 7
                                         return
                                     }
-                                    dragPosition = value.location.x
+                                    else {
+                                        dragPosition = value.location.x
+                                    }
+                                    
+                                    updateSelectedDataPointAndTotalBalance(dataPoints: dataPoints , to: value.location.x)
+                                    
+                                    chartHeaderViewModel.updateHeaderInfo(dataPoints: dataPoints, selectedDataPoint: selectedDataPoint)
+                
                                 }
                                 .onEnded { _ in
                                     dragPosition = nil
+                                    chartHeaderViewModel.setHeaderInfoToDefault(dataPoints: dataPoints)
+                                 
                                     Task {
                                         await balanceChartViewModel.loadTotalBalance()
                                     }
@@ -77,147 +81,159 @@ struct BalanceChartView: View {
             
             
             
-            else if (timeInterval == "3M") {
-                VStack {
-                    if let dataPoints = balanceChartData.all {
-                        Chart {
-                            ForEach(dataPoints.suffix(from: startIndex), id: \.id) { dataPoint in
-
-                                LineMark(
-                                    x: .value("Day", dataPoint.date),
-                                    y: .value("Value", dataPoint.value)
-                                )
-                            }
-                        }
-                        .padding([.leading, .trailing], CGFloat(10))
-                        .chartXScale(domain: createRange(from: dataPoints[startIndex].date, to: dataPoints[dataPoints.count - 1].date))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: height)
-                        .onAppear {
-                            startIndex = getStartIndex(totalBalanceChart: dataPoints)
-                        }
-                        .gesture(
-                            DragGesture()
-                                .onChanged { value in
-                                    if(value.location.x <= 10) {
-                                        dragPosition = 10
-                                        return
-                                    }
-                                    else if (value.location.x >= UIScreen.main.bounds.width - 10) {
-                                        dragPosition = UIScreen.main.bounds.width - 10
-                                        return
-                                    }
-                                    dragPosition = value.location.x
-                                }
-                                .onEnded { _ in
-                                    dragPosition = nil
-                                    Task {
-                                        await balanceChartViewModel.loadTotalBalance()
-                                    }
-                                }
-                        )
-                        .overlay(
-                            RectangleOverlayView(dataPoints: Array(dataPoints.suffix(from: startIndex)), startIndex: startIndex , dragPosition: dragPosition, selectedDataPoint: $selectedDataPoint)
-                        )
-                    }
-                }
-                .chartYAxis(.hidden)
-                .chartXAxis(.hidden)
-                .foregroundStyle(Color.theme.green)
-            }
-            else if (timeInterval == "1M") {
-                VStack {
-                    if let dataPoints = balanceChartData.all {
-                        Chart {
-                            ForEach(dataPoints.suffix(from: startIndex), id: \.id) { dataPoint in
-
-                                LineMark(
-                                    x: .value("Day", dataPoint.date),
-                                    y: .value("Value", dataPoint.value)
-                                )
-                            }
-                        }
-                        .padding([.leading, .trailing], CGFloat(10))
-                        .chartXScale(domain: createRange(from: dataPoints[startIndex].date, to: dataPoints[dataPoints.count - 1].date))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: height)
-                        .onAppear {
-                            startIndex = getStartIndex(totalBalanceChart: dataPoints)
-                        }
-                        .gesture(
-                            DragGesture()
-                                .onChanged { value in
-                                    if(value.location.x <= 10) {
-                                        dragPosition = 10
-                                        return
-                                    }
-                                    else if (value.location.x >= UIScreen.main.bounds.width - 10) {
-                                        dragPosition = UIScreen.main.bounds.width - 10
-                                        return
-                                    }
-                                    dragPosition = value.location.x
-                                }
-                                .onEnded { _ in
-                                    dragPosition = nil
-                                    Task {
-                                        await balanceChartViewModel.loadTotalBalance()
-                                    }
-                                }
-                        )
-                        .overlay(
-                            RectangleOverlayView(dataPoints: Array(dataPoints.suffix(from: startIndex)), startIndex: startIndex , dragPosition: dragPosition, selectedDataPoint: $selectedDataPoint)
-                        )
-                    }
-                }
-                .chartYAxis(.hidden)
-                .chartXAxis(.hidden)
-                .foregroundStyle(Color.theme.green)
-            }
-            else if (timeInterval == "1W") {
-                VStack {
-                    if let dataPoints = balanceChartData.oneWeek {
-                        Chart {
-                            ForEach(dataPoints) { dataPoint in
-                                LineMark(
-                                    x: .value("Day", dataPoint.date),
-                                    y: .value("Value", dataPoint.value)
-                                )
-                            }
-                        }
-                        .padding([.leading, .trailing], CGFloat(10))
-                        .chartXScale(domain: createRange(from: dataPoints.first?.date ?? Date(), to: dataPoints.last?.date ?? Date()))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: height)
-                        .gesture(
-                            DragGesture()
-                                .onChanged { value in
-                                    if(value.location.x <= 10) {
-                                        dragPosition = 10
-                                        return
-                                    }
-                                    else if (value.location.x >= UIScreen.main.bounds.width - 10) {
-                                        dragPosition = UIScreen.main.bounds.width - 10
-                                        return
-                                    }
-                                    dragPosition = value.location.x
-                                }
-                                .onEnded { _ in
-                                    dragPosition = nil
-                                    Task {
-                                        await balanceChartViewModel.loadTotalBalance()
-                                    }
-                                }
-                        )
-                        .overlay(
-                            RectangleOverlayView(dataPoints: dataPoints, dragPosition: dragPosition, selectedDataPoint: $selectedDataPoint)
-                        )
-                    }
-                }
-                .edgesIgnoringSafeArea(.horizontal) // Extend to the horizontal edges of the screen
-                .chartYAxis(.hidden)
-                .chartXAxis(.hidden)
-                .foregroundStyle(Color.theme.green)
-            }
+//            else if (timeInterval == "3M") {
+//                VStack {
+//                    if let dataPoints = balanceChartData.all {
+//                        Chart {
+//                            ForEach(dataPoints.suffix(from: startIndex), id: \.id) { dataPoint in
+//
+//                                LineMark(
+//                                    x: .value("Day", dataPoint.date),
+//                                    y: .value("Value", dataPoint.value)
+//                                )
+//                            }
+//                        }
+//                        .padding([.leading, .trailing], CGFloat(10))
+//                        .chartXScale(domain: createRange(from: dataPoints[startIndex].date, to: dataPoints[dataPoints.count - 1].date))
+//                        .frame(maxWidth: .infinity)
+//                        .frame(height: height)
+//                        .onAppear {
+//                            startIndex = getStartIndex(totalBalanceChart: dataPoints)
+//                            defaultHeader(dataPoints: Array(dataPoints.suffix(from: startIndex)))
+//                        }
+//                        .gesture(
+//                            DragGesture()
+//                                .onChanged { value in
+//                                    if(value.location.x <= 10) {
+//                                        dragPosition = 10
+//                                        return
+//                                    }
+//                                    else if (value.location.x >= UIScreen.main.bounds.width - 10) {
+//                                        dragPosition = UIScreen.main.bounds.width - 10
+//                                        return
+//                                    }
+//                                    else {
+//                                        dragPosition = value.location.x
+//                                    }
+//                                    updateHeader(dataPoints: Array(dataPoints.suffix(from: startIndex)))
+//
+//                                }
+//                                .onEnded { _ in
+//                                    dragPosition = nil
+//                                    defaultHeader(dataPoints: Array(dataPoints.suffix(from: startIndex)))
+//                                    Task {
+//                                        await balanceChartViewModel.loadTotalBalance()
+//                                    }
+//                                }
+//                        )
+//                        .overlay(
+//                            RectangleOverlayView(dataPoints: Array(dataPoints.suffix(from: startIndex)), startIndex: startIndex , dragPosition: dragPosition, selectedDataPoint: $selectedDataPoint)
+//                        )
+//                    }
+//                }
+//                .chartYAxis(.hidden)
+//                .chartXAxis(.hidden)
+//                .foregroundStyle(Color.theme.green)
+//            }
+//            else if (timeInterval == "1M") {
+//                VStack {
+//                    if let dataPoints = balanceChartData.all {
+//                        Chart {
+//                            ForEach(dataPoints.suffix(from: startIndex), id: \.id) { dataPoint in
+//
+//                                LineMark(
+//                                    x: .value("Day", dataPoint.date),
+//                                    y: .value("Value", dataPoint.value)
+//                                )
+//                            }
+//                        }
+//                        .padding([.leading, .trailing], CGFloat(10))
+//                        .chartXScale(domain: createRange(from: dataPoints[startIndex].date, to: dataPoints[dataPoints.count - 1].date))
+//                        .frame(maxWidth: .infinity)
+//                        .frame(height: height)
+//                        .onAppear {
+//                            startIndex = getStartIndex(totalBalanceChart: dataPoints)
+//                            defaultHeader(dataPoints: Array(dataPoints.suffix(from: startIndex)))
+//                        }
+//                        .gesture(
+//                            DragGesture()
+//                                .onChanged { value in
+//                                    if(value.location.x <= 10) {
+//                                        dragPosition = 10
+//                                        return
+//                                    }
+//                                    else if (value.location.x >= UIScreen.main.bounds.width - 10) {
+//                                        dragPosition = UIScreen.main.bounds.width - 10
+//                                        return
+//                                    } else {
+//                                        dragPosition = value.location.x
+//                                    }
+//                                    updateHeader(dataPoints: Array(dataPoints.suffix(from: startIndex)))
+//
+//
+//                                }
+//                                .onEnded { _ in
+//                                    dragPosition = nil
+//                                    defaultHeader(dataPoints: Array(dataPoints.suffix(from: startIndex)))
+//                                    Task {
+//                                        await balanceChartViewModel.loadTotalBalance()
+//                                    }
+//                                }
+//                        )
+//                        .overlay(
+//                            RectangleOverlayView(dataPoints: Array(dataPoints.suffix(from: startIndex)), startIndex: startIndex , dragPosition: dragPosition, selectedDataPoint: $selectedDataPoint)
+//                        )
+//                    }
+//                }
+//                .chartYAxis(.hidden)
+//                .chartXAxis(.hidden)
+//                .foregroundStyle(Color.theme.green)
+//            }
+//            else if (timeInterval == "1W") {
+//                VStack {
+//                    if let dataPoints = balanceChartData.oneWeek {
+//                        Chart {
+//                            ForEach(dataPoints) { dataPoint in
+//                                LineMark(
+//                                    x: .value("Day", dataPoint.date),
+//                                    y: .value("Value", dataPoint.value)
+//                                )
+//                            }
+//                        }
+//                        .padding([.leading, .trailing], CGFloat(10))
+//                        .chartXScale(domain: createRange(from: dataPoints.first?.date ?? Date(), to: dataPoints.last?.date ?? Date()))
+//                        .frame(maxWidth: .infinity)
+//                        .frame(height: height)
+//                        .gesture(
+//                            DragGesture()
+//                                .onChanged { value in
+//                                    if(value.location.x <= 10) {
+//                                        dragPosition = 10
+//                                        return
+//                                    }
+//                                    else if (value.location.x >= UIScreen.main.bounds.width - 10) {
+//                                        dragPosition = UIScreen.main.bounds.width - 10
+//                                        return
+//                                    }
+//                                    dragPosition = value.location.x
+//                                }
+//                                .onEnded { _ in
+//                                    dragPosition = nil
+//                                    Task {
+//                                        await balanceChartViewModel.loadTotalBalance()
+//                                    }
+//                                }
+//                        )
+//                        .overlay(
+//                            RectangleOverlayView(dataPoints: dataPoints, dragPosition: dragPosition, selectedDataPoint: $selectedDataPoint)
+//                        )
+//                    }
+//                }
+//                .edgesIgnoringSafeArea(.horizontal) // Extend to the horizontal edges of the screen
+//                .chartYAxis(.hidden)
+//                .chartXAxis(.hidden)
+//                .foregroundStyle(Color.theme.green)
+//            }
 //            else if (timeInterval == "1") {
 //                HStack {
 //                    Chart {
@@ -271,6 +287,16 @@ struct BalanceChartView: View {
         return 0
     }
     
+    func updateSelectedDataPointAndTotalBalance(dataPoints: [ChartDataPoint], to dragPosition: CGFloat) {
+        // Convert drag position to chart data point
+        let index = Int( (dragPosition - 10) / (UIScreen.main.bounds.width - 20) * CGFloat(dataPoints.count - 1))
+        let dataPoint = index >= 0 && index < dataPoints.count ? dataPoints[index] : nil
+        
+        DispatchQueue.main.async {
+            self.selectedDataPoint = dataPoint
+            balanceChartViewModel.totalBalance = dataPoint?.value ?? 0
+        }
+    }
 
     
 }
@@ -295,10 +321,10 @@ struct RectangleOverlayView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            if let dragPosition = dragPosition, let closestDataPoint = getClosestDataPoint(dataPoints: dataPoints , startIndex: startIndex, to: dragPosition, geometry: geometry) {
+            if let dragPosition = dragPosition {
                 // Draw the vertical line
                 VStack {
-                    Text("\(closestDataPoint.date.asMediumDateString())")
+                    Text("\(selectedDataPoint?.date.asMediumDateString() ?? "Error")")
                         .font(.caption2)
                     Rectangle()
                         .fill(Color.theme.secondaryText)
@@ -312,22 +338,7 @@ struct RectangleOverlayView: View {
         }
 
     }
-
-    func getClosestDataPoint(dataPoints: [ChartDataPoint], startIndex: Int?, to dragPosition: CGFloat, geometry: GeometryProxy) -> ChartDataPoint? {
-        // Convert drag position to chart data point
-        // This is an example, you'll need to implement the logic based on your data
-        let index = Int( (dragPosition - 10) / (UIScreen.main.bounds.width - 20) * CGFloat(dataPoints.count - 1))
-        
-        print("DragPosition: \(dragPosition), index: \(index), value: \(dataPoints[index].value)")
-        
-        let output = index >= 0 && index < dataPoints.count ? dataPoints[index] : nil
-        
-        DispatchQueue.main.async {
-            self.selectedDataPoint = output
-            balanceChartViewModel.totalBalance = output?.value ?? 0
-        }
-        return output
-    }
-    
 }
+
+
 
