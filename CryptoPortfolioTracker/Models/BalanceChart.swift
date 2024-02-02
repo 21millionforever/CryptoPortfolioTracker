@@ -10,6 +10,8 @@ import Foundation
 
 struct BalanceChartData: Hashable {
     var all: [ChartDataPoint]?
+    var threeMonth: [ChartDataPoint]?
+    var oneMonth: [ChartDataPoint]?
     var oneWeek: [ChartDataPoint]?
     var oneDay: [ChartDataPoint]?
     var live: [ChartDataPoint]?
