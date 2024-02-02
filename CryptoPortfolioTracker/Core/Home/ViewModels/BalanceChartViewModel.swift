@@ -12,7 +12,7 @@ class BalanceChartViewModel: ObservableObject {
     @Published var walletToBalanceChart = [String: BalanceChartData]()
     @Published var totalBalanceChart = BalanceChartData()
     @Published var isTotalBalanceChartDataLoaded = false
-    @Published var totalBalance: Double = 0
+    @Published var balance: Double = 0
     
     private let chartDataService = BalanceChartDataService()
     
@@ -26,7 +26,7 @@ class BalanceChartViewModel: ObservableObject {
     */
     func loadTotalBalance() async {
         DispatchQueue.main.async { [weak self] in
-            self?.totalBalance = self?.totalBalanceChart.all?.last?.value ?? 0.00
+            self?.balance = self?.totalBalanceChart.all?.last?.value ?? 0.00
         }
     }
     

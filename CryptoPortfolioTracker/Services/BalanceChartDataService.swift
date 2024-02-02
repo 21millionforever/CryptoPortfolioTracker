@@ -8,6 +8,17 @@
 import Foundation
 
 class BalanceChartDataService {
+    
+    /**
+     Fetch chart data
+     
+     This function takes a wallet address and the time frame of chart data you want to fetch
+     
+     - Parameters:
+       - walletAddress:  a wallet address
+       - days:  Chart time frame
+     - Returns: [ChartDataPoint]
+    */
     func fetchWalletChartData(walletAddress: String, days: String) async throws -> [ChartDataPoint] {
         let endpoint = "\(Config.server_url)/getWalletBalanceChart/\(walletAddress)/\(days)"
         

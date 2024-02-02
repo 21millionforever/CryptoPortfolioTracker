@@ -40,9 +40,9 @@ struct HomeView: View {
                 .navigationTitle("Total Balance")
 
             }
-            .navigationDestination(for: WalletInfo.self) { walletInfo in
-                AccountDetailView(walletInfo: walletInfo)
-            }
+//            .navigationDestination(for: WalletInfo.self) { walletInfo in
+//                AccountDetailView(walletInfo: walletInfo)
+//            }
             .navigationDestination(isPresented: $showingImportWalletView, destination: {ImportWalletView(showingImportWalletView: $showingImportWalletView)})
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -68,12 +68,12 @@ extension HomeView {
     private var TotalBalanceView: some View {
         VStack(spacing: 10) {
             HStack() {
-                Text(balanceChartViewModel.totalBalance.asCurrencyWith2Decimals())
+                Text(balanceChartViewModel.balance.asCurrencyWith2Decimals())
                     .contentTransition(.numericText())
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .redacted(reason: balanceChartViewModel.isTotalBalanceChartDataLoaded ? [] : .placeholder)
-                    .animation(.easeInOut(duration: 0.3), value: balanceChartViewModel.totalBalance) // Add animation here
+                    .animation(.easeInOut(duration: 0.3), value: balanceChartViewModel.balance) // Add animation here
                    
                 Spacer()
             }
@@ -132,6 +132,9 @@ extension HomeView {
             } else {
                 AccountCellSectionPlaceHolderView
             }
+        }
+        .navigationDestination(for: WalletInfo.self) { walletInfo in
+            AccountDetailView(walletInfo: walletInfo)
         }
     }
 }

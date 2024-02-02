@@ -35,15 +35,11 @@ struct AccountRowView: View {
                     }
                     .frame(height:40)
                     Spacer()
-                    
-                    
-                    
-//                    if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
-//                            BalanceChartView(balanceChartData: balanceChartData, timeInterval: "All", height: 50)
-//                    }
 
-                    
-                    
+                    if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
+                            BalanceChartView(balanceChartData: balanceChartData, timeInterval: "All", chartHeight: 50, draggable: false)
+                    }
+       
                 }
 
                 VStack(spacing: 0) {

@@ -25,7 +25,6 @@ struct AccountDetailView: View {
                         .padding(.leading)
                     ChartTabView(balanceChartData: balanceChartViewModel.walletToBalanceChart[walletInfo.address] ?? BalanceChartData(), selectedTab: $selectedTab)
                 }
-//                .padding(.leading)
                 
                 AssetActivityTabView(walletInfo: walletInfo)
           
@@ -48,7 +47,7 @@ extension AccountDetailView {
     private var BalanceView: some View {
         VStack(spacing: 10) {
             HStack() {
-                Text(balanceChartViewModel.walletToBalanceChart[walletInfo.address]?.all?.last?.value.asCurrencyWith2Decimals() ?? "$Error")
+                Text(balanceChartViewModel.balance.asCurrencyWith2Decimals())
                     .contentTransition(.numericText())
                     .font(.largeTitle)
                     .fontWeight(.bold)
