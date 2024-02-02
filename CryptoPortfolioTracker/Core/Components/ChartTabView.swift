@@ -170,13 +170,13 @@ struct ChartTabView: View {
         let currentDate = Date()
         switch tab {
         case "1W":
-            BalanceChartView(balanceChartData: balanceChartData, timeInterval: "1W", height: 200)
+            BalanceChartView(balanceChartData: balanceChartData, timeInterval: "1W", height: 200, dragable: true)
         case "1M":
-            BalanceChartView(balanceChartData: balanceChartData, timeInterval: "1M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200)
+            BalanceChartView(balanceChartData: balanceChartData, timeInterval: "1M", timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate), height: 200, dragable: true)
         case "3M":
-            BalanceChartView(balanceChartData: balanceChartData, timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate), height: 200)
+            BalanceChartView(balanceChartData: balanceChartData, timeInterval: "3M", timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate), height: 200, dragable: true)
         case "All":
-            BalanceChartView(balanceChartData: balanceChartData, timeInterval: "All", height: 200)
+            BalanceChartView(balanceChartData: balanceChartData, timeInterval: "All", height: 200, dragable: true)
         default:
             Text("Please select a time frame")
         }

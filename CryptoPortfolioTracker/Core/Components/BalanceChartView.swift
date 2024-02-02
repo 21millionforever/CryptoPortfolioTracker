@@ -19,6 +19,8 @@ struct BalanceChartView: View {
     var height: CGFloat
     @State private var selectedDataPoint: ChartDataPoint?
     @State private var dragPosition: CGFloat? = nil
+    let dragable: Bool
+    
     var body: some View {
         if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
             if (timeInterval == "All") {
@@ -244,7 +246,7 @@ struct BalanceChartView: View {
                         )
                     }
                 }
-                .edgesIgnoringSafeArea(.horizontal) // Extend to the horizontal edges of the screen
+                .edgesIgnoringSafeArea(.horizontal)
                 .chartYAxis(.hidden)
                 .chartXAxis(.hidden)
                 .foregroundStyle(Color.theme.green)
@@ -355,6 +357,7 @@ struct RectangleOverlayView: View {
 
     }
 }
+
 
 
 

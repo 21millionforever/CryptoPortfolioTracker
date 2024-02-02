@@ -13,8 +13,6 @@ class BalanceChartViewModel: ObservableObject {
     @Published var totalBalanceChart = BalanceChartData()
     @Published var isTotalBalanceChartDataLoaded = false
     @Published var totalBalance: Double = 0
-//    @Published var usdDiff: Double?
-//    @Published var percDiff: Double?
     
     private let chartDataService = BalanceChartDataService()
     
