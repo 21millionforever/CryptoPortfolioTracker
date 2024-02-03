@@ -14,14 +14,14 @@ class CoinImageService {
     private let fileManager = LocalFileManager.instance
     private let folderName = "coin_images"
     
-    func getCoinImage(imageName: String, urlString: String) async throws -> UIImage? {
-        if let image = fileManager.getImage(imageName: imageName, folderName: folderName) {
-//            print("Retrieved image from File Manager")
+    func getCoinImage(imageSymbol: String, urlString: String) async throws -> UIImage? {
+        if let image = fileManager.getImage(imageName: imageSymbol, folderName: folderName) {
+            print("Retrieved image from File Manager")
             return image
         }
         else {
             do {
-                let image = try await fetchCoinImage(imageName: imageName, urlString: urlString)
+                let image = try await fetchCoinImage(imageName: imageSymbol, urlString: urlString)
                 return image
             } catch let error {
                 print("Error fetching coin image. \(error)")
@@ -30,8 +30,8 @@ class CoinImageService {
         }
     }
         
-    func fetchCoinImage(imageName: String, urlString: String) async throws -> UIImage {
-//        print("Downloading image now")
+    private func fetchCoinImage(imageName: String, urlString: String) async throws -> UIImage {
+        print("Downloading image now")
         guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
         }

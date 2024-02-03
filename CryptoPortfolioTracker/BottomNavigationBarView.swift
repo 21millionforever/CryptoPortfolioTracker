@@ -9,9 +9,9 @@ import SwiftUI
 
 struct BottomNavigationBarView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
-    @EnvironmentObject var walletInfoViewModel: WalletsViewModel
+    @EnvironmentObject var walletsHoldingModel: WalletsHoldingModel
     @EnvironmentObject var sharedDataModel : SharedDataModel
-    
+
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
     
     init() {
@@ -40,13 +40,17 @@ struct BottomNavigationBarView: View {
         .task {
             await balanceChartViewModel.loadChartData(addresses: sharedDataModel.addresses)
             await balanceChartViewModel.loadTotalBalance()
-            await walletInfoViewModel.loadWalletInfo(addresses: sharedDataModel.addresses)
+            await walletsHoldingModel.loadWalletsHolding(addresses: sharedDataModel.addresses)
+            walletsHoldingModel.loadTotalWalletHolding()
+               
         }
         .onReceive(timer) { _ in
             Task {
                 await balanceChartViewModel.loadChartData(addresses: sharedDataModel.addresses)
                 await balanceChartViewModel.loadTotalBalance()
-                await walletInfoViewModel.loadWalletInfo(addresses: sharedDataModel.addresses)
+                await walletsHoldingModel.loadWalletsHolding(addresses: sharedDataModel.addresses)
+                // TODO: need to find a more efficient way
+//                walletsHoldingModel.loadTotalWalletHolding()
             }
         }
     }

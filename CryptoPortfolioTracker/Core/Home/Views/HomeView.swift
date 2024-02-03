@@ -11,7 +11,7 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
-    @EnvironmentObject var walletInfoViewModel: WalletsViewModel
+    @EnvironmentObject var walletsHoldingModel: WalletsHoldingModel
     @EnvironmentObject var sharedDataModel : SharedDataModel
     
     @State private var showBottomMenu: Bool = false
@@ -40,9 +40,6 @@ struct HomeView: View {
                 .navigationTitle("Total Balance")
 
             }
-//            .navigationDestination(for: WalletInfo.self) { walletInfo in
-//                AccountDetailView(walletInfo: walletInfo)
-//            }
             .navigationDestination(isPresented: $showingImportWalletView, destination: {ImportWalletView(showingImportWalletView: $showingImportWalletView)})
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -122,19 +119,18 @@ extension HomeView {
     private var AccountsSectionView: some View {
         Group {
             if balanceChartViewModel.isTotalBalanceChartDataLoaded {
-                ForEach(walletInfoViewModel.walletsInfo, id: \.id) { walletInfo in
-                    NavigationLink(value: walletInfo) {
-                        
-                        AccountRowView(balanceChartData: balanceChartViewModel.walletToBalanceChart[walletInfo.address] ?? BalanceChartData(), walletInfo: walletInfo)
-                            .padding(.leading)
+                ForEach(walletsHoldingModel.walletsHolding, id: \.id) { walletHolding in
+                    NavigationLink(value: walletHolding) {
+//                        AccountRowView(balanceChartData: balanceChartViewModel.walletToBalanceChart[walletHolding.address.lowercased()] ?? BalanceChartData(), walletHolding: walletHolding)
+//                            .padding(.leading)
                     }
                 }
             } else {
                 AccountCellSectionPlaceHolderView
             }
         }
-        .navigationDestination(for: WalletInfo.self) { walletInfo in
-            AccountDetailView(walletInfo: walletInfo)
+        .navigationDestination(for: WalletHolding.self) { walletHolding in
+            AccountDetailView(walletHolding: walletHolding)
         }
     }
 }

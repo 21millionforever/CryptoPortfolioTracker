@@ -13,7 +13,6 @@ class MarketViewModel: ObservableObject {
     @Published var filteredCoins: [Coin] = []
     @Published var searchText: String = ""
     @Published var portfolioCoins: [Coin] = []
-//    @Published var marketData: GlobalData?
     
     private let coinDataService = CoinDataService()
     private let marketDataService = MarketDataService()
@@ -32,6 +31,11 @@ class MarketViewModel: ObservableObject {
         addSubscribers()
     }
 
+    /**
+     Call api "https://api.coingecko.com/api/v3/coins/markets" and populate allCoins, which is [Coin]
+     
+     - Returns: Doesn't return anything
+    */
     private func downloadCoins() async {
         do {
             let fetchedCoins = try await coinDataService.fetchCoinsData()
@@ -56,10 +60,7 @@ class MarketViewModel: ObservableObject {
             DispatchQueue.main.async { [weak self] in
                 self?.statistics = []
                 self?.statistics.append(contentsOf: [marketCap, volume, btcDominance])
-            }
-            
-
-            
+            }  
         } catch let error {
             print("Error fetching market data: \(error)")
         }
@@ -93,5 +94,26 @@ class MarketViewModel: ObservableObject {
         return filteredCoins
     }
     
+    
+    func loadPortfolioCoins(totalWalletTokens: [Token]) {
+        // Preparing updates
+        var updatedCoins = self.allCoins
+        var tempPortfolioCoins = [Coin]()
+        
+        for token in totalWalletTokens {
+            if let coinIndex = updatedCoins.firstIndex(where: { $0.symbol == token.token.lowercased() }) {
+                let existingHoldings = updatedCoins[coinIndex].currentHoldings ?? 0
+                let newHoldings = existingHoldings + token.amount
+                updatedCoins[coinIndex] = updatedCoins[coinIndex].updateHoldings(amount: newHoldings)
+                tempPortfolioCoins.append(updatedCoins[coinIndex])
+            }
+        }
+        
+        // Apply updates
+        DispatchQueue.main.async { [weak self] in
+            self?.allCoins = updatedCoins
+            self?.portfolioCoins = tempPortfolioCoins
+        }
+    }
     
 }

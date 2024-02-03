@@ -11,7 +11,7 @@ import SwiftUI
 struct CryptoPortfolioTrackerApp: App {
     @StateObject private var sharedDataModel = SharedDataModel()
     @StateObject private var balanceChartViewModel = BalanceChartViewModel()
-    @StateObject private var walletInfoViewModel = WalletsViewModel()
+    @StateObject private var walletsHoldingModel = WalletsHoldingModel()
     @StateObject private var marketViewModel = MarketViewModel()
     @StateObject private var chartHeaderViewModel = ChartHeaderViewModel()
 
@@ -25,7 +25,7 @@ struct CryptoPortfolioTrackerApp: App {
                 BottomNavigationBarView()
                     .environmentObject(balanceChartViewModel)
                     .environmentObject(sharedDataModel)
-                    .environmentObject(walletInfoViewModel)
+                    .environmentObject(walletsHoldingModel)
                     .environmentObject(marketViewModel)
                     .environmentObject(chartHeaderViewModel)
             }

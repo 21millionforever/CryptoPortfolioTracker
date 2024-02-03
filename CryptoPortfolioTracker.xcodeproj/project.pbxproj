@@ -44,7 +44,7 @@
 		442F36F82B5E0A070013DC96 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36F72B5E0A070013DC96 /* Color.swift */; };
 		442F36FF2B5E0D530013DC96 /* CrossButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F36FE2B5E0D530013DC96 /* CrossButtonView.swift */; };
 		442F37022B5E19110013DC96 /* BalanceChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37012B5E19110013DC96 /* BalanceChartViewModel.swift */; };
-		442F37042B5ED66A0013DC96 /* WalletsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37032B5ED66A0013DC96 /* WalletsViewModel.swift */; };
+		442F37042B5ED66A0013DC96 /* WalletsHoldingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37032B5ED66A0013DC96 /* WalletsHoldingModel.swift */; };
 		442F37082B6015C30013DC96 /* SharedDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37072B6015C30013DC96 /* SharedDataModel.swift */; };
 		442F370A2B60396E0013DC96 /* LargeTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442F37092B60396E0013DC96 /* LargeTitleView.swift */; };
 		4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */; };
@@ -105,7 +105,7 @@
 		442F36F72B5E0A070013DC96 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		442F36FE2B5E0D530013DC96 /* CrossButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossButtonView.swift; sourceTree = "<group>"; };
 		442F37012B5E19110013DC96 /* BalanceChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceChartViewModel.swift; sourceTree = "<group>"; };
-		442F37032B5ED66A0013DC96 /* WalletsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsViewModel.swift; sourceTree = "<group>"; };
+		442F37032B5ED66A0013DC96 /* WalletsHoldingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsHoldingModel.swift; sourceTree = "<group>"; };
 		442F37072B6015C30013DC96 /* SharedDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataModel.swift; sourceTree = "<group>"; };
 		442F37092B60396E0013DC96 /* LargeTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTitleView.swift; sourceTree = "<group>"; };
 		4499E8A42B43DF500077CBEB /* AssetActivityTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetActivityTabView.swift; sourceTree = "<group>"; };
@@ -209,7 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				442F37012B5E19110013DC96 /* BalanceChartViewModel.swift */,
-				442F37032B5ED66A0013DC96 /* WalletsViewModel.swift */,
+				442F37032B5ED66A0013DC96 /* WalletsHoldingModel.swift */,
 				44086DDA2B6C1165009CD4A2 /* ChartHeaderViewModel.swift */,
 			);
 			path = ViewModels;
@@ -229,6 +229,21 @@
 				44EB87442B47219800EBF063 /* StartView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		44086DDC2B6EBD46009CD4A2 /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				44086DDD2B6EBD65009CD4A2 /* ViewModels */,
+			);
+			path = Wallet;
+			sourceTree = "<group>";
+		};
+		44086DDD2B6EBD65009CD4A2 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		442F36EC2B5734060013DC96 /* Assets */ = {
@@ -255,6 +270,7 @@
 		442F36FA2B5E0CD80013DC96 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				44086DDC2B6EBD46009CD4A2 /* Wallet */,
 				44086DC22B64F3E3009CD4A2 /* Start */,
 				44086DB52B639AEC009CD4A2 /* Home */,
 				44086DAE2B637D63009CD4A2 /* Market */,
@@ -452,7 +468,7 @@
 				44EB87452B47219800EBF063 /* StartView.swift in Sources */,
 				449C55CD2B44F939005E1593 /* ActivitySwapCell.swift in Sources */,
 				44086DDB2B6C1165009CD4A2 /* ChartHeaderViewModel.swift in Sources */,
-				442F37042B5ED66A0013DC96 /* WalletsViewModel.swift in Sources */,
+				442F37042B5ED66A0013DC96 /* WalletsHoldingModel.swift in Sources */,
 				4499E8A72B43E4EC0077CBEB /* ActivityView.swift in Sources */,
 				44086DB22B638101009CD4A2 /* CoinImageService.swift in Sources */,
 				4499E8A52B43DF500077CBEB /* AssetActivityTabView.swift in Sources */,

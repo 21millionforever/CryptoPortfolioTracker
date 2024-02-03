@@ -16,17 +16,17 @@ class CoinImageViewModel: ObservableObject {
     
     init(coin: Coin){
         Task {
-            await getImage(urlString: coin.image, imageName: coin.id)
+            await getImage(urlString: coin.image, imageSymbol: coin.symbol)
         }
     }
     
-    func getImage(urlString: String, imageName: String) async {
+    func getImage(urlString: String, imageSymbol: String) async {
         DispatchQueue.main.async {
             self.isLoading = true
         }
         
         do {
-            let fetchedImage = try await coinImageService.getCoinImage(imageName: imageName, urlString: urlString)
+            let fetchedImage = try await coinImageService.getCoinImage(imageSymbol: imageSymbol, urlString: urlString)
             DispatchQueue.main.async {
                 self.image = fetchedImage
                 self.isLoading = false

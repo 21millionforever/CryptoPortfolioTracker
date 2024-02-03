@@ -8,7 +8,10 @@
 import Foundation
 
 class CoinDataService {
-
+    /**
+     Call api "https://api.coingecko.com/api/v3/coins/markets" and return the result
+     - Returns: Return the result from the api call
+    */
     func fetchCoinsData() async throws -> [Coin] {
         print("fetchCoinsData is called")
         

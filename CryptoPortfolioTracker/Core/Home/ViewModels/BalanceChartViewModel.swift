@@ -16,6 +16,7 @@ class BalanceChartViewModel: ObservableObject {
     
     private let chartDataService = BalanceChartDataService()
     
+    
     /**
      Update totalBalance
      

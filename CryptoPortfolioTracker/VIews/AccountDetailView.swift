@@ -10,7 +10,7 @@ import SwiftUI
 struct AccountDetailView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
     
-    var walletInfo: WalletInfo
+    var walletHolding: WalletHolding
     @Environment(\.presentationMode) var presentationMode
     
     let tabs = ["LIVE", "1D", "1W", "1M", "3M", "All"]
@@ -23,10 +23,10 @@ struct AccountDetailView: View {
                 VStack(alignment: .leading) {
                     BalanceView
                         .padding(.leading)
-                    ChartTabView(balanceChartData: balanceChartViewModel.walletToBalanceChart[walletInfo.address] ?? BalanceChartData(), selectedTab: $selectedTab)
+                    ChartTabView(balanceChartData: balanceChartViewModel.walletToBalanceChart[walletHolding.address.lowercased()] ?? BalanceChartData(), selectedTab: $selectedTab)
                 }
                 
-                AssetActivityTabView(walletInfo: walletInfo)
+                AssetActivityTabView(walletHolding: walletHolding)
           
             }
             .navigationTitle("Total Balance")

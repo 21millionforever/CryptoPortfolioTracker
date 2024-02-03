@@ -55,9 +55,22 @@ extension CoinRowView {
     
     private var centerColumn: some View {
         VStack(alignment: .trailing) {
-            Text(coin.currentHoldingValue.asCurrencyWith2Decimals())
-                .bold()
-            Text((coin.currentHoldings ?? 0).asNumberString())
+            if let currentHoldingValue = coin.currentHoldingValue {
+                Text(currentHoldingValue.asCurrencyWith2Decimals())
+            }
+            else {
+                Text("")
+            }
+            
+            if let currentHolding = coin.currentHoldings {
+                Text(currentHolding.asNumberString())
+            }
+            else {
+                Text("")
+            }
+//            Text(coin.currentHoldingValue.asCurrencyWith2Decimals())
+//                .bold()
+//            Text((coin.currentHoldings ?? 0).asNumberString())
         }
         .foregroundColor(Color.theme.mainText)
     }

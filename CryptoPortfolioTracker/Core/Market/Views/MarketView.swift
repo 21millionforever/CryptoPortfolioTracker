@@ -9,25 +9,35 @@ import SwiftUI
 
 struct MarketView: View {
     @EnvironmentObject private var marketViewModel: MarketViewModel
+    @EnvironmentObject private var walletsHoldingModel: WalletsHoldingModel
+    @State private var isPortfolioCoinsLoaded = false
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
                     MarketStatisticView()
+                    
                     SearchBarView(searchText: $marketViewModel.searchText)
                     
                     columnTitles
                     
                     allCoinsList
                         .listStyle(PlainListStyle())
+                        .task {
+                            if !isPortfolioCoinsLoaded {
+                                marketViewModel.loadPortfolioCoins(totalWalletTokens: walletsHoldingModel.totalWalletTokens)
+                                DispatchQueue.main.async {
+                                    self.isPortfolioCoinsLoaded = true
+                                }
+                            }
+                            
+                        }
                 }
                 .navigationTitle("Market")
-                .toolbar {
-                    
-                }
             }
         }
+        
     }
 }
 
@@ -36,13 +46,12 @@ struct MarketView: View {
 
 extension MarketView {
     private var allCoinsList: some View {
-//            List {
+
             ForEach(marketViewModel.filteredCoins) { coin in
                 CoinRowView(coin: coin)
                     .padding(.trailing, 10)
-//                    .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
             }
-//            }
+
     }
     
     private var columnTitles: some View {

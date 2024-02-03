@@ -206,7 +206,7 @@ extension ChartTabView {
                     .font(.subheadline)
                     .fontWeight(.semibold)
 
-                Text(chartHeaderViewModel.percentageDiff?.asPercentString() ?? "N/A")
+                Text("(\(chartHeaderViewModel.percentageDiff?.asPercentString() ?? "N/A"))")
                     .font(.subheadline)
                     .fontWeight(.semibold)
 

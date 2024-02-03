@@ -13,7 +13,7 @@ import Foundation
 struct AccountRowView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
     let balanceChartData: BalanceChartData
-    var walletInfo: WalletInfo
+    var walletHolding: WalletHolding
     
     var body: some View {
         VStack(alignment: .trailing) {
@@ -30,7 +30,7 @@ struct AccountRowView: View {
                             .fontWeight(.medium)
                             .foregroundColor(Color.theme.mainText)
                         
-                        Text(walletInfo.address)
+                        Text(walletHolding.address)
                             .foregroundColor(Color.theme.mainText)
                     }
                     .frame(height:40)
@@ -43,7 +43,7 @@ struct AccountRowView: View {
                 }
 
                 VStack(spacing: 0) {
-                    Text(walletInfo.balanceInUSD.asCurrencyWith2Decimals())
+                    Text(balanceChartViewModel.walletToBalanceChart[walletHolding.address.lowercased()]?.all?.last?.value.asCurrencyWith2Decimals() ?? "Error")
                         .font(.body)
                         .fontWeight(.regular)
                         .foregroundColor(Color.theme.mainText)
