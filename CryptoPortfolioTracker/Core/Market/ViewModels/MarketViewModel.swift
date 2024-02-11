@@ -8,8 +8,14 @@
 import Foundation
 import Combine
 
+
+/// A View model for data needed for Market view
+///
+/// This class is responsible for requesting and stroing coin data.
+/// When the class is initalized, it fetches data for allCoins and statistics
 class MarketViewModel: ObservableObject {
     @Published var allCoins: [Coin] = []
+    @Published var symbolToCoinMap = [String:Coin]()
     @Published var filteredCoins: [Coin] = []
     @Published var searchText: String = ""
     @Published var portfolioCoins: [Coin] = []
@@ -20,35 +26,51 @@ class MarketViewModel: ObservableObject {
     // Store your subscriptions
     private var cancellables = Set<AnyCancellable>()
     
-    @Published var statistics: [Statistic] = [
-    ]
+    @Published var statistics: [Statistic] = []
     
     init() {
-        Task {
-            await downloadCoins()
-            await downloadMarketData()
-        }
         addSubscribers()
+    }
+    
+    func populateSymbolToCoinMap() async {
+        // Use a reduce operation to handle duplicate symbols, keeping the first Coin object for each symbol.
+        let symbolToCoinMap = self.allCoins.reduce(into: [String: Coin]()) { (result, coin) in
+            // If the symbol already exists, don't overwrite it. This keeps the first Coin object for each symbol.
+            if result[coin.symbol] == nil {
+                result[coin.symbol] = coin
+            }
+        }
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.symbolToCoinMap = symbolToCoinMap
+        }
     }
 
     /**
-     Call api "https://api.coingecko.com/api/v3/coins/markets" and populate allCoins, which is [Coin]
+     Call api "https://api.coingecko.com/api/v3/coins/markets"
+     and populate self.allCoins
      
      - Returns: Doesn't return anything
     */
-    private func downloadCoins() async {
+    func downloadCoins() async {
         do {
             let fetchedCoins = try await coinDataService.fetchCoinsData()
+            
             DispatchQueue.main.async { [weak self] in
                 self?.allCoins = fetchedCoins
             }
         } catch let error {
             print("Error fetching coins: \(error)")
-            // Handle the error appropriately
         }
     }
     
-    private func downloadMarketData() async {
+    /**
+     Call api "https://api.coingecko.com/api/v3/global"
+     and populate self.statistics
+     
+     - Returns: Doesn't return anything
+    */
+    func downloadMarketData() async {
         do {
             
             let fetchedMarketData = try await marketDataService.fetchMarketData()
@@ -95,13 +117,13 @@ class MarketViewModel: ObservableObject {
     }
     
     
-    func loadPortfolioCoins(totalWalletTokens: [Token]) {
+    func loadPortfolioCoins(totalWalletTokens: [Token]) async {
         // Preparing updates
         var updatedCoins = self.allCoins
         var tempPortfolioCoins = [Coin]()
         
         for token in totalWalletTokens {
-            if let coinIndex = updatedCoins.firstIndex(where: { $0.symbol == token.token.lowercased() }) {
+            if let coinIndex = updatedCoins.firstIndex(where: { $0.symbol == token.symbol.lowercased() }) {
                 let existingHoldings = updatedCoins[coinIndex].currentHoldings ?? 0
                 let newHoldings = existingHoldings + token.amount
                 updatedCoins[coinIndex] = updatedCoins[coinIndex].updateHoldings(amount: newHoldings)
@@ -110,7 +132,7 @@ class MarketViewModel: ObservableObject {
         }
         
         // Apply updates
-        DispatchQueue.main.async { [weak self] in
+        DispatchQueue.main.async { [weak self, updatedCoins, tempPortfolioCoins] in
             self?.allCoins = updatedCoins
             self?.portfolioCoins = tempPortfolioCoins
         }

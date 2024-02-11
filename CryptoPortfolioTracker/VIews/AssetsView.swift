@@ -11,19 +11,21 @@ struct AssetsView: View {
     var walletHolding: WalletHolding
 
     var body: some View {
+        
         VStack {
             ForEach(walletHolding.tokens, id: \.id) { tokenInfo in
                 NavigationLink(value: tokenInfo) {
-                    AssetTokenCellView(tokenInfo: tokenInfo)
+                    AssetTokenRowView(tokenInfo: tokenInfo)
                 }
                 GrayDivider()
             }
         }
         .padding([.leading, .trailing])
         .navigationDestination(for: Token.self) {tokenInfo in
-            Text("Token")
+            Text(tokenInfo.symbol)
         }
     }
+    
 }
 
 //struct AssetsView_Previews: PreviewProvider {

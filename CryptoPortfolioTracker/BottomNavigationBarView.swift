@@ -11,6 +11,7 @@ struct BottomNavigationBarView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
     @EnvironmentObject var walletsHoldingModel: WalletsHoldingModel
     @EnvironmentObject var sharedDataModel : SharedDataModel
+    @EnvironmentObject var marketViewModel : MarketViewModel
 
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
     
@@ -37,13 +38,19 @@ struct BottomNavigationBarView: View {
                 }
         }
         .accentColor(Color.theme.accent)
-        .task {
-            await balanceChartViewModel.loadChartData(addresses: sharedDataModel.addresses)
-            await balanceChartViewModel.loadTotalBalance()
-            await walletsHoldingModel.loadWalletsHolding(addresses: sharedDataModel.addresses)
-            walletsHoldingModel.loadTotalWalletHolding()
-               
-        }
+//        .task {
+//            await balanceChartViewModel.loadChartData(addresses: sharedDataModel.addresses)
+//            await balanceChartViewModel.loadTotalBalance()
+//
+//            await walletsHoldingModel.loadWalletsHolding(addresses: sharedDataModel.addresses)
+//            await walletsHoldingModel.loadTotalWalletHolding()
+//
+//            await marketViewModel.downloadCoins()
+//            await marketViewModel.downloadMarketData()
+//
+//            await marketViewModel.populateSymbolToCoinMap()
+//            await marketViewModel.loadPortfolioCoins(totalWalletTokens: walletsHoldingModel.totalWalletTokens)
+//        }
         .onReceive(timer) { _ in
             Task {
                 await balanceChartViewModel.loadChartData(addresses: sharedDataModel.addresses)
