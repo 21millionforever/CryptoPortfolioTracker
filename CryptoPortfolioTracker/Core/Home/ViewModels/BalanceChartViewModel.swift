@@ -8,6 +8,9 @@
 import Foundation
 import SwiftUI
 
+/// A view model for balance chart
+///
+/// This class is responsible for requesting and storing data for balance chart.  The class doesn't load anything when it's initialized.
 class BalanceChartViewModel: ObservableObject {
     @Published var walletToBalanceChart = [String: BalanceChartData]()
     @Published var totalBalanceChart = BalanceChartData()
@@ -18,9 +21,9 @@ class BalanceChartViewModel: ObservableObject {
     
     
     /**
-     Update totalBalance
+     Update update balance
      
-     This function updates totalBalance by assigning the value of self?.totalBalanceChart.all?.last?.value to totalBalance
+     This function updates balance(Double) by assigning the value of self?.totalBalanceChart.all?.last?.value to totalBalance
      
      - Parameters: Doesn't need an input
      - Returns: Doesn't return anything
@@ -32,7 +35,7 @@ class BalanceChartViewModel: ObservableObject {
     }
     
     /**
-     Populate walletToBalanceChart and totalBalanceChart
+     Populate walletToBalanceChart([String: BalanceChartData]) and totalBalanceChart(BalanceChartData)
      
      This function takes a list of wallet addresses
      

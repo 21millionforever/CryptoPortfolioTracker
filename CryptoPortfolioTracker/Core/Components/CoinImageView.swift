@@ -19,7 +19,7 @@ struct CoinImageView: View {
         if let image = vm.image {
             Image(uiImage: image)
                 .resizable()
-                .scaledToFit()
+//                .scaledToFit()
         } else if vm.isLoading {
             ProgressView()
         } else {

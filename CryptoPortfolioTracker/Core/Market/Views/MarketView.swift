@@ -26,7 +26,7 @@ struct MarketView: View {
                         .listStyle(PlainListStyle())
                         .task {
                             if !isPortfolioCoinsLoaded {
-                                marketViewModel.loadPortfolioCoins(totalWalletTokens: walletsHoldingModel.totalWalletTokens)
+                                await marketViewModel.loadPortfolioCoins(totalWalletTokens: walletsHoldingModel.totalWalletTokens)
                                 DispatchQueue.main.async {
                                     self.isPortfolioCoinsLoaded = true
                                 }

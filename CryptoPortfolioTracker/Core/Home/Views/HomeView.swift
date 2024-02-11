@@ -121,8 +121,8 @@ extension HomeView {
             if balanceChartViewModel.isTotalBalanceChartDataLoaded {
                 ForEach(walletsHoldingModel.walletsHolding, id: \.id) { walletHolding in
                     NavigationLink(value: walletHolding) {
-//                        AccountRowView(balanceChartData: balanceChartViewModel.walletToBalanceChart[walletHolding.address.lowercased()] ?? BalanceChartData(), walletHolding: walletHolding)
-//                            .padding(.leading)
+                        AccountRowView(balanceChartData: balanceChartViewModel.walletToBalanceChart[walletHolding.address.lowercased()] ?? BalanceChartData(), walletHolding: walletHolding)
+                            .padding(.leading)
                     }
                 }
             } else {

@@ -28,6 +28,14 @@ extension Double {
         return currencyFormatter.string(from: number) ?? "$0.00"
     }
     
+    func asCurrencyWith2DecimalsWithoutSign() -> String {
+        let number = NSNumber(value: abs(self))
+        return currencyFormatter.string(from: number) ?? "$0.00"
+    }
+    
+    
+    
+    
     /// Converts a Double into string representation
     /// ```
     /// Convert 1.2223 to "1.22"
@@ -42,6 +50,10 @@ extension Double {
     /// ```
     func asPercentString() -> String {
         return asNumberString() + "%"
+    }
+    
+    func asPercentStringWithoutSign() -> String {
+        return abs(self).asNumberString() + "%"
     }
     
     /// Convert a Double to a String with K, M, Bn, Tr abbreviations.

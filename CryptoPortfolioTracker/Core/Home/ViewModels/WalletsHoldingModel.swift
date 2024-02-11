@@ -71,27 +71,39 @@ import Foundation
 //    let publicTags: [String]?
 //}
 
-// MARK: - Welcome
+
 struct WalletHolding : Codable, Hashable {
     let id = UUID()
     let address: String
     let tokens: [Token]
 }
 
-// MARK: - Token
+
 struct Token : Codable, Hashable {
     let id = UUID()
-    let token: String
+    let symbol, name, address: String
     let amount: Double
 }
 
 
-// TODO: Put wallat info into a service, and change the name of the model to
+/// A model for wallets' token holdings
+///
+/// This class is responsible for requesting and stroing wallets' token holdings.  Nothing is called when the class is initialized
 class WalletsHoldingModel: ObservableObject {
     @Published var walletsHolding = [WalletHolding]()
     @Published var totalWalletTokens = [Token]()
     @Published var isWalletsHoldingLoaded: Bool = false
     
+    /**
+     Call the server and fetch all the tokens that the wallet is holding
+     
+     This function fetches a WalletHolding object
+     
+     - Parameters:
+            walletAddress: String
+     - Returns:
+            a WalletHolding object
+    */
     func fetchWalletHolding(walletAddress: String) async throws -> WalletHolding {
         
         let endpoint = "\(Config.server_url)/getWalletInfo/\(walletAddress)"
@@ -104,6 +116,16 @@ class WalletsHoldingModel: ObservableObject {
         return data
     }
     
+    /**
+     Take in a list of addresses and get each wallet's token holdings.  Finally, populate walletsHolding and make isWalletsHoldingLoaded become true
+     
+     This function populates walletsHolding
+     
+     - Parameters:
+            addresses: [String]
+     - Returns:
+            Doesn't return anything
+    */
     func loadWalletsHolding(addresses: [String]) async {
         await withTaskGroup(of: WalletHolding?.self) { group in
             for address in addresses {
@@ -136,30 +158,68 @@ class WalletsHoldingModel: ObservableObject {
         }
     }
     
-    func loadTotalWalletHolding() {
-        // Step 1: Flatten the list of all tokens
+//    func loadTotalWalletHolding() async {
+//        // Step 1: Flatten the list of all tokens
+//        let allTokens = self.walletsHolding.flatMap { $0.tokens }
+//
+//        // Step 2 & 3: Group the tokens by their identifier and sum their amounts
+//        let groupedTokens = Dictionary(grouping: allTokens, by: { $0.token })
+//            .mapValues { tokens -> Token in
+//                // Sum the amounts of tokens with the same identifier
+//                let totalAmount = tokens.reduce(0) { $0 + $1.amount }
+//                // Assume all tokens in the group have the same token identifier, so use the first one
+//                guard let firstToken = tokens.first else {
+//                    // Handle the unexpected case where tokens is unexpectedly empty
+//                    // This should theoretically never happen since Dictionary(grouping:by:) should only call this closure for non-empty arrays
+//                    return Token(symbol: "Unknown", name: "Unknown", address: "Unknown", amount: 0)
+//                }
+//                return Token(token: firstToken.token, amount: totalAmount)
+//            }
+//            .values // We only care about the grouped Token values, not the keys
+//        let combinedTokens = Array(groupedTokens)
+//
+//        DispatchQueue.main.async { [weak self] in
+//            self?.totalWalletTokens = combinedTokens
+//        }
+//    }
+    
+    
+    /**
+     The function should only be called after totalWalletTokens is already populated.  It combines tokens held by different wallets into a list of Token objects.
+     
+     This function populates totalWalletTokens
+     
+     - Parameters:
+            Nothing
+     - Returns:
+            Doesn't return anything
+    */
+    func loadTotalWalletHolding() async {
+        // Step 1: Flatten the array
         let allTokens = self.walletsHolding.flatMap { $0.tokens }
         
-        // Step 2 & 3: Group the tokens by their identifier and sum their amounts
-        let groupedTokens = Dictionary(grouping: allTokens, by: { $0.token })
-            .mapValues { tokens -> Token in
-                // Sum the amounts of tokens with the same identifier
-                let totalAmount = tokens.reduce(0) { $0 + $1.amount }
-                // Assume all tokens in the group have the same token identifier, so use the first one
-                guard let firstToken = tokens.first else {
-                    // Handle the unexpected case where tokens is unexpectedly empty
-                    // This should theoretically never happen since Dictionary(grouping:by:) should only call this closure for non-empty arrays
-                    return Token(token: "Unknown", amount: 0)
-                }
-                return Token(token: firstToken.token, amount: totalAmount)
+        // Step 2 and 3: Group and combine the tokens
+        let combinedTokens = allTokens.reduce(into: [String: Token]()) { (result, token) in
+            // Use symbol and name as the key. Handle nils appropriately; here, nils are converted to an empty string.
+            let key = "\(token.symbol)-\(token.name)"
+            if let existingToken = result[key] {
+                // If a token with the same symbol and name exists, add the amounts
+                let updatedAmount = existingToken.amount + token.amount
+                result[key] = Token(symbol: token.symbol, name: token.name, address: token.address, amount: updatedAmount)
+            } else {
+                // Otherwise, add the new token
+                result[key] = token
             }
-            .values // We only care about the grouped Token values, not the keys
-        let combinedTokens = Array(groupedTokens)
+        }
+        
+        // Step 4: Convert the dictionary back into a list of Token objects
+        let combinedTokenList = Array(combinedTokens.values)
         
         DispatchQueue.main.async { [weak self] in
-            self?.totalWalletTokens = combinedTokens
-        }  
+            self?.totalWalletTokens = combinedTokenList
+        }
+        
+        
     }
-
     
 }

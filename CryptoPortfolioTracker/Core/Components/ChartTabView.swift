@@ -199,16 +199,18 @@ extension ChartTabView {
         var body: some View {
             HStack(spacing: 3) {
                 Image(systemName: chartHeaderViewModel.usdDiff ?? 0 >= 0 ? "arrowtriangle.up.fill" : "arrowtriangle.down.fill")
-                    .foregroundColor(chartHeaderViewModel.usdDiff ?? 0 >= 0 ? .green : .red)
+                    .foregroundColor(chartHeaderViewModel.usdDiff ?? 0 >= 0 ? Color.theme.green : Color.theme.red)
                     .imageScale(.medium)
 
-                Text(chartHeaderViewModel.usdDiff?.asCurrencyWith2Decimals() ?? "N/A")
+                Text(chartHeaderViewModel.usdDiff?.asCurrencyWith2DecimalsWithoutSign() ?? "N/A")
                     .font(.subheadline)
                     .fontWeight(.semibold)
+                    .foregroundColor(chartHeaderViewModel.usdDiff ?? 0 >= 0 ? Color.theme.green : Color.theme.red)
 
-                Text("(\(chartHeaderViewModel.percentageDiff?.asPercentString() ?? "N/A"))")
+                Text("(\(chartHeaderViewModel.percentageDiff?.asPercentStringWithoutSign() ?? "N/A"))")
                     .font(.subheadline)
                     .fontWeight(.semibold)
+                    .foregroundColor(chartHeaderViewModel.percentageDiff ?? 0 >= 0 ? Color.theme.green : Color.theme.red)
 
                 Text(timeFrame)
                     .font(.subheadline)

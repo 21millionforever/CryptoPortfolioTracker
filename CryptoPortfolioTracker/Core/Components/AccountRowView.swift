@@ -9,12 +9,11 @@ import SwiftUI
 import Charts
 import Foundation
 
-
 struct AccountRowView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
     let balanceChartData: BalanceChartData
-    var walletHolding: WalletHolding
-    
+    let walletHolding: WalletHolding
+
     var body: some View {
         VStack(alignment: .trailing) {
             HStack(spacing:0) {
@@ -29,7 +28,7 @@ struct AccountRowView: View {
                             .font(.title2)
                             .fontWeight(.medium)
                             .foregroundColor(Color.theme.mainText)
-                        
+
                         Text(walletHolding.address)
                             .foregroundColor(Color.theme.mainText)
                     }
@@ -39,11 +38,11 @@ struct AccountRowView: View {
                     if (balanceChartViewModel.isTotalBalanceChartDataLoaded) {
                             BalanceChartView(balanceChartData: balanceChartData, timeInterval: "All", chartHeight: 50, draggable: false)
                     }
-       
+
                 }
 
                 VStack(spacing: 0) {
-                    Text(balanceChartViewModel.walletToBalanceChart[walletHolding.address.lowercased()]?.all?.last?.value.asCurrencyWith2Decimals() ?? "Error")
+                    Text(balanceChartData.all?.last?.value.asCurrencyWith2Decimals() ?? "Error")
                         .font(.body)
                         .fontWeight(.regular)
                         .foregroundColor(Color.theme.mainText)
@@ -57,9 +56,10 @@ struct AccountRowView: View {
             GrayDivider()
                 .padding()
         }
-        
+
     }
 }
+
 //struct AccountCellView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        AccountRowView(address: Config.test_wallet)
