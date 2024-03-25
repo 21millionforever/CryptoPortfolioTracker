@@ -19,7 +19,7 @@ struct ActivityView: View {
 
     var body: some View {
         VStack {
-            ForEach(groupedActivities.keys.sorted().reversed(), id: \.self) { date in
+            ForEach(sortedDateKeys, id: \.self) { date in
                 HStack {
                     Text(date) // Date header
                         .font(.headline)
@@ -158,6 +158,19 @@ struct ActivityView: View {
             return date.toFormattedString()
         }
         return grouped
+    }
+    
+    // Computed property to sort the keys by actual dates
+    var sortedDateKeys: [String] {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, yyyy" // Adjust this format to match your date strings
+
+        // Convert String to Date, then sort, then convert back to String
+        return groupedActivities.keys.compactMap { dateString -> Date? in
+            return dateFormatter.date(from: dateString)
+        }.sorted().reversed().compactMap { date -> String? in
+            return dateFormatter.string(from: date)
+        }
     }
 
 
