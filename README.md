@@ -16,4 +16,8 @@
 <h2>Notes </h2>
 Fill out the configuration files in both the client and server code before using.
 
+<h2>Demo</h2>
+
+
+![Screen Recording 2024-03-24 at 9 54 52 PM](https://github.com/21millionforever/CryptoPortfolioTracker/assets/87239565/7e3b5f22-de2e-4947-9bb8-29175323319e)
 
