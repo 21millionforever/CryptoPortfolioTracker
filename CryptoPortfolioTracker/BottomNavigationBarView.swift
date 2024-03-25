@@ -27,13 +27,13 @@ struct BottomNavigationBarView: View {
         TabView {
             HomeView()
                 .tabItem {
-                    Label("Home", systemImage: "chart.line.uptrend.xyaxis")
+                    Label("Portfolio", systemImage: "person.crop.circle")
                         .foregroundColor(.black)
                 }
 
             MarketView()
                 .tabItem {
-                    Label("Second", systemImage: "gearshape")
+                    Label("Market", systemImage: "chart.line.uptrend.xyaxis")
                 }
         }
         .accentColor(Color.theme.accent)
