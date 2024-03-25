@@ -74,7 +74,7 @@ struct ActivitySwapCell: View {
  
         }
         .padding([.leading, .trailing])
-        .background(Color.white)
+//        .background(Color.white)
 //        .cornerRadius(20)
 //        .shadow(radius: 2)
     }

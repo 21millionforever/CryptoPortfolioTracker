@@ -59,7 +59,7 @@ struct ActivityReceiveCell: View {
         }
         .frame(height:55)
         .padding([.leading, .trailing])
-        .background(Color.white)
+//        .background(Color.white)
 //        .cornerRadius(20)
 //        .shadow(radius: 2)
         

@@ -59,7 +59,7 @@ struct ActivitySendCell: View {
         }
         .frame(height:55)
         .padding([.leading, .trailing])
-        .background(Color.white)
+//        .background(Color.white)
     }
 }
 
