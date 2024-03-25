@@ -19,7 +19,7 @@ struct StartAnimationView: View {
                 .frame(width: 100, height: 100)
                 .scaleEffect(isAnimating ? 1.0 : 0.1)
                 .onAppear {
-                    withAnimation(.easeInOut(duration: 2.0)) {
+                    withAnimation(.easeInOut(duration: 3.0)) {
                         isAnimating = true
                     }
                 }

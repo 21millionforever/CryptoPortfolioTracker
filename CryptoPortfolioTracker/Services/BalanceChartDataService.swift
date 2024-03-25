@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import OSLog
+
 
 class BalanceChartDataService {
     
@@ -19,38 +21,35 @@ class BalanceChartDataService {
        - days:  Chart time frame
      - Returns: [ChartDataPoint]
     */
-    func fetchWalletChartData(walletAddress: String, days: String) async throws -> [ChartDataPoint] {
-        let endpoint = "\(Config.server_url)/getWalletBalanceChart/\(walletAddress)/\(days)"
+    func fetchWalletChartData(walletAddress: String) async throws -> [ChartDataPoint] {
+        let endpoint = "\(Config.server_url)/getWalletBalanceChart/\(walletAddress)"
         
         guard let url = URL(string: endpoint) else {
             throw APIError.invalidURL
         }
-        let raw_data: [[String]] = try await NetworkingManager.fetchData(from: url)
+     
+        let raw_data: [Dictionary<String, Double>] = try await NetworkingManager.fetchData(from: url)
+        logger.log("tempMaxBalanceChart(rawData):\(raw_data)")
         
-        return parseChartData(rawData: raw_data, days: days)
+        let output = parseChartData(rawData: raw_data)
+        return output
     }
     
-    private func parseChartData(rawData: [[String]], days: String) -> [ChartDataPoint] {
+    private func parseChartData(rawData: [Dictionary<String, Double>]) -> [ChartDataPoint] {
         var chartData: [ChartDataPoint] = []
         
         let dateFormatter = DateFormatter()
-        if (days == "max") {
-            dateFormatter.dateFormat = "MMMM d, yyyy"
-        }
-        else if (days == "7") {
-            dateFormatter.dateFormat = "MMMM d, yyyy, h a"
-        }
+        dateFormatter.dateFormat = "MMMM d, yyyy"
         
-        for item in rawData {
-            if let dateString = item.first,
-               let valueString = item.last,
-               let date = dateFormatter.date(from: dateString),
-               let value = Double(valueString) {
-                let dataPoint = ChartDataPoint(date: date, value: value)
-                chartData.append(dataPoint)
+        for dictionary in rawData {
+            for (dateString, value) in dictionary {
+                if let date = dateFormatter.date(from: dateString) {
+                    let dataPoint = ChartDataPoint(date: date, value: value)
+                    chartData.append(dataPoint)
+                }
             }
         }
-        
         return chartData
+        
     }
 }

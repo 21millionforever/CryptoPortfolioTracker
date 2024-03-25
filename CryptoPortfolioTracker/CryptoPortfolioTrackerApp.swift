@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import OSLog
 
 @main
-struct CryptoPortfolioTrackerApp: App {
+struct CryptoTrackerApp: App {
     @StateObject private var sharedDataModel = SharedDataModel()
     @StateObject private var balanceChartViewModel = BalanceChartViewModel()
     @StateObject private var walletsHoldingModel = WalletsHoldingModel()
@@ -17,7 +18,6 @@ struct CryptoPortfolioTrackerApp: App {
     
     // State for controlling the display of the main content
     @State private var isShowingMainContent = false
-
     
     var body: some Scene {
         WindowGroup {
@@ -25,67 +25,42 @@ struct CryptoPortfolioTrackerApp: App {
                 if !isShowingMainContent {
                     startAnimationView
                 } else if sharedDataModel.addresses.isEmpty {
-                    StartView().environmentObject(sharedDataModel)
-                } else {
+                    StartView()
+                        .environmentObject(sharedDataModel)
+                }
+                else {
                     mainContentView
                 }
             }
             
-            
-            
-            
-//            if !isShowingMainContent {
-//                StartAnimationView()
-//                    .onAppear {
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { // Match your animation duration
-//                            withAnimation {
-//                                isShowingMainContent = true
-//                            }
-//                        }
-//                    }
-//                    .task {
-//                        await balanceChartViewModel.loadChartData(addresses: sharedDataModel.addresses)
-//                        await balanceChartViewModel.loadTotalBalance()
-//
-//                        await walletsHoldingModel.loadWalletsHolding(addresses: sharedDataModel.addresses)
-//                        await walletsHoldingModel.loadTotalWalletHolding()
-//
-//                        await marketViewModel.downloadCoins()
-//                        await marketViewModel.downloadMarketData()
-//
-//                        await marketViewModel.populateSymbolToCoinMap()
-//                        await marketViewModel.loadPortfolioCoins(totalWalletTokens: walletsHoldingModel.totalWalletTokens)
-//                    }
-//            }
-//            else if(sharedDataModel.addresses.isEmpty) {
-//                StartView()
-//                    .environmentObject(sharedDataModel)
-//            } else {
-//                BottomNavigationBarView()
-//                    .environmentObject(balanceChartViewModel)
-//                    .environmentObject(sharedDataModel)
-//                    .environmentObject(walletsHoldingModel)
-//                    .environmentObject(marketViewModel)
-//                    .environmentObject(chartHeaderViewModel)
-//            }
         }
     }
 }
 
-extension CryptoPortfolioTrackerApp {
+extension CryptoTrackerApp {
     private var startAnimationView: some View {
         StartAnimationView()
             .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                if (!sharedDataModel.addresses.isEmpty) {
+                    Task {
+                        await loadInitialData()
+                    }
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                     withAnimation { isShowingMainContent = true }
                 }
+                
             }
-            .task { await loadInitialData() }
     }
+    
     
     // Computed property for the main content view
     private var mainContentView: some View {
         BottomNavigationBarView()
+            .onAppear {
+                Task {
+                    await loadInitialData()
+                }}
             .environmentObject(balanceChartViewModel)
             .environmentObject(sharedDataModel)
             .environmentObject(walletsHoldingModel)
@@ -94,7 +69,6 @@ extension CryptoPortfolioTrackerApp {
     }
     
     
-    // Method to load initial data asynchronously
     private func loadInitialData() async {
         await balanceChartViewModel.loadChartData(addresses: sharedDataModel.addresses)
         await balanceChartViewModel.loadTotalBalance()
@@ -107,6 +81,8 @@ extension CryptoPortfolioTrackerApp {
         
         await marketViewModel.populateSymbolToCoinMap()
         await marketViewModel.loadPortfolioCoins(totalWalletTokens: walletsHoldingModel.totalWalletTokens)
+        
     }
 }
+
 

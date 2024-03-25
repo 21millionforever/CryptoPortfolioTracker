@@ -58,7 +58,8 @@ struct AssetTokenRowView: View {
                         Text(priceChangePercentage24H.asPercentStringWithoutSign())
                             .font(.caption)
                             .fontWeight(.bold)
-                            .foregroundColor(Color.gray.opacity(0.8))
+//                            .foregroundColor(Color.gray.opacity(0.8))
+                            .foregroundColor(priceChangePercentage24H >= 0 ? Color.theme.green : Color.theme.red)
                     }
 
                 }

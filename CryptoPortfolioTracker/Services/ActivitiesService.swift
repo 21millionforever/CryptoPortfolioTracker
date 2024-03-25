@@ -1,8 +1,8 @@
 //
-//  GetActivitiesApi.swift
+//  ActivitiesService.swift
 //  CryptoPortfolioTracker
 //
-//  Created by Zhendong Chen on 1/1/24.
+//  Created by Zhendong Chen on 3/24/24.
 //
 
 import Foundation

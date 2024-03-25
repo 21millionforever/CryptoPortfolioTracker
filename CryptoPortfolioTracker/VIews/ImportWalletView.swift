@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct ImportWalletView: View {
     @EnvironmentObject var sharedDataModel : SharedDataModel
@@ -69,6 +70,7 @@ struct ImportWalletView: View {
             print("The wallet is already in sharedDataModel.addresses")
         } else {
             sharedDataModel.addresses.append(walletAddress)
+            Logger().log("After addeded a wallet: \(sharedDataModel.addresses)")
         }
     }
     

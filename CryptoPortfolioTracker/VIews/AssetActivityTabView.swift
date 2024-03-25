@@ -22,21 +22,6 @@ struct AssetActivityTabView: View {
    
     }
     
-//    func formatTokenBalance(tokenInfo: Token) -> String {
-//        let balance = Double(tokenInfo.balance)
-//        let decimals = Double(tokenInfo.tokenInfo.decimals) ?? 18
-//        let formattedBalance = balance / pow(10.0, decimals)
-//        return String(format: "%.2f", formattedBalance)
-//    }
-//
-//    func calculateTokenValueInUSD(tokenInfo: Token) -> String {
-//        let balance = Double(tokenInfo.balance)
-//        let decimals = Double(tokenInfo.tokenInfo.decimals) ?? 18
-//        let formattedBalance = balance / pow(10.0, decimals)
-//        let tokenValueInUSD = formattedBalance * tokenInfo.tokenInfo.price.rate
-//        return tokenValueInUSD.asCurrencyWith2Decimals()
-//    }
-    
 }
 
 extension AssetActivityTabView {
@@ -81,10 +66,8 @@ extension AssetActivityTabView {
             switch selectedTab {
                 case "Assets":
                     AssetsView(walletHolding: walletHolding)
-//                Text(selectedTab)
                 case "Activity":
-//                    ActivityView(address: walletInfo.address)
-                Text(selectedTab)
+                    ActivityView(address: walletHolding.address)
                 default:
                     Text(selectedTab)
             }

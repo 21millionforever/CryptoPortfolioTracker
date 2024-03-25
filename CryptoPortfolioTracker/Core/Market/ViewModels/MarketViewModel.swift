@@ -82,7 +82,7 @@ class MarketViewModel: ObservableObject {
             DispatchQueue.main.async { [weak self] in
                 self?.statistics = []
                 self?.statistics.append(contentsOf: [marketCap, volume, btcDominance])
-            }  
+            }
         } catch let error {
             print("Error fetching market data: \(error)")
         }

@@ -4,10 +4,8 @@
 //
 //  Created by Zhendong Chen on 12/25/23.
 //
-import Charts
 
 import SwiftUI
-
 
 struct HomeView: View {
     @EnvironmentObject var balanceChartViewModel: BalanceChartViewModel
@@ -17,10 +15,10 @@ struct HomeView: View {
     @State private var showBottomMenu: Bool = false
     @State var showingImportWalletView: Bool = false
     @State private var selectedTab = "All"
-    let tabs = ["LIVE", "1D", "1W", "1M", "3M", "All"]
+    let tabs = ["1W", "1M", "3M", "All"]
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
-
-
+    
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -52,7 +50,11 @@ struct HomeView: View {
             .onChange(of: sharedDataModel.addresses) { newAddresses in
                 guard let lastAddress = newAddresses.last else { return }
                 Task {
-                    await balanceChartViewModel.loadSingleAddressChartData(address: lastAddress)
+                    await balanceChartViewModel.loadChartData(addresses: sharedDataModel.addresses)
+                    await balanceChartViewModel.loadTotalBalance()
+                    
+                    await walletsHoldingModel.loadWalletsHolding(addresses: sharedDataModel.addresses)
+                    await walletsHoldingModel.loadTotalWalletHolding()
                 }
             }
             

@@ -75,6 +75,11 @@ extension MarketView {
     
 }
 
+#Preview {
+    MarketView()
+}
+
+
 struct MarketView_Previews: PreviewProvider {
     static var previews: some View {
         MarketView()

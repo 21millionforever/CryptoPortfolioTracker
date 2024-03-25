@@ -7,6 +7,10 @@
 
 import Foundation
 import SwiftUI
+import OSLog
+
+let logger = Logger(subsystem: "BalanceChart", category: "BalanceChartDataLoading")
+
 
 /// A view model for balance chart
 ///
@@ -18,7 +22,6 @@ class BalanceChartViewModel: ObservableObject {
     @Published var balance: Double = 0
     
     private let chartDataService = BalanceChartDataService()
-    
     
     /**
      Update update balance
@@ -33,7 +36,7 @@ class BalanceChartViewModel: ObservableObject {
             self?.balance = self?.totalBalanceChart.all?.last?.value ?? 0.00
         }
     }
-    
+
     /**
      Populate walletToBalanceChart([String: BalanceChartData]) and totalBalanceChart(BalanceChartData)
      
@@ -49,26 +52,46 @@ class BalanceChartViewModel: ObservableObject {
                 let lowerCaseAddress = address.lowercased()
                 group.addTask {
                     do {
-                        let currentDate = Date()
-                        
                         // Get the max chart for the wallet address
-                        let tempMaxBalanceChart = try await self.chartDataService.fetchWalletChartData(walletAddress: lowerCaseAddress, days: "max")
+                        var tempMaxBalanceChart = try await self.chartDataService.fetchWalletChartData(walletAddress: lowerCaseAddress)
+                        tempMaxBalanceChart.reverse()
+                        logger.log("tempMaxBalanceChart([ChartDataPoint]): \(tempMaxBalanceChart)")
+                        logger.log("tempMaxBalanceChart's length: \(tempMaxBalanceChart.count)")
                         
                         // Get the chart for the last three monthes for the wallet address
-                        let threeMonthStartIndex = self.getStartIndex(dataPoints: tempMaxBalanceChart, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
-                        let tempThreeMonthBalanceChart = Array(tempMaxBalanceChart.suffix(from: threeMonthStartIndex))
+                        var tempThreeMonthBalanceChart: [ChartDataPoint] = []
+                        if tempMaxBalanceChart.count >= 91 {
+                            tempThreeMonthBalanceChart = Array(tempMaxBalanceChart.suffix(91))
+                        } else {
+                            tempThreeMonthBalanceChart = tempMaxBalanceChart
+                        }
+                        logger.log("tempThreeMonthBalanceChart: \(tempThreeMonthBalanceChart)")
+                        logger.log("tempThreeMonthBalanceChart's length: \(tempThreeMonthBalanceChart.count)")
                         
                         // Get the chart for the last month for the wallet address
-                        let oneMonthStartIndex = self.getStartIndex(dataPoints: tempMaxBalanceChart, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
-                        let tempOneMonthBalanceChart = Array(tempMaxBalanceChart.suffix(from: oneMonthStartIndex))
+                        var tempOneMonthBalanceChart: [ChartDataPoint] = []
+                        if tempMaxBalanceChart.count >= 30 {
+                            tempOneMonthBalanceChart = Array(tempMaxBalanceChart.suffix(30))
+                        } else {
+                            tempOneMonthBalanceChart = tempMaxBalanceChart
+                        }
+                        logger.log("tempOneMonthBalanceChart: \(tempOneMonthBalanceChart)")
+                        logger.log("tempOneMonthBalanceChart's length: \(tempOneMonthBalanceChart.count)")
+                        
                         
                         // Get the chart for the last week for the wallet address
-                        let tempOneWeekBalanceChart = try await self.chartDataService.fetchWalletChartData(walletAddress: lowerCaseAddress, days: "7")
+                        var tempOneWeekBalanceChart: [ChartDataPoint] = []
+                        if tempMaxBalanceChart.count >= 7 {
+                            tempOneWeekBalanceChart = Array(tempMaxBalanceChart.suffix(7))
+                        } else {
+                            tempOneWeekBalanceChart = tempMaxBalanceChart
+                        }
+                        logger.log("tempOneWeekBalanceChart: \(tempOneWeekBalanceChart)")
+                        logger.log("tempOneWeekBalanceChart's length: \(tempOneWeekBalanceChart.count)")
                         
-                        // Get the chart for the day for the wallet addresss
-                        // let tempOneDayBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: lowerCaseAddress, days: "1")
                         
                         return (lowerCaseAddress, BalanceChartData(all: tempMaxBalanceChart, threeMonth: tempThreeMonthBalanceChart, oneMonth: tempOneMonthBalanceChart, oneWeek: tempOneWeekBalanceChart))
+                        
                     } catch {
                         print("Error fetching data for address \(lowerCaseAddress): \(error)")
                         return (lowerCaseAddress, BalanceChartData())
@@ -88,66 +111,26 @@ class BalanceChartViewModel: ObservableObject {
                 let tempThreeMonthChartData = self.CalculateTotalBalanceChart(walletToBalanceChart: self.walletToBalanceChart, timeInterval: "threeMonth")
                 let tempOneMonthChartData = self.CalculateTotalBalanceChart(walletToBalanceChart: self.walletToBalanceChart, timeInterval: "oneMonth")
                 let tempOneWeekChartData = self.CalculateTotalBalanceChart(walletToBalanceChart: self.walletToBalanceChart, timeInterval: "7")
-                // let tempOneDayChartData = self.CalculateTotalBalanceChart(walletToBalanceChart: self.walletToBalanceChart, timeInterval: "1")
                 
                 self.totalBalanceChart.all = tempMaxChartData
                 self.totalBalanceChart.threeMonth = tempThreeMonthChartData
                 self.totalBalanceChart.oneMonth = tempOneMonthChartData
                 self.totalBalanceChart.oneWeek = tempOneWeekChartData
-//                self.totalBalanceChart.oneday = tempOneDayChartData
                 self.isTotalBalanceChartDataLoaded = true
             }
+//            print("\(totalBalanceChart.all!)")
+//            logger.log("self.totalBalanceChart.all: \(self.totalBalanceChart.all!)")
+//            logger.log("self.totalBalanceChart.threeMonth: \(self.totalBalanceChart.threeMonth!)")
+//            logger.log("self.totalBalanceChart.oneMonth: \(self.totalBalanceChart.oneMonth!)")
+//            logger.log("self.totalBalanceChart.oneWeek: \(self.totalBalanceChart.oneWeek!)")
+            
+            
+            
+            
+            
         }
     }
     
-    /**
-     Update walletToBalanceChart and totalBalanceChart
-     
-     This function takes a wallet address, and then update walletToBalanceChart and totalBalanceChart
-     
-     - Parameters:
-       - address: A wallet address
-     - Returns: Doesn't return anything
-    */
-    func loadSingleAddressChartData(address: String) async {
-        let lowerCaseAddress = address.lowercased()
-        let currentDate = Date()
-        do {
-            let tempMaxBalanceChart = try await self.chartDataService.fetchWalletChartData(walletAddress: lowerCaseAddress, days: "max")
-            
-            let threeMonthStartIndex = self.getStartIndex(dataPoints: tempMaxBalanceChart, timeBefore: Calendar.current.date(byAdding: .month, value: -3, to: currentDate))
-            let tempThreeMonthBalanceChart = Array(tempMaxBalanceChart.suffix(from: threeMonthStartIndex))
-            
-            let oneMonthStartIndex = self.getStartIndex(dataPoints: tempMaxBalanceChart, timeBefore: Calendar.current.date(byAdding: .month, value: -1, to: currentDate))
-            let tempOneMonthBalanceChart = Array(tempMaxBalanceChart.suffix(from: oneMonthStartIndex))
-            
-            let tempOneWeekBalanceChart = try await self.chartDataService.fetchWalletChartData(walletAddress: lowerCaseAddress, days: "7")
-            // let tempOneDayBalanceChart = try await fetchWalletHistoricalValueChart(walletAddress: lowerCaseAddress, days: "1")
-            
-            let chartData = BalanceChartData(all: tempMaxBalanceChart, threeMonth: tempThreeMonthBalanceChart, oneMonth: tempOneMonthBalanceChart, oneWeek: tempOneWeekBalanceChart)
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.walletToBalanceChart[lowerCaseAddress] = chartData
-
-                // Calculate the total balance chart
-                let tempMaxChartData = self?.CalculateTotalBalanceChart(walletToBalanceChart: self?.walletToBalanceChart ?? [:], timeInterval: "max")
-                let tempThreeMonthChartData = self?.CalculateTotalBalanceChart(walletToBalanceChart: self?.walletToBalanceChart ?? [:], timeInterval: "threeMonth")
-                let tempOneMonthChartData = self?.CalculateTotalBalanceChart(walletToBalanceChart: self?.walletToBalanceChart ?? [:], timeInterval: "oneMonth")
-                let tempOneWeekChartData = self?.CalculateTotalBalanceChart(walletToBalanceChart: self?.walletToBalanceChart ?? [:], timeInterval: "7")
-                // let tempOneDayChartData = CalculateTotalBalanceChart(walletToBalanceChart: self?.walletToBalanceChart ?? [:], timeInterval: "1")
-
-                self?.totalBalanceChart.all = tempMaxChartData
-                self?.totalBalanceChart.threeMonth = tempThreeMonthChartData
-                self?.totalBalanceChart.oneMonth = tempOneMonthChartData
-                self?.totalBalanceChart.oneWeek = tempOneWeekChartData
-//                self?.totalBalanceChart.oneday = tempOneDayChartData
-                self?.isTotalBalanceChartDataLoaded = true
-            }
-            
-        } catch {
-            print("Error fetching data for address \(lowerCaseAddress): \(error)")
-        }
-    }
     
     /**
      Computes the sum of the balance charts of all the wallets
@@ -162,7 +145,7 @@ class BalanceChartViewModel: ObservableObject {
         var combinedData = [Date: Double]()
         
         
-        for (address, balanceChartData) in walletToBalanceChart {
+        for (_, balanceChartData) in walletToBalanceChart {
             if (timeInterval == "max") {
                 if let dataPoints = balanceChartData.all {
                     for dataPoint in dataPoints {
@@ -195,18 +178,7 @@ class BalanceChartViewModel: ObservableObject {
                     }
                 }
             }
-            
-//            else if (timeInterval == "1") {
-//                if let dataPoints = balanceChartData.oneDay {
-//                    for dataPoint in dataPoints {
-//                        combinedData[dataPoint.date, default: 0] += dataPoint.value
-//                    }
-//                }
-//            }
-            
-            
-            
-            
+
         }
         
         let unsortedDataPoints = combinedData.map { ChartDataPoint(date: $0.key, value: $0.value) }
@@ -217,30 +189,73 @@ class BalanceChartViewModel: ObservableObject {
     }
     
     /**
-     Get the start index in a list of data points
+     Update walletToBalanceChart and totalBalanceChart
      
-     This function takes a list of ChartDataPoint objects and a Date? object and find the start index.
+     This function takes a wallet address, and then update walletToBalanceChart and totalBalanceChart
      
      - Parameters:
-       - dataPoints: a list of ChartDataPoint objects
-       - timeBefore: A Date object.
-     - Returns: An index that is an int
+       - address: A wallet address
+     - Returns: Doesn't return anything
     */
-    func getStartIndex(dataPoints: [ChartDataPoint], timeBefore: Date?) -> Int {
-        if let timeBefore = timeBefore {
-            print("timeBefore: \(timeBefore)")
-
-            for (index, dataPoint) in dataPoints.enumerated() {
-                // Use the date directly for comparison
-                if dataPoint.date >= timeBefore {
-                    return index
-                }
+    func loadSingleAddressChartData(address: String) async {
+        let lowerCaseAddress = address.lowercased()
+        do {
+            // Get the max chart for the wallet address
+            var tempMaxBalanceChart = try await self.chartDataService.fetchWalletChartData(walletAddress: lowerCaseAddress)
+            tempMaxBalanceChart.reverse()
+            
+            // Get the chart for the last three monthes for the wallet address
+            var tempThreeMonthBalanceChart: [ChartDataPoint] = []
+            if tempMaxBalanceChart.count >= 91 {
+                tempThreeMonthBalanceChart = Array(tempMaxBalanceChart.suffix(91))
+            } else {
+                tempThreeMonthBalanceChart = tempMaxBalanceChart
             }
+            
+            // Get the chart for the last month for the wallet address
+            var tempOneMonthBalanceChart: [ChartDataPoint] = []
+            if tempMaxBalanceChart.count >= 30 {
+                tempOneMonthBalanceChart = Array(tempMaxBalanceChart.suffix(30))
+            } else {
+                tempOneMonthBalanceChart = tempMaxBalanceChart
+            }
+            
+            
+            // Get the chart for the last week for the wallet address
+            var tempOneWeekBalanceChart: [ChartDataPoint] = []
+            if tempMaxBalanceChart.count >= 7 {
+                tempOneWeekBalanceChart = Array(tempMaxBalanceChart.suffix(7))
+            } else {
+                tempOneWeekBalanceChart = tempMaxBalanceChart
+            }
+            
+            let chartData = BalanceChartData(all: tempMaxBalanceChart, threeMonth: tempThreeMonthBalanceChart, oneMonth: tempOneMonthBalanceChart, oneWeek: tempOneWeekBalanceChart)
+            
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.walletToBalanceChart[lowerCaseAddress] = chartData
+
+                // Calculate the total balance chart
+                let tempMaxChartData = self?.CalculateTotalBalanceChart(walletToBalanceChart: self?.walletToBalanceChart ?? [:], timeInterval: "max")
+                let tempThreeMonthChartData = self?.CalculateTotalBalanceChart(walletToBalanceChart: self?.walletToBalanceChart ?? [:], timeInterval: "threeMonth")
+                let tempOneMonthChartData = self?.CalculateTotalBalanceChart(walletToBalanceChart: self?.walletToBalanceChart ?? [:], timeInterval: "oneMonth")
+                let tempOneWeekChartData = self?.CalculateTotalBalanceChart(walletToBalanceChart: self?.walletToBalanceChart ?? [:], timeInterval: "7")
+
+                self?.totalBalanceChart.all = tempMaxChartData
+                self?.totalBalanceChart.threeMonth = tempThreeMonthChartData
+                self?.totalBalanceChart.oneMonth = tempOneMonthChartData
+                self?.totalBalanceChart.oneWeek = tempOneWeekChartData
+                self?.isTotalBalanceChartDataLoaded = true
+            }
+            
+        } catch {
+            print("Error fetching data for address \(lowerCaseAddress): \(error)")
         }
-        
-        return 0
     }
-}
     
+    
+    
+    
+}
 
 
